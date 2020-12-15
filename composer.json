@@ -1,0 +1,19 @@
+{
+    "name": "elhab/e-shop",
+    "description": "Une boutique en ligne fait main",
+    "authors": [
+        {
+            "name": "keleslz",
+            "email": "elhabibaly@gmail.com"
+        }
+    ],
+    "require": {
+        "aura/autoload": "^2.0",
+        "stripe/stripe-php": "^7.61"
+    }, 
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

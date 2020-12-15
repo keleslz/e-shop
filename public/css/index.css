@@ -1,0 +1,143 @@
+.add-mini-pic, .show-mini-pic {
+  min-width: 300px;
+  width: 40%;
+  margin: 4%;
+}
+.add-mini-pic form, .show-mini-pic form {
+  width: 100% !important;
+}
+
+.show-mini-pic .mini-card {
+  width: 80%;
+  min-width: 300px;
+}
+
+.add-mini-pic {
+  display: flex;
+  justify-content: center;
+}
+.add-mini-pic div {
+  display: flex;
+  flex-direction: column;
+}
+.add-mini-pic div h3 {
+  width: 100%;
+}
+.add-mini-pic div form {
+  display: flex;
+  width: 100%;
+}
+.add-mini-pic div form input {
+  width: 280px;
+}
+.add-mini-pic div form button {
+  max-width: 280px !important;
+}
+
+.h-screen form {
+  width: 250px;
+}
+.h-screen form input, .h-screen form textarea {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.h-screen #registre-product, .h-screen #registre-category, .h-screen .medium-form {
+  width: 320px;
+}
+.h-screen #registre-product input, .h-screen #registre-category input, .h-screen .medium-form input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ccc;
+}
+.h-screen #registre-product input[type=file], .h-screen #registre-category input[type=file], .h-screen .medium-form input[type=file] {
+  height: max-content;
+}
+.h-screen #registre-product .input-container, .h-screen #registre-category .input-container, .h-screen .medium-form .input-container {
+  height: max-content;
+}
+.h-screen #registre-product textarea, .h-screen #registre-category textarea, .h-screen .medium-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+.h-screen #registre-product > *, .h-screen #registre-category > *, .h-screen .medium-form > * {
+  width: 100%;
+}
+
+.h1 {
+  font-size: 2rem !important;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700 !important;
+  padding: 5px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.h2 {
+  font-size: 1.5rem !important;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700 !important;
+  padding: 5px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.min-pic-container:hover {
+  border: 10px solid red;
+}
+
+.big-card-container {
+  min-width: 250px !important;
+  max-width: 500px;
+}
+.big-card-container .button-container {
+  justify-content: space-around;
+}
+.big-card-container .button-container form {
+  width: max-content;
+}
+.big-card-container .button-container form button {
+  min-width: 100px !important;
+}
+
+.medium-picture {
+  width: 150px;
+  height: 150px;
+}
+
+.cont {
+  min-height: 90vh !important;
+}
+
+.container h1 {
+  font-size: 2.5rem;
+}
+.container .text-2xl {
+  font-size: x-large;
+}
+
+.home-banner {
+  height: 200px;
+}
+
+@media screen and (max-width: 905px) {
+  .mini-pic-list-container {
+    display: flex;
+    justify-content: center !important;
+  }
+  .mini-pic-list-container form {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 905px) {
+  .show-mini-pic .mini-card {
+    margin-left: 10%;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */

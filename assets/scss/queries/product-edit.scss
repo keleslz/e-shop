@@ -1,0 +1,21 @@
+@media screen and (max-width:905px)
+{
+    .mini-pic-list-container {
+
+        display: flex;
+        justify-content: center!important;
+
+        form{
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (min-width:905px){
+    .show-mini-pic {
+    
+        .mini-card{
+            margin-left: 10%;
+        }
+    }
+}

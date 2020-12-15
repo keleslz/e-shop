@@ -1,0 +1,30 @@
+.min-pic-container{
+    
+    &:hover {
+        border: 10px solid red;
+    }   
+}
+
+.big-card-container {
+
+    min-width: 250px!important;
+    max-width: 500px;
+
+    .button-container
+    {
+        justify-content: space-around;
+
+        form{
+            width: max-content;
+
+            button {
+                min-width:100px!important;
+            }
+        }
+    }
+}
+
+.medium-picture {
+    width: 150px;
+    height: 150px;
+}

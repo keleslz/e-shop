@@ -1,0 +1,47 @@
+.add-mini-pic, .show-mini-pic {
+    min-width:300px;
+    width: 40%;
+    margin: 4%;
+    
+    form{
+        width: 100%!important;
+    }
+}
+
+.show-mini-pic {
+    
+    .mini-card{
+        width: 80%;
+        min-width: 300px;
+    }
+}
+
+.add-mini-pic {
+
+    display: flex;
+    justify-content: center;
+
+   div{
+
+       display: flex;
+       flex-direction: column;
+
+        h3 {
+            width: 100%;
+        }
+    
+        form {
+
+            display: flex;
+            width: 100%;
+            
+            input {
+                width: 280px;
+            }
+
+            button {
+                max-width: 280px!important;
+            }
+        }
+   }
+}

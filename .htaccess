@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQuEST_FILENAME} !-d
+RewriteCond %{REQuEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/index.php/$1

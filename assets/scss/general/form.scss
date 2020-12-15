@@ -1,0 +1,66 @@
+.h-screen {
+
+    form {
+        width: 250px;   
+        
+        input, textarea {
+            border : 1px solid #ccc;
+            border-radius: 5px;
+        }
+    }
+
+    #registre-product,#registre-category,.medium-form 
+    {
+        width : 320px;
+
+        input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #ccc;
+        }
+
+        input[type=file]
+        {
+            height: max-content;
+        }
+
+        .input-container{
+            height: max-content;
+        }
+
+        textarea {
+            
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+
+        &>*{
+            width: 100%;
+        }
+    }
+
+}
+
+.h1 {
+    font-size: 2rem!important; 
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    font-weight: 700!important;
+    padding: 5px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.h2 {
+    font-size: 1.5rem!important; 
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    font-weight: 700!important;
+    padding: 5px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
