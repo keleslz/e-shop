@@ -1,7 +1,7 @@
 
 <nav class="flex justify-around p-3 bg-black flex-wrap items-center">
     
-    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/accueil">Accueil</a></li>
+    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>
     <ul id="navbar-category" class="list-none  dropdown" style="height:30px;">
         <a class=" text-center hover:text-gray-400 text-white px-2" href="#">Categories</a>
         <div id="" style="position:absolute;z-index:100" class="items bg-black hidden pt-2">
@@ -9,7 +9,7 @@
         </div>
     </ul>
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="#Nouveautés">Nouveautés</a></li>
-    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/panier">Panier<?php displayCart($this->var['cart'])?></a></li>
+    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/cart">Panier<?php displayCart($this->var['cart'])?></a></li>
 
     <?php if (is_array($this->var['adminSession']) && count($this->var['adminSession']) > 0) : ?>
         

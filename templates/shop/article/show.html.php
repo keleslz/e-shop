@@ -16,7 +16,7 @@
                 <h3 class="text-center text-2xl mb-3"><?= $product['product_name']?></h3>
             </div>
             <div class="container flex items-center justify-center mb-3">
-                <img class="w-100 p-0 mb-3" src="public/img-storage/<?= $this->var['productImg']['img_name'] ?? 'default-image.jpg'?>" alt="Image alternative  bientot dispo">
+                <img class="w-100 p-0 mb-3" src="/public/img-storage/<?= $this->var['productImg']['img_name'] ?? 'default-image.jpg'?>" alt="Image alternative  bientot dispo">
             </div>
 
             <div class="flex flex-col mb-5">
@@ -29,11 +29,11 @@
 
                         <div>
                             <p style="width:105px" class="mb-3">Quantité</p>
-                            <input style="width:105px" class="mb-3 p-2"  type="number" required  value="<?php displayProductQuantityIfExist($product['product_id'])?>" name="quantity">
+                            <input id="cart-quantity" style="width:105px" class="mb-3 p-2"  type="number" required  value="<?php displayProductQuantityIfExist($product['product_id'])?>" name="quantity">
                         </div>
 
                         <div>
-                            <button type="submit" style="height:50px!important" class="mb-2 text-center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">
+                            <button id="add-on-cart"type="submit" style="height:50px!important" class="enabled mb-2 text-center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">
                                 Ajouter au panier
                             </button>
                         </div>
@@ -41,7 +41,7 @@
                     </div>
                 </form>
                     
-                <a href="/public/shop/panier"  style="height:50px!important"  
+                <a href="/public/shop/cart"  style="height:50px!important"  
                     class="text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
                 >
                     Acheter maintenant
@@ -63,7 +63,7 @@
     </div>
 
 <?php else : ?>
-    <?php $this->redirectTo('/public/shop/accueil') ?>
+    <?php $this->redirectTo('/public/shop/home') ?>
 <?php endif ?>
 
 <div class="cont"></div>

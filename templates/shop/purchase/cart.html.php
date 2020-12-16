@@ -24,7 +24,7 @@
     <?php else :  ?>
 
         <h2 >Votre panier est vide </h2>
-        <a href="/public/shop/accueil">Remplissez le avec des articles</a>
+        <a href="/public/shop/home">Remplissez le avec des articles</a>
 
     <?php endif ?>
 

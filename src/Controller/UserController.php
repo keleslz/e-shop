@@ -63,7 +63,7 @@ class UserController extends AbstractController
                     }else {
                         $session->create($exist);
                         $session->set('user','success', 'Vous êtes connecté');
-                        $this->redirectTo('shop/accueil');
+                        $this->redirectTo('shop/home');
                     }
                     
                 }else
@@ -170,7 +170,7 @@ class UserController extends AbstractController
         (new Repository())->disconnect();
         session_start();
         session_unset();
-        $this->redirectTo('shop/accueil');
+        $this->redirectTo('user/signin');
     }
 
     public function delete()
@@ -186,7 +186,7 @@ class UserController extends AbstractController
         if(!$userRepo)
         {
             $session->set('user','error','Désolé une erreur est survenue');
-            $this->redirectTo('/shop/accueil');
+            $this->redirectTo('/shop/home');
             die();
         }
 
@@ -200,7 +200,7 @@ class UserController extends AbstractController
         }else{
             $session->set('user','success', 'Une erreur est survenue nous vous prions de réessayer ultèrieurement');
             (new Repository())->disconnect();
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
         }
     }
 }

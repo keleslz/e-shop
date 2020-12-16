@@ -3,5 +3,6 @@
         <a href="https://github.com/keleslz">Keleslz</a>
     </footer>
     <script type="module" src="/public/js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

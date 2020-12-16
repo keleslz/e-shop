@@ -18,6 +18,7 @@ require_once ROOT . DS . 'src/Entity/Client.php'; // Get Client entity
 require_once ROOT . DS . 'src/Entity/Shop.php'; // Get Client entity 
 require_once ROOT . DS . 'src/Entity/Pdf.php'; // Get Pdf entity 
 require_once ROOT . DS . 'src/Entity/Bill.php'; // Get Bill entity 
+require_once ROOT . DS . 'src/Entity/Cart.php'; // Get Cart entity 
 
 //Session
 require_once ROOT . DS . 'src/Lib/Session/Session.php'; // Start Session

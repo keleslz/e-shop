@@ -1,0 +1,21 @@
+1. Produit :
+    
+    JS : 
+        Ajax :
+            - Ajout de produit au panier
+            - Finir la fonctionnalité Acheter maintenant
+        
+    PHP :
+        - Factoriser tous le code des controller en procedant par ordre alphabétique
+        - De BillController -> UserController
+    
+Lors du commit lister les fichiers modifiés pour n'ajouter que ceux la pour proceder au deploiement.
+
+2. Commentaire
+    
+    Commenter toutes les classes
+
+
+Bug :
+    Produits :
+       Panier: Une mauvaise quantité envoyé au serveur retourne une 404 malgrès les controles mis en place.Suite à ça impossible d 'ajouter d' autres produits.Une deconnexion est necessaire pour pouvoir le remplir à nouveau.

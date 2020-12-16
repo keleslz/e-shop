@@ -27,7 +27,7 @@ class UserSession extends Session
     {
         if( !isset($_SESSION['_userStart']) )
         {
-            header('Location:/public/shop/accueil');
+            header('Location:/public/shop/home');
             die();
         }
     }  
@@ -40,7 +40,7 @@ class UserSession extends Session
         if( isset($_SESSION['_userStart']) && intval($_SESSION['_userStart']['law']) < 65535)
         {  
             $this->set('user', 'error', (new inputError())::basicError());
-            header('Location:/public/shop/accueil');
+            header('Location:/public/shop/home');
             die();
         }
     }
@@ -53,7 +53,7 @@ class UserSession extends Session
         if( isset($_SESSION['_userStart']) && intval($_SESSION['_userStart']['law']) < 100)
         {  
             $this->set('user', 'error', (new inputError())::basicError()) ;
-            header('Location:/public/shop/accueil');
+            header('Location:/public/shop/home');
             die();
         }
     }

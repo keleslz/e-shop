@@ -229,7 +229,7 @@ abstract class InputValidator
         return true;
     }
 
-    public function product_description() : bool
+    public function product_description($string = '') : bool
     {
         return true;
     }

@@ -72,12 +72,12 @@ function displayCart($cart) : void
     if(is_array($cart) && count($cart) > 0)
     {   
         $count = count($cart);
-        echo "<span class='inline-block rounded-full h-6 w-6 mx-1 bg-green-700 p-1 text-xs text-white'>{$count}</span>";
+        echo "<span id='cart-quantity-stored' class='inline-block rounded-full h-6 w-6 mx-1 bg-green-700 p-1 text-xs text-white'>{$count}</span>";
     }
 }
 
 
-// shop/panier
+// shop/cart
 
 function isSame(array $listoOfValue, int $idCurrentProduct) : int
 {   
@@ -112,13 +112,15 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
 
         if( $display === true ) {
 
+            $img = $cartRepo['img_name'] ?? 'default-image.jpg' ;
+            
             echo "  
         
                 <a href='/public/shop/show/$productId/$slug'>
                     <div class='flex flex-wrap mx-5 shadow-lg mb-3 p-1'> 
                 
                         <div class='flex mb-3'>
-                            <img class='rounded' style='width:150px;height:150px;' src='/img-storage/{$cartRepo['img_name']}' alt=''>
+                            <img class='rounded' style='width:150px;height:150px;' src='/public/img-storage/{$img}' alt=''>
                         </div>
 
                         <div    style='width:calc(100% - 160px);padding-left:5px;padding-right:5px;min-width:200px'

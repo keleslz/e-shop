@@ -14,7 +14,7 @@ use App\AbstractClass\AbstractController;
 
 class ShopController extends AbstractController
 {
-    public function accueil()
+    public function home()
     {   
         $session = new UserSession();
         $user = $_SESSION['_userStart'] ?? null;
@@ -43,13 +43,13 @@ class ShopController extends AbstractController
     {
         $userSession = new UserSession();
 
-        $idProduct = intval(strip_tags($param));
+        $idProduct = intval(htmlspecialchars($param));
         $product = (new ProductRepository())->findOneBy('product','product_id', $idProduct);
 
         if(!$product)
         {
             $userSession->set('product','error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
             die();
         }
 
@@ -57,21 +57,9 @@ class ShopController extends AbstractController
 
         if(isset($user['id']))
         {
-            $adminSession = (new UserRepository())->findOneBy('user','id', intval($user['id']));
+            $user = (new UserRepository())->findOneBy('user','id', intval($user['id']));
         }
         
-        if(isset($_POST))
-        {
-            $input = new Input();
-            $post = $input->cleaner($_POST);
-            $good = $input->hasGoodformat($post);
-
-            if(is_array($good) && !in_array(false, $good) )
-            {
-                $userSession->cart($post);
-            }
-        }
-
         $picture = new ImageRepository();
         $productImg = $picture->findImageProduct( $product['id_img'] ?? null);
 
@@ -79,8 +67,8 @@ class ShopController extends AbstractController
             'categories' => (new CategoryRepository())->findAll('category'),
             'product' => $product,
             'productImg' => $productImg,
-            'adminSessionLaw' => $adminSession['law'] ?? null,
-            'adminSession' => $adminSession ??  null,
+            'adminSessionLaw' => $user['law'] ?? null,
+            'adminSession' => $user ??  null,
             'session' => $userSession,
             'cart' => $userSession->get('_cart'),
             'pictureAssociated' => $picture->findAllBy('img','id_product', $product['product_id'] )
@@ -89,7 +77,7 @@ class ShopController extends AbstractController
         (new Repository())->disconnect();
     }
     
-    public function panier()
+    public function cart()
     {
         $userSession = new UserSession();
         $user = $_SESSION['_userStart'] ?? null;
@@ -140,7 +128,7 @@ class ShopController extends AbstractController
         if(!count($cart) > 0)
         {
             $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
             die();
         }
         
@@ -185,7 +173,7 @@ class ShopController extends AbstractController
         if(!(isset($_SESSION['_customer']['delivery'])))
         {
             $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
         }
 
         $adminSession = [];
@@ -205,7 +193,7 @@ class ShopController extends AbstractController
             $productsCart = (new ProductRepository())->findAllcartRepo($cart);
         }else{
             $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
         }
 
         $input = new Input();
@@ -262,7 +250,7 @@ class ShopController extends AbstractController
         if(!isset($_SESSION['_customer']['customer']) || count($cart) < 0)
         {
             $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
             die();
         }
 
@@ -280,7 +268,7 @@ class ShopController extends AbstractController
 
         $userSession->set('user', 'success','Paiement effectué avec succès');
 
-        $this->redirectTo('shop/accueil'); */
+        $this->redirectTo('shop/home'); */
 
         $this->redirectTo('bill/generate');
     }

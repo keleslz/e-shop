@@ -50,6 +50,16 @@ export class Dropdownbox
                     listContainer.classList.add('hidden');
                 }
             })
+
+            target.addEventListener('mouseover', ()=>{
+
+                if(listContainer.classList.contains('hidden'))
+                {
+                    listContainer.classList.remove('hidden');
+                }else{
+                    listContainer.classList.add('hidden');
+                }
+            })
         }
     }
 

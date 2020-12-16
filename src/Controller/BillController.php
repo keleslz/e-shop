@@ -26,7 +26,7 @@ class Billcontroller extends AbstractController
         if(!isset($_SESSION['_customer']) || !isset($cart))
         {
             $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
-            $this->redirectTo('shop/accueil');
+            $this->redirectTo('shop/home');
             die();
         }
 
