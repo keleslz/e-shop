@@ -49,17 +49,8 @@ class UserController extends AbstractController
             {      
                 return;
             }
-            
-          /*   $user = ( new UserRepository() )->findOneBy('user','email', $_POST['email']) ;
-            $passValid = password_verify( $_POST['password'], $user['password'] ?? false );
-
-            $user && $passValid 
-                ? $userSession->start($user, $this)
-                : $userSession->set('user','error', "Veuillez vérifier vos identifiants de connexion")
-            ; */
 
             (new User())->checkAuthentification($_POST['email'], $_POST['password'], $this);
-
         }
 
         $this->render('admin/user/sign-in', [
@@ -86,25 +77,7 @@ class UserController extends AbstractController
             $data['equal'] =  Tool::equal($_POST['password'], $_POST['confirmPass']) ;
             $error = InputError::get($data);
 
-            if(!in_array( false, $data))
-            {   
-                $repo = new UserRepository();
-                $exist = $repo->findOneBy('user', 'email', $_POST['email']) ;
-
-                if ( $exist === false ) 
-                {   
-                    $user = new User();
-                    $user->setEmail($_POST['email']);
-                    $user->setPassword($_POST['password']);
-                    $repo->create($user) 
-                    ? (new Session())->set('user','success', 'Votre compte a été crée') 
-                    : (new Session())->set('user','error', 'Désolé une erreur est survenue lors de votre inscription') ;
-                }else{
-                    (new Session())->set('user','error', 'Désolé mais ce compte existe déjà') ;
-
-                }
-
-            }
+            !in_array( false, $data) ?: (new User())->new($_POST['email'], $_POST['password']);
         }
         
         $this->render('admin/user/sign-up', [
@@ -112,6 +85,7 @@ class UserController extends AbstractController
             'error' => $error,
             'session' => (new Session())
         ]);
+        
         (new Repository())->disconnect();
     }
 

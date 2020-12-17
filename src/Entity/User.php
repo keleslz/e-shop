@@ -371,6 +371,8 @@ class User
         die();
     }
 
+    //--------------SIGNIN
+
     /**
      * @param string $email send by user
      * @param string $password send by user
@@ -409,4 +411,74 @@ class User
             $user[ self::PASSWORD_TABLE_FIELD_NAME ] ?? false )
         ;
     }
+
+    //--------------SIGNIN-END
+
+
+
+    //--------------SIGNUP
+
+    /**
+     * Create new user
+     */
+    public function new (string $email, string $password)
+    {
+        if ( $this->checkIfAlreadyExist($email) ) 
+        {   
+            $this->create($email, $password ) ? $this->success(): $this->failed();
+        }else{
+            $this->alreadyExist();
+        }
+    }
+
+    /**
+     * Check if user already exist
+     * @return array|false
+     */
+    private function checkIfAlreadyExist(string $email)
+    {  
+        return !is_array((new UserRepository())->findOneBy('user', 'email', $email)) ;
+    }
+    
+    /**
+     * Create user
+     */
+    private function create(string $email, string $password) : bool
+    {
+        return (new UserRepository())->create( $this->setInfo( $email, $password)) ;
+    }
+
+    /**
+     * Setting user info
+     */
+    private function setInfo(string $email, string $password) : User
+    {
+        $this->setEmail($email);
+        $this->setPassword($password);
+        return $this;
+    }
+
+    /**
+     * Alert user if creation was successful
+     */
+    private function success() : void
+    {
+        (new Session())->set('user','success', 'Votre compte a été crée');
+    }
+
+    /**
+     * Alert user if creation failed
+     */
+    private function failed() : void
+    {
+        (new Session())->set('user','error', 'Désolé une erreur est survenue lors de votre inscription') ;
+    }
+
+    private function alreadyExist() : void
+    {
+        (new Session())->set('user','error', 'Désolé mais ce compte existe déjà') ;
+    }
+
+    //--------------SIGNUP-END
+
 }
