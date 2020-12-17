@@ -10,7 +10,11 @@ use App\Lib\Input\InputError;
 use App\Repository\Repository;
 use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
+use App\Service\User\UserCreation;
+use App\Service\User\UserUpdateEmail;
+use App\Service\User\UserUpdatePassword;
 use App\AbstractClass\AbstractController;
+use App\Services\User\UserAuthentification;
 
 class UserController extends AbstractController
 {
@@ -50,7 +54,7 @@ class UserController extends AbstractController
                 return;
             }
 
-            (new User())->checkAuthentification($_POST['email'], $_POST['password'], $this);
+            (new UserAuthentification())->checkAuthentification($_POST['email'], $_POST['password'], $this);
         }
 
         $this->render('admin/user/sign-in', [
@@ -77,7 +81,10 @@ class UserController extends AbstractController
             $data['equal'] =  Tool::equal($_POST['password'], $_POST['confirmPass']) ;
             $error = InputError::get($data);
 
-            !in_array( false, $data) ?: (new User())->new($_POST['email'], $_POST['password']);
+            if(!in_array( false, $data))
+            {
+                (new UserCreation())->new($_POST['email'], $_POST['password']);
+            }
         }
         
         $this->render('admin/user/sign-up', [
@@ -85,7 +92,7 @@ class UserController extends AbstractController
             'error' => $error,
             'session' => (new Session())
         ]);
-        
+
         (new Repository())->disconnect();
     }
 
@@ -103,16 +110,19 @@ class UserController extends AbstractController
         if(count($_POST) > 0)
         {
             $input = new Input();
-            $user = new User();
+            // $user = new User();
             $post = $input->cleaner($_POST);
             
-            if($input->password($post['password'])) 
+            if(!$input->password($post['password'])) 
             {
-                $user->updateEmailOnly($userData, $post, $this);
-                $user->updatePassword($userData, $post, $this);
-            }else{
                 $session->set('user','error', (new InputError())::password());
-            }
+                $this->redirectTo('user/edit');
+            };
+
+            (new UserUpdateEmail())->update($userData, $post, $this);
+            // $user->updatePassword($userData, $post, $this);
+            (new UserUpdatePassword())->updatePassword($userData, $post, $this);
+
         }
 
         $this->render('admin/user/edition', [

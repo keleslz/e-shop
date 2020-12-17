@@ -266,61 +266,10 @@ class User
         return $this->name;
     }
 
-    public function updateEmailOnly(array $userData, array $post, AbstractController $controller) : void
-    {   
-        $session = new Session();
-        
-        if(!password_verify($post['password'], $userData['password']))
-        {
-            $session->set('user','error', (new InputError())::password());
-            $controller->redirectTo('user/edit');
-            die();
-        }
-
-        if (empty($post['newPassword']) && empty($post['passwordConfirm']) )
-        {   
-            $currentMail = $userData['email'];
-            $mail = $post['email'];
-
-            if(isset($mail) && !empty($mail))
-            {   
-                $session = new Session();
-                $mailExist = (new UserRepository())->findOneBy('user','email', $mail)['email'] ?? null; 
-
-                if ( $currentMail === $mail ) {
-                    
-                    $session->set('user', 'info' , 'Aucune modfication effectuée');
-                    $controller->redirectTo('user/edit');
-                    die();
-                } 
-
-                if( $currentMail !== $mail && is_array($mailExist) )
-                {
-                    $session->set('user','error', 'Désolé cet email est déjà utilisé');
-                    $controller->redirectTo('user/edit');
-                    die();
-                }
-
-                if( $currentMail !== $mail && is_null($mailExist) )
-                {   
-                    $this->setEmail($mail);
-
-                    (new UserRepository())->updateEmail($this , $userData['id']) 
-                        ? $session->set('user','success', 'Votre Email a bien été modifié')
-                        : $session->set('user','error', (new InputError())::basicError())
-                    ;
-
-                    $controller->redirectTo('user/edit');
-                    die();
-                }
-            }
-        }
-    }
-
     /**
      * @param string $userData password hashed
      */
-    public function updatePassword(array $userData, array $post, AbstractController $controller) : void
+/*     public function updatePassword(array $userData, array $post, AbstractController $controller) : void
     {   
         $session = new Session();
 
@@ -369,48 +318,11 @@ class User
 
         $controller->redirectTo('user/edit');
         die();
-    }
+    } */
 
     //--------------SIGNIN
 
-    /**
-     * @param string $email send by user
-     * @param string $password send by user
-     */
-    public function checkAuthentification(string $email, string $password, AbstractController $controller) : void
-    {
-        $userSession = new UserSession();
-
-        $user = $this->checkAccount($email);
-        $passValid = $this->checkPass($password, $user);
-
-        $user && $passValid 
-            ? $userSession->start($user, $controller)
-            : $userSession->set( 'user' ,'error', "Veuillez vérifier vos identifiants de connexion")
-        ;
-    }
-
-    /**
-     * Check if account exist
-     * @return array|false 
-     */
-    private function checkAccount (string $email)
-    {
-        return  ( new UserRepository() )->findOneBy( self::TABLE_NAME , self::EMAIL_TABLE_FIELD_NAME , $email) ;
-    }
-
-    /**
-     * Check if pass is good
-     * @param string $password send by user
-     * @param array|false $user data provided by database
-     */
-    private function checkPass (string $password, $user ) : bool
-    {
-        return password_verify(
-            $password,
-            $user[ self::PASSWORD_TABLE_FIELD_NAME ] ?? false )
-        ;
-    }
+   // -----------------
 
     //--------------SIGNIN-END
 
@@ -418,67 +330,12 @@ class User
 
     //--------------SIGNUP
 
-    /**
-     * Create new user
-     */
-    public function new (string $email, string $password)
-    {
-        if ( $this->checkIfAlreadyExist($email) ) 
-        {   
-            $this->create($email, $password ) ? $this->success(): $this->failed();
-        }else{
-            $this->alreadyExist();
-        }
-    }
-
-    /**
-     * Check if user already exist
-     * @return array|false
-     */
-    private function checkIfAlreadyExist(string $email)
-    {  
-        return !is_array((new UserRepository())->findOneBy('user', 'email', $email)) ;
-    }
-    
-    /**
-     * Create user
-     */
-    private function create(string $email, string $password) : bool
-    {
-        return (new UserRepository())->create( $this->setInfo( $email, $password)) ;
-    }
-
-    /**
-     * Setting user info
-     */
-    private function setInfo(string $email, string $password) : User
-    {
-        $this->setEmail($email);
-        $this->setPassword($password);
-        return $this;
-    }
-
-    /**
-     * Alert user if creation was successful
-     */
-    private function success() : void
-    {
-        (new Session())->set('user','success', 'Votre compte a été crée');
-    }
-
-    /**
-     * Alert user if creation failed
-     */
-    private function failed() : void
-    {
-        (new Session())->set('user','error', 'Désolé une erreur est survenue lors de votre inscription') ;
-    }
-
-    private function alreadyExist() : void
-    {
-        (new Session())->set('user','error', 'Désolé mais ce compte existe déjà') ;
-    }
+   // --------
 
     //--------------SIGNUP-END
+
+    //-------------- EDIT
+
+    //--------------EDIT-END
 
 }

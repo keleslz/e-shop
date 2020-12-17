@@ -51,3 +51,10 @@ require_once ROOT . DS . 'src/Repository/ProductRepository.php'; // Get ProductR
 require_once ROOT . DS . 'src/Repository/FileRepository.php'; // Get FileRepository
 require_once ROOT . DS . 'src/Repository/ImageRepository.php'; // Get ImageRepository
 require_once ROOT . DS . 'src/Repository/CategoryRepository.php'; // Get ImageRepository
+
+//Service
+//-------User
+require_once ROOT . DS . 'src/Service/User/UserAuthentification.php'; // Get UserAuthentification service
+require_once ROOT . DS . 'src/Service/User/UserCreation.php'; // Get UserCreation service
+require_once ROOT . DS . 'src/Service/User/UserUpdateEmail.php'; // Get UserUpdateEmail service
+require_once ROOT . DS . 'src/Service/User/UserUpdatePassword.php'; // Get UserUpdatePassword service

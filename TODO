@@ -23,11 +23,6 @@ Lors du commit lister les fichiers modifiés pour n'ajouter que ceux la pour pro
     Creer class UserEmail et refactoriser les methodes de App\Entity\User
     Objectif vider les entités de toutes ses méthodes et les ranger dans des sous-classes (laissser get/set et autres)
 
-App\Services :
-    User : 
-        - User/UserAuthentification
-        - User/UserEmail
-        - User/password
 
 Bug :
     Produits :
@@ -38,3 +33,11 @@ Boites à idée :
 
     -  Ajouter multi filtres de produits par categories via Ajax
 
+    - App\Services :
+        User : 
+            - User/UserAuthentification
+            - User/UserEmail
+            - User/password
+            - User/Signin?
+            - User/Signup?
+            - User/delete?
