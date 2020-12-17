@@ -36,46 +36,35 @@ class UserController extends AbstractController
      */
     public function signIn()
     {    
-        
         $error = [];
-        $session = new UserSession();
-        $session->ifConnected();
+        $userSession = new UserSession();
+        $userSession->ifConnected();
         
         if( count($_POST) > 0 )
         {
             $data =  (new Input)->hasGoodFormat($_POST);
             $error = InputError::get($data);
             
-            if(!in_array( false, $data))
+            if(in_array( false, $data))
             {      
-                $repo = new UserRepository();
-                $exist = $repo->findOneBy('user','email', $_POST['email']) ;
-                $passValid = password_verify( $_POST['password'], $exist['password'] ?? false );
-
-                if ( $exist && $passValid )
-                {   
-                    if( intval($exist['law']) === 65535 ) 
-                    {
-                        $session->create($exist);
-                        $session->set('user','success', 'Vous êtes connecté');
-                        $this->redirectTo('user/dashboard');
-                    
-                    }else {
-                        $session->create($exist);
-                        $session->set('user','success', 'Vous êtes connecté');
-                        $this->redirectTo('shop/home');
-                    }
-                    
-                }else
-                {
-                    $session->set('user','error', "Veuillez vérifier vos identifiants de connexion");
-                }
+                return;
             }
+            
+          /*   $user = ( new UserRepository() )->findOneBy('user','email', $_POST['email']) ;
+            $passValid = password_verify( $_POST['password'], $user['password'] ?? false );
+
+            $user && $passValid 
+                ? $userSession->start($user, $this)
+                : $userSession->set('user','error', "Veuillez vérifier vos identifiants de connexion")
+            ; */
+
+            (new User())->checkAuthentification($_POST['email'], $_POST['password'], $this);
+
         }
 
         $this->render('admin/user/sign-in', [
             'error' => $error,
-            'session' => $session
+            'session' => $userSession
         ]);
         
         (new Repository())->disconnect();

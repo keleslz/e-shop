@@ -44,8 +44,10 @@ class ShopController extends AbstractController
         $userSession = new UserSession();
 
         $idProduct = intval(htmlspecialchars($param));
-        $product = (new ProductRepository())->findOneBy('product','product_id', $idProduct);
-
+        $productRepo = new ProductRepository();
+        $product = $productRepo->findOneBy('product','product_id', $idProduct);
+        $currentProductCategory = null;
+        
         if(!$product)
         {
             $userSession->set('product','error', 'Désolé une erreur est survenue');
@@ -60,9 +62,14 @@ class ShopController extends AbstractController
             $user = (new UserRepository())->findOneBy('user','id', intval($user['id']));
         }
         
+
+        if( isset($product['id_category']) ){
+            $currentProductCategory = $productRepo->findOneBy('category','category_id' , intval($product['id_category']));
+        }
+
         $picture = new ImageRepository();
         $productImg = $picture->findImageProduct( $product['id_img'] ?? null);
-
+        
         $this->render('shop/article/show', [
             'categories' => (new CategoryRepository())->findAll('category'),
             'product' => $product,
@@ -71,7 +78,8 @@ class ShopController extends AbstractController
             'adminSession' => $user ??  null,
             'session' => $userSession,
             'cart' => $userSession->get('_cart'),
-            'pictureAssociated' => $picture->findAllBy('img','id_product', $product['product_id'] )
+            'pictureAssociated' => $picture->findAllBy('img','id_product', $product['product_id'] ),
+            'currentProductCategory' => $currentProductCategory['category_name'] ?? null
         ]);
 
         (new Repository())->disconnect();

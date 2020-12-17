@@ -10,7 +10,12 @@
 
     <div class="azeaze flex justify-center mt-24 mb-5">
 
+    
         <div class="big-card-container w-1/2 p-5 shadow-xl rounded-t">
+        
+            <div>
+                <p>Catégorie  : <a href="#LaCategorie"><?= $this->var['currentProductCategory'] ?? 'Non-Classée' ?></a></p>
+            </div>
 
             <div>
                 <h3 class="text-center text-2xl mb-3"><?= $product['product_name']?></h3>
@@ -20,11 +25,11 @@
             </div>
 
             <div class="flex flex-col mb-5">
-
+    
                 <form class="flex flex-col justify-center mb-0" method="post">
                 
                     <div class="flex flex-wrap justify-left items-center px-2">
-                        
+
                         <input type="hidden" name="productId" value="<?= $product['product_id'] ?>">
 
                         <div>

@@ -10,6 +10,7 @@ use App\Lib\Input\InputError;
 use App\Lib\Input\InputValidator;
 use App\Repository\UserRepository;
 use App\AbstractClass\AbstractController;
+use App\Lib\Session\UserSession;
 
 class User 
 {
@@ -38,6 +39,9 @@ class User
     const PASSWORD_FIELD_NAME = 'password';
     const NEW_PASSWORD_FIELD_NAME = 'newPassword';
     const PASSWORD_CONFIRM_FIELD_NAME = 'passwordConfirm';
+    const PASSWORD_TABLE_FIELD_NAME = 'password';
+    const EMAIL_TABLE_FIELD_NAME = 'email';
+    const TABLE_NAME = 'user';
 
     /**
      * Get the value of id
@@ -365,5 +369,44 @@ class User
 
         $controller->redirectTo('user/edit');
         die();
+    }
+
+    /**
+     * @param string $email send by user
+     * @param string $password send by user
+     */
+    public function checkAuthentification(string $email, string $password, AbstractController $controller) : void
+    {
+        $userSession = new UserSession();
+
+        $user = $this->checkAccount($email);
+        $passValid = $this->checkPass($password, $user);
+
+        $user && $passValid 
+            ? $userSession->start($user, $controller)
+            : $userSession->set( 'user' ,'error', "Veuillez vérifier vos identifiants de connexion")
+        ;
+    }
+
+    /**
+     * Check if account exist
+     * @return array|false 
+     */
+    private function checkAccount (string $email)
+    {
+        return  ( new UserRepository() )->findOneBy( self::TABLE_NAME , self::EMAIL_TABLE_FIELD_NAME , $email) ;
+    }
+
+    /**
+     * Check if pass is good
+     * @param string $password send by user
+     * @param array|false $user data provided by database
+     */
+    private function checkPass (string $password, $user ) : bool
+    {
+        return password_verify(
+            $password,
+            $user[ self::PASSWORD_TABLE_FIELD_NAME ] ?? false )
+        ;
     }
 }

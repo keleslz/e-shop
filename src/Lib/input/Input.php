@@ -33,7 +33,7 @@ class Input extends InputValidator
             } catch (\Throwable $th) {
 
                 $session->set('user','error', 'Désolé  une erreur est survenue');
-                header('Location:/public/user/dashboard');
+                header('Location:/public/user/signin');
                 die();
             }
         }

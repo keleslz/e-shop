@@ -69,10 +69,11 @@ function displayCategoriesList (array $categories)
  */
 function displayCart($cart) : void
 {   
-    if(is_array($cart) && count($cart) > 0)
+    if(is_array($cart))
     {   
-        $count = count($cart);
+        $count = count($cart) > 0 ? count($cart) : 0;
         echo "<span id='cart-quantity-stored' class='inline-block rounded-full h-6 w-6 mx-1 bg-green-700 p-1 text-xs text-white'>{$count}</span>";
+        return;
     }
 }
 
