@@ -1,5 +1,5 @@
 Lien de previsualisation du projet : 
-    - http://3e8spahifw.preview.infomaniak.website/public/shop/accueil
+    - http://3e8spahifw.preview.infomaniak.website/public/shop/home
 
 #e-shop
 
