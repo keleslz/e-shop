@@ -6,32 +6,58 @@ use App\Entity\User;
 use App\Lib\Session\Session;
 use App\Lib\Input\InputError;
 use App\Repository\UserRepository;
-use App\AbstractClass\AbstractController;
 use App\Lib\input\Input;
-use App\Lib\Input\InputValidator;
 
 /**
- * Create user
+ * Uupdate user email
  */
 class UserUpdateEmail extends User
 {
    const REDIRECT_ADDRRESS = '/public/user/edit';
 
-   public function update(array $userData, array $post): void
+   private int $userDataId;
+
+   private string $currentMail;
+
+   private string $postMail;
+
+   private string $currentPassword;
+
+   private $postPassword;
+
+   /**
+    * Update user email if " NEW_PASSWORD_FIELD_NAME " is empty
+    * @param array $userData an array with user info provided by database
+    * @param array $post an array with info sent by user
+    */
+   public function __construct(array $userData , array $post)
+   {
+      $isNotUpdateEmail = isset($post[ self::NEW_PASSWORD_FIELD_NAME ]) && !empty($post[ self::NEW_PASSWORD_FIELD_NAME ]);
+      
+      if( $isNotUpdateEmail )
+      {
+         return;
+      };
+
+      $this->userDataId = intval($userData[ self::ID_TABLE_FIELD_NAME]);
+      $this->currentMail = $userData[ self::EMAIL_TABLE_FIELD_NAME ];
+      $this->postMail = $post[ self::EMAIL_FIELD_NAME ];
+      $this->currentPassword = $userData[ self::PASSWORD_TABLE_FIELD_NAME ];
+      $this->postPassword = $post[ self::PASSWORD_FIELD_NAME ];
+
+      $this->update();
+   }
+
+   /**
+    * Start update
+    */
+   public function update(): void
    {
       $session = new Session();
+      $this->error();
+      $this->setEmail($this->postMail);
 
-      $currentMail = $userData['email'];
-      $mail = $post['email'];
-
-      $this->checkFormat($mail);
-      $this->checkPassword($post['password'], $userData['password']);
-      $this->mailAreSame($currentMail, $mail);
-      $this->mailUnavailable( (new UserRepository())->findOneBy('user', 'email', $mail)['email'] ?? null );
-      
-      $this->setEmail($mail);
-
-      (new UserRepository())->updateEmail($this, $userData['id'])
+      (new UserRepository())->updateEmail($this, $this->userDataId )
             ? $session->set('user', 'success', 'Votre Email a bien été modifié')
             : $session->set('user', 'error', (new InputError())::basicError())
       ;
@@ -40,18 +66,28 @@ class UserUpdateEmail extends User
       die();
    }
 
+   /**
+    * Redirect with message if error detected
+    */
+   public function error()
+   {
+      $this->checkFormat();
+      $this->checkPassword();
+      $this->mailAreSame();
+      $mail = (new UserRepository())->findOneBy(self::TABLE_NAME, self::EMAIL_TABLE_FIELD_NAME, $this->postMail)[ self::EMAIL_FIELD_NAME] ?? null ;
+      $this->mailUnavailable( $mail );
+   }
 
    /**
     * Check if not empty, if has good format
     *  and isEmpty() funciton will call the InputError class
-    * @param string $mail sent by user
     */
-   private function checkFormat(string $mail) : void
+   private function checkFormat() : void
    {
       $input = new Input();
-      $array = ['email' => $mail];
+      $array = ['email' => $this->postMail];
       $empty = !empty($input->isEmpty($array)) ;
-      $badFormat = !$input->email($mail);
+      $badFormat = !$input->email($this->postMail);
 
       if( $empty || $badFormat )
       {
@@ -62,12 +98,10 @@ class UserUpdateEmail extends User
 
    /**
     * Check if password is the good
-    * @param string $password sent by user
-    * @param string $passwordHashed provided by database
     */
-   private function checkPassword(string $password, string $passwordHashed): void
+   private function checkPassword(): void
    {
-      if (!password_verify($password, $passwordHashed)) {
+      if (!password_verify($this->postPassword, $this->currentPassword )) {
          (new Session())->set('user', 'error', (new InputError())::password());
          header('Location:' . self::REDIRECT_ADDRRESS);
          die();
@@ -76,12 +110,10 @@ class UserUpdateEmail extends User
 
    /**
     * If old and new address mail are same 
-    * @param string $currentMail mail provided by database
-    * @param string $mail sent by user
     */
-   private function mailAreSame(string $currentMail, string $mail)
+   private function mailAreSame() : void
    {
-      if ($currentMail === $mail) 
+      if ($this->currentMail === $this->postMail) 
       {
          (new Session())->set('user', 'info', 'Aucune modfication effectuée');
          header('Location:' . self::REDIRECT_ADDRRESS);

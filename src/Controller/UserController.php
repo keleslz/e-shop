@@ -119,7 +119,7 @@ class UserController extends AbstractController
                 $this->redirectTo('user/edit');
             };
 
-            (new UserUpdateEmail())->update($userData, $post, $this);
+            (new UserUpdateEmail($userData, $post))->update();
             // $user->updatePassword($userData, $post, $this);
             (new UserUpdatePassword())->updatePassword($userData, $post, $this);
 

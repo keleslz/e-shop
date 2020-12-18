@@ -36,12 +36,17 @@ class User
 
     private string $createdAt;
 
+    //constant name for HTML5 input
     const PASSWORD_FIELD_NAME = 'password';
+    const EMAIL_FIELD_NAME = 'email';
     const NEW_PASSWORD_FIELD_NAME = 'newPassword';
     const PASSWORD_CONFIRM_FIELD_NAME = 'passwordConfirm';
+
+    //constant name for the name of the User table and all its fields
+    const TABLE_NAME = 'user';
     const PASSWORD_TABLE_FIELD_NAME = 'password';
     const EMAIL_TABLE_FIELD_NAME = 'email';
-    const TABLE_NAME = 'user';
+    const ID_TABLE_FIELD_NAME = 'id';
 
     /**
      * Get the value of id
@@ -319,23 +324,5 @@ class User
         $controller->redirectTo('user/edit');
         die();
     } */
-
-    //--------------SIGNIN
-
-   // -----------------
-
-    //--------------SIGNIN-END
-
-
-
-    //--------------SIGNUP
-
-   // --------
-
-    //--------------SIGNUP-END
-
-    //-------------- EDIT
-
-    //--------------EDIT-END
 
 }
