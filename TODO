@@ -34,10 +34,3 @@ Boites à idée :
     -  Ajouter multi filtres de produits par categories via Ajax
 
     - App\Services :
-        User : 
-            - User/UserAuthentification
-            - User/UserEmail
-            - User/password
-            - User/Signin?
-            - User/Signup?
-            - User/delete?

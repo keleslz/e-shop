@@ -6,7 +6,7 @@
 <?php $categories = $this->var['categories'] ?>
 
 
-<?php require_once ROOT . DS . 'templates/partials/nav/admin-nav.html.php' ?>
+<?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
 <h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Voir tous les produits</h1>
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>

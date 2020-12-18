@@ -34,9 +34,6 @@ class User
      */
     protected static string $classCalled = '';
 
-
-
-
     //constant name for HTML5 input
     const PASSWORD_FIELD_NAME = 'password';
     const EMAIL_FIELD_NAME = 'email';
@@ -48,8 +45,10 @@ class User
     const PASSWORD_TABLE_FIELD_NAME = 'password';
     const EMAIL_TABLE_FIELD_NAME = 'email';
     const ID_TABLE_FIELD_NAME = 'id';
+    const LAW_TABLE_FIELD_NAME = 'law';
 
     const REDIRECT_ADDRRESS = '/public/user/edit';
+    const HIGH_LAW_LEVEL = 65535;
 
     /**
      * Get the value of id

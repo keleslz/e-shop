@@ -58,3 +58,4 @@ require_once ROOT . DS . 'src/Service/User/UserAuthentification.php'; // Get Use
 require_once ROOT . DS . 'src/Service/User/UserCreation.php'; // Get UserCreation service
 require_once ROOT . DS . 'src/Service/User/UserUpdateEmail.php'; // Get UserUpdateEmail service
 require_once ROOT . DS . 'src/Service/User/UserUpdatePassword.php'; // Get UserUpdatePassword service
+require_once ROOT . DS . 'src/Service/User/UserDelete.php'; // Get UserDelete service

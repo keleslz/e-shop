@@ -8,7 +8,6 @@ use App\Lib\Input\InputError;
 use App\Repository\UserRepository;
 use App\Service\User\UserUpdateEmail;
 use ErrorException;
-use Exception;
 
 /**
  * @class Update user user must called after UserUpdateEmail::class
