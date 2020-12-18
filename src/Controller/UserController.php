@@ -110,18 +110,10 @@ class UserController extends AbstractController
         if(count($_POST) > 0)
         {
             $input = new Input();
-            // $user = new User();
             $post = $input->cleaner($_POST);
             
-            if(!$input->password($post['password'])) 
-            {
-                $session->set('user','error', (new InputError())::password());
-                $this->redirectTo('user/edit');
-            };
-
-            (new UserUpdateEmail($userData, $post))->update();
-            // $user->updatePassword($userData, $post, $this);
-            (new UserUpdatePassword())->updatePassword($userData, $post, $this);
+            (new UserUpdateEmail($userData, $post));
+            (new UserUpdatePassword($userData, $post));
 
         }
 

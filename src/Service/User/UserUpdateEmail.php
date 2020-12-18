@@ -13,27 +13,21 @@ use App\Lib\input\Input;
  */
 class UserUpdateEmail extends User
 {
-   const REDIRECT_ADDRRESS = '/public/user/edit';
-
-   private int $userDataId;
-
-   private string $currentMail;
-
-   private string $postMail;
-
-   private string $currentPassword;
-
-   private $postPassword;
-
    /**
-    * Update user email if " NEW_PASSWORD_FIELD_NAME " is empty
+    * Update user email if " NEW_PASSWORD_FIELD_NAME " is empty,  must called before UserUpdateEmail::class
     * @param array $userData an array with user info provided by database
     * @param array $post an array with info sent by user
     */
    public function __construct(array $userData , array $post)
    {
+      /*
+       *  Warn UserUpdatePassword::class that this class was called before 
+       *   and don't throw exception
+       */
+      self::$classCalled = get_class($this);
+
       $isNotUpdateEmail = isset($post[ self::NEW_PASSWORD_FIELD_NAME ]) && !empty($post[ self::NEW_PASSWORD_FIELD_NAME ]);
-      
+
       if( $isNotUpdateEmail )
       {
          return;
