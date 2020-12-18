@@ -34,7 +34,7 @@
 
                         <div>
                             <p style="width:105px" class="mb-3">Quantité</p>
-                            <input id="cart-quantity" style="width:105px" class="mb-3 p-2"  type="number" required  value="<?php displayProductQuantityIfExist($product['product_id'])?>" name="quantity">
+                            <input id="cart-quantity" style="width:105px" class="mb-3 p-2"  type="number" min="0" required  value="1" name="quantity">
                         </div>
 
                         <div>
@@ -47,7 +47,7 @@
                 </form>
                     
                 <a href="/public/shop/cart"  style="height:50px!important"  
-                    class="text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
+                    class="remove-product text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
                 >
                     Acheter maintenant
                 </a>

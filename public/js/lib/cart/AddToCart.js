@@ -1,5 +1,5 @@
 /**
- * Add article to cart with Ajax
+ * Add article to cart
  */
 export const AddToCart = $(() => {
 
@@ -114,5 +114,4 @@ export const AddToCart = $(() => {
 
         span.innerHTML = count;
     }
-
 })
