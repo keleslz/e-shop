@@ -12,10 +12,6 @@ use App\Repository\UserRepository;
  */
 class UserDelete extends User
 {   
-    const REDIRECT_SIGNIN = '/public/admin/signin';
-    const REDIRECT_SIGNUP = '/public/admin/signup';
-    const REDIRECT_HOME = '/public/shop/home';
-    
     /**
      * @param array|false $user an array or false if not exist
      */

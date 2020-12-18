@@ -56,7 +56,7 @@ class UserUpdateEmail extends User
             : $session->set('user', 'error', (new InputError())::basicError())
       ;
 
-      header('Location:' . self::REDIRECT_ADDRRESS);
+      header('Location:' . self::REDIRECT_EDIT);
       die();
    }
 
@@ -85,7 +85,7 @@ class UserUpdateEmail extends User
 
       if( $empty || $badFormat )
       {
-         header('Location:' . self::REDIRECT_ADDRRESS);
+         header('Location:' . self::REDIRECT_EDIT);
          die();
       }
    }
@@ -97,7 +97,7 @@ class UserUpdateEmail extends User
    {
       if (!password_verify($this->postPassword, $this->currentPassword )) {
          (new Session())->set('user', 'error', (new InputError())::password());
-         header('Location:' . self::REDIRECT_ADDRRESS);
+         header('Location:' . self::REDIRECT_EDIT);
          die();
       }
    }
@@ -110,7 +110,7 @@ class UserUpdateEmail extends User
       if ($this->currentMail === $this->postMail) 
       {
          (new Session())->set('user', 'info', 'Aucune modfication effectuée');
-         header('Location:' . self::REDIRECT_ADDRRESS);
+         header('Location:' . self::REDIRECT_EDIT);
          die();
       }
    }
@@ -125,7 +125,7 @@ class UserUpdateEmail extends User
       if (!is_null($mailExist)) 
       {
          (new Session())->set('user', 'error', 'Désolé cet email est déjà utilisé');
-         header('Location:' . self::REDIRECT_ADDRRESS);
+         header('Location:' . self::REDIRECT_EDIT);
          die();
       }
    }

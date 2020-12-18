@@ -51,7 +51,7 @@ class UserUpdatePassword extends User
         $this->error();
         $this->update();
 
-        header('Location:' . self::REDIRECT_ADDRRESS);
+        header('Location:' . self::REDIRECT_EDIT);
         die();
     }
 
@@ -73,7 +73,7 @@ class UserUpdatePassword extends User
         if(!password_verify($this->postPassword, $this->currentPassword))
         {
             (new Session())->set('user','error', (new InputError())::password());
-            header('Location:' . self::REDIRECT_ADDRRESS);
+            header('Location:' . self::REDIRECT_EDIT);
             die();
         }
     }
@@ -86,7 +86,7 @@ class UserUpdatePassword extends User
         if( !(new Input())->password($this->postPassword) )
         {
             (new Session())->set('user','error', (new InputError())::newPassword());
-            header('Location:' . self::REDIRECT_ADDRRESS);
+            header('Location:' . self::REDIRECT_EDIT);
             die();
         }
     }
@@ -99,7 +99,7 @@ class UserUpdatePassword extends User
         if($this->newPassword !== $this->passwordConfirm)
         {
             (new Session())->set('user','error', (new InputError())::passwordNotSame("nouveaux mot de passe","confirmer nouveau mot de passe"));
-            header('Location:' . self::REDIRECT_ADDRRESS);
+            header('Location:' . self::REDIRECT_EDIT);
             die();
         }
     }

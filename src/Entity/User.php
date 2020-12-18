@@ -47,7 +47,11 @@ class User
     const ID_TABLE_FIELD_NAME = 'id';
     const LAW_TABLE_FIELD_NAME = 'law';
 
-    const REDIRECT_ADDRRESS = '/public/user/edit';
+    const REDIRECT_SIGNIN = '/public/admin/signin';
+    const REDIRECT_SIGNUP = '/public/admin/signup';
+    const REDIRECT_EDIT = '/public/user/edit';
+    const REDIRECT_HOME = '/public/shop/home';
+
     const HIGH_LAW_LEVEL = 65535;
 
     /**
