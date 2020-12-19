@@ -28,7 +28,6 @@ class ShopController extends AbstractController
 
         $this->render('shop/article/home', [
             'categories' => (new CategoryRepository())->findAll('category'),
-            'products' => (new ProductRepository())->findAllCards(),
             'session' => $session,
             'adminSessionLaw' => $adminSession['law'] ?? null,
             'adminSession' => $adminSession ??  null,

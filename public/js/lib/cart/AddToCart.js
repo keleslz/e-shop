@@ -33,10 +33,12 @@ export const AddToCart = $(() => {
             dataType : 'text',  // what to expect back from the PHP script, if anything
             data :  { product } ,                         
             success : (res) => {
-                // console.log(res)
                 const data = JSON.parse(res);
-                // console.log(data);
+                success();
                 refreshCartQuantity(data.count)
+            },
+            error : (err) => {
+                error();
             }
         });
     }
@@ -113,5 +115,44 @@ export const AddToCart = $(() => {
         }
 
         span.innerHTML = count;
+    }
+
+    /**
+     * display succes message
+     */
+    function success()
+    {
+        const title = $('div > h3').html();
+        const $i = $('<i></i>');
+
+        $i.addClass('success');
+        $i.html( '<strong>' + title + '</strong> ajouté au panier')
+        $i.insertBefore('.big-card-container');
+        destroy($i[0]);
+    }
+
+    /**
+     * display error message
+     */
+    function error()
+    {
+        const title = $('div > h3').html();
+        const $i = $('<i></i>');
+
+        $i.addClass('success');
+        $i.html( '<strong>' + title + '</strong> ajouté au panier')
+        $i.insertBefore('.big-card-container');
+        destroy($i[0]);
+    }
+
+    /**
+     * destroy html element after a time given
+     * @param {HTMLElement} i
+     */
+    function destroy(i)
+    {
+        setTimeout( () => {
+            i.remove()
+        }, 1500)
     }
 })

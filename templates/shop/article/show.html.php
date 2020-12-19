@@ -8,8 +8,7 @@
     
     <?php $this->var['session']->display() ?> 
 
-    <div class="azeaze flex justify-center mt-24 mb-5">
-
+    <div id="show-article-container" class="flex justify-center mt-24 mb-5">
     
         <div class="big-card-container w-1/2 p-5 shadow-xl rounded-t">
         
@@ -70,7 +69,5 @@
 <?php else : ?>
     <?php $this->redirectTo('/public/shop/home') ?>
 <?php endif ?>
-
-<div class="cont"></div>
 
 <?php require_once ROOT . DS . 'templates/partials/footer.html.php' ?>

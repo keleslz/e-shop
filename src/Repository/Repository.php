@@ -86,14 +86,17 @@ class Repository
         return $query->fetchAll();
     }
 
-    
-    public function findAll(string $tableName)  : array
+    /**
+     * @param int $option PDO::FETCH_ASSOC, FETCH_BOUND, FETCH_CLASS,
+     * FETCH_INTO, FETCH_NAMED , FETCH_NUM , FETCH_OBJ , FETCH_PROPS_LATE 
+     */
+    public function findAll(string $tableName, int $fetchStyle = 0)  : array
     {
         $sql ="SELECT * FROM $tableName";
 
         $query = self::$pdo->query($sql);
         
-        return $query->fetchAll();
+        return $fetchStyle === 0 ? $query->fetchAll() : $query->fetchAll($fetchStyle); ;
     }
 
     /**

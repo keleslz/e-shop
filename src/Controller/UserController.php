@@ -152,5 +152,7 @@ class UserController extends AbstractController
         $idUser = $session->get('_userStart')['id'];
         $user  = $userRepo->findOneBy('user','id', intval($idUser));
         (new UserDelete( $user ));
+        $userRepo->disconnect();
+
     }
 }

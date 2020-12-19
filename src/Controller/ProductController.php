@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Lib\Tool;
+use PDO;
 use ImageRepository;
 use App\Entity\Image;
 use App\Entity\Product;
@@ -231,5 +231,19 @@ class ProductController extends AbstractController
             $session->set('product','error', 'Désolé une erreur est survenue');
             $this->redirectTo('product/show');
         }
+        $repo->disconnect();
+    }
+
+    public function getAll()
+    {
+        $product = (new ProductRepository())->findAllCards();
+        $category = (new CategoryRepository())->findAll('category', PDO::FETCH_ASSOC);
+
+        echo json_encode([
+            'category' => $category,
+            'product' => $product
+        ]);
+
+        (new Repository())->disconnect();
     }
 }
