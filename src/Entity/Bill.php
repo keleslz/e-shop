@@ -39,7 +39,7 @@ class Bill extends Client
             $_SESSION['_cart'] = null;
             $_SESSION['_customer'] = null;
             $_SESSION['_billing'] = null;
-            $abstractController->redirectTo('shop/accueil');
+            $abstractController->redirectTo('shop/home');
         }
     }
 

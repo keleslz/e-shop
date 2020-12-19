@@ -24,13 +24,28 @@ class Product
 
     private int $idCategory = 0;
 
+    private int $quantity;
+
+    
 
     /**
      * Get the value of id
      */ 
     public function getId()
     {
-        return $this->id;
+        return intval($this->id);
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = intval($id);
+
+        return $this;
     }
 
     /**
@@ -160,7 +175,27 @@ class Product
 
         return $this;
     }
-    
+
+    /**
+     * Get the value of quantity
+     */ 
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set the value of quantity
+     *
+     * @return  self
+     */ 
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
     public function create(array $post, ProductRepository $productRepo , Session $session, $idImage )
     {   
         $category = $post['category_id'] === "Non classée" ? -1 : intval($post['category_id']) ;
@@ -239,5 +274,17 @@ class Product
             }
             (new ImageRepository())->deleteAll('img', 'id_product', $productRepo['product_id']); //Delete all picture associated in db
         }
+    }
+
+    /**
+     * Setting Product property for store it in the cart
+     */
+    public function setProductForCard(array $post)
+    {
+        $this->setId(intval($post['id']));
+        $this->setName($post['name']);
+        $this->setQuantity($post['quantity']);
+
+        return $this;
     }
 }

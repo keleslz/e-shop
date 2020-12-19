@@ -8,11 +8,11 @@ $productCategory = $this->var['save']['category_name'] ?? null;
 $categories = $this->var['categories'];
 ?>
 
-<?php require_once ROOT . DS . 'templates/partials/nav/admin-nav.html.php' ?>
+<?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
 <h1 class="h1">Ajouter un produit</h1>
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>
-<?php require_once ROOT . DS . 'templates/partials/nav/admin-nav.html.php' ?>
+<?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
 <?php $this->var['session']->display() ?>
 

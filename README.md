@@ -22,9 +22,18 @@ Organistation de la structure inspirée de Symfony 5.
 
         Fichier e_shop.sql
 
-        Fourni un user de base : 
+        Fourni un admin de base : 
             email :  Admin@fr.Fr
             password : Admin123*
+
+        Fourni clients de base : 
+            email :  b@fr.Fr
+            password : Client123*
+
+            email :  c@fr.Fr
+            password : Client123*
+
+
 
 2. Amélioration
 

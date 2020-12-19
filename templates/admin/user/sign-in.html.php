@@ -28,7 +28,7 @@
         <a class="mb-2 text-center bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded" href="signup">S'inscrire</a>
         
         <a class="mb-2 text-center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white 
-            py-1 px-1 border border-blue-500 hover:border-transparent rounded" href="/public/shop/accueil">Retourner sur le shop</a>
+            py-1 px-1 border border-blue-500 hover:border-transparent rounded" href="/public/shop/home">Retourner sur le shop</a>
     </form>
 </div>
 

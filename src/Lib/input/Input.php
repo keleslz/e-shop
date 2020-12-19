@@ -33,7 +33,7 @@ class Input extends InputValidator
             } catch (\Throwable $th) {
 
                 $session->set('user','error', 'Désolé  une erreur est survenue');
-                header('Location:/public/user/dashboard');
+                header('Location:/public/user/signin');
                 die();
             }
         }
@@ -56,12 +56,11 @@ class Input extends InputValidator
     }
 
     /**
-     * Key name empty of an array
+     * Check if value empty and call inputError::fieldNameError
      */
     public function isEmpty(array $inputs) : array
     {
         $empty = [];
-        $i = 0;
         $session = new Session();
         $backToPage = $_SERVER['REQUEST_URI'];
 
@@ -72,8 +71,8 @@ class Input extends InputValidator
             {
                 $empty[$key] = $key;
 
+                //try to call good method to display error if not exist catch it
                 try {
-
                     $session->set('product','error', (new InputError())->$key($value));
                 } catch (\Throwable $th) {
 

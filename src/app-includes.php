@@ -18,6 +18,7 @@ require_once ROOT . DS . 'src/Entity/Client.php'; // Get Client entity
 require_once ROOT . DS . 'src/Entity/Shop.php'; // Get Client entity 
 require_once ROOT . DS . 'src/Entity/Pdf.php'; // Get Pdf entity 
 require_once ROOT . DS . 'src/Entity/Bill.php'; // Get Bill entity 
+require_once ROOT . DS . 'src/Entity/Cart.php'; // Get Cart entity 
 
 //Session
 require_once ROOT . DS . 'src/Lib/Session/Session.php'; // Start Session
@@ -50,3 +51,11 @@ require_once ROOT . DS . 'src/Repository/ProductRepository.php'; // Get ProductR
 require_once ROOT . DS . 'src/Repository/FileRepository.php'; // Get FileRepository
 require_once ROOT . DS . 'src/Repository/ImageRepository.php'; // Get ImageRepository
 require_once ROOT . DS . 'src/Repository/CategoryRepository.php'; // Get ImageRepository
+
+//Service
+//-------User
+require_once ROOT . DS . 'src/Service/User/UserAuthentification.php'; // Get UserAuthentification service
+require_once ROOT . DS . 'src/Service/User/UserCreation.php'; // Get UserCreation service
+require_once ROOT . DS . 'src/Service/User/UserUpdateEmail.php'; // Get UserUpdateEmail service
+require_once ROOT . DS . 'src/Service/User/UserUpdatePassword.php'; // Get UserUpdatePassword service
+require_once ROOT . DS . 'src/Service/User/UserDelete.php'; // Get UserDelete service

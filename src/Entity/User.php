@@ -4,12 +4,6 @@ namespace App\Entity;
 
 use DateTime;
 use DateTimeZone;
-use App\Lib\input\Input;
-use App\Lib\Session\Session;
-use App\Lib\Input\InputError;
-use App\Lib\Input\InputValidator;
-use App\Repository\UserRepository;
-use App\AbstractClass\AbstractController;
 
 class User 
 {
@@ -35,9 +29,30 @@ class User
 
     private string $createdAt;
 
+    /**
+     * Setting if child class A was Called before child Class B
+     */
+    protected static string $classCalled = '';
+
+    //constant name for HTML5 input
     const PASSWORD_FIELD_NAME = 'password';
+    const EMAIL_FIELD_NAME = 'email';
     const NEW_PASSWORD_FIELD_NAME = 'newPassword';
     const PASSWORD_CONFIRM_FIELD_NAME = 'passwordConfirm';
+
+    //constant name for the name of the User table and all its fields
+    const TABLE_NAME = 'user';
+    const PASSWORD_TABLE_FIELD_NAME = 'password';
+    const EMAIL_TABLE_FIELD_NAME = 'email';
+    const ID_TABLE_FIELD_NAME = 'id';
+    const LAW_TABLE_FIELD_NAME = 'law';
+
+    const REDIRECT_SIGNIN = '/public/admin/signin';
+    const REDIRECT_SIGNUP = '/public/admin/signup';
+    const REDIRECT_EDIT = '/public/user/edit';
+    const REDIRECT_HOME = '/public/shop/home';
+
+    const HIGH_LAW_LEVEL = 65535;
 
     /**
      * Get the value of id
@@ -260,110 +275,5 @@ class User
     public function getName()
     {
         return $this->name;
-    }
-
-    public function updateEmailOnly(array $userData, array $post, AbstractController $controller) : void
-    {   
-        $session = new Session();
-        
-        if(!password_verify($post['password'], $userData['password']))
-        {
-            $session->set('user','error', (new InputError())::password());
-            $controller->redirectTo('user/edit');
-            die();
-        }
-
-        if (empty($post['newPassword']) && empty($post['passwordConfirm']) )
-        {   
-            $currentMail = $userData['email'];
-            $mail = $post['email'];
-
-            if(isset($mail) && !empty($mail))
-            {   
-                $session = new Session();
-                $mailExist = (new UserRepository())->findOneBy('user','email', $mail)['email'] ?? null; 
-
-                if ( $currentMail === $mail ) {
-                    
-                    $session->set('user', 'info' , 'Aucune modfication effectuée');
-                    $controller->redirectTo('user/edit');
-                    die();
-                } 
-
-                if( $currentMail !== $mail && is_array($mailExist) )
-                {
-                    $session->set('user','error', 'Désolé cet email est déjà utilisé');
-                    $controller->redirectTo('user/edit');
-                    die();
-                }
-
-                if( $currentMail !== $mail && is_null($mailExist) )
-                {   
-                    $this->setEmail($mail);
-
-                    (new UserRepository())->updateEmail($this , $userData['id']) 
-                        ? $session->set('user','success', 'Votre Email a bien été modifié')
-                        : $session->set('user','error', (new InputError())::basicError())
-                    ;
-
-                    $controller->redirectTo('user/edit');
-                    die();
-                }
-            }
-        }
-    }
-
-    /**
-     * @param string $userData password hashed
-     */
-    public function updatePassword(array $userData, array $post, AbstractController $controller) : void
-    {   
-        $session = new Session();
-
-        $pass = self::PASSWORD_FIELD_NAME ;
-        $newPass = self::NEW_PASSWORD_FIELD_NAME ;
-        $passConfirm = self::PASSWORD_CONFIRM_FIELD_NAME ;
-
-        $password = isset($post[$pass]) && !empty($post[$pass]);
-        $newPassword = isset($post[$newPass]) && !empty($post[$newPass]);
-        $passwordConfirm = isset($post[$passConfirm]) && !empty($post[$passConfirm]);
-
-        if(!$password || !$newPassword || !$passwordConfirm )
-        {
-            return;
-        }
-
-        if(!password_verify($post[$pass], $userData[$pass]))
-        {
-            $session->set('user','error', (new InputError())::password());
-            $controller->redirectTo('user/edit');
-            die();
-        }
-
-        if( !(new Input())->password($post[$pass]) )
-        {
-            $session->set('user','error', (new InputError())::newPassword());
-            $controller->redirectTo('user/edit');
-            die();
-        }
-
-        if($post[$newPass] !== $post[$passConfirm])
-        {
-            $session->set('user','error', (new InputError())::passwordNotSame("nouveaux mot de passe","confirmer nouveau mot de passe"));
-            $controller->redirectTo('user/edit');
-            die();
-        }
-
-        $this->setPassword($post[$newPass]);
-        
-        $userRepo = new UserRepository();
-      
-        $userRepo->updatePassword($this , $userData['id']) 
-            ? $session->set('user','success', 'Mot de passe modifié')
-            : $session->set('user','error', (new InputError())::basicError())
-        ;
-
-        $controller->redirectTo('user/edit');
-        die();
     }
 }

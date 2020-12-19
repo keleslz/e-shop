@@ -69,26 +69,16 @@ function displayCategoriesList (array $categories)
  */
 function displayCart($cart) : void
 {   
-    if(is_array($cart) && count($cart) > 0)
+    if(is_array($cart))
     {   
-        $count = count($cart);
-        echo "<span class='inline-block rounded-full h-6 w-6 mx-1 bg-green-700 p-1 text-xs text-white'>{$count}</span>";
+        $count = count($cart) > 0 ? count($cart) : 0;
+        echo "<span id='cart-quantity-stored' class='inline-block rounded-full h-6 w-6 mx-1 bg-green-700 p-1 text-xs text-white'>{$count}</span>";
+        return;
     }
 }
 
 
-// shop/panier
-
-function isSame(array $listoOfValue, int $idCurrentProduct) : int
-{   
-    foreach ($listoOfValue as $key => $val) {
-
-        if($key === $idCurrentProduct)
-        {
-            return intval($val);
-        }
-    }
-}   
+// shop/cart
 
 /**
  * Display user cart list 
@@ -112,21 +102,25 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
 
         if( $display === true ) {
 
+            $img = $cartRepo['img_name'] ?? 'default-image.jpg' ;
+            
             echo "  
-        
-                <a href='/public/shop/show/$productId/$slug'>
+                <a href='/public/shop/show/{$productId}/{$slug}'>
                     <div class='flex flex-wrap mx-5 shadow-lg mb-3 p-1'> 
                 
                         <div class='flex mb-3'>
-                            <img class='rounded' style='width:150px;height:150px;' src='/img-storage/{$cartRepo['img_name']}' alt=''>
+                            <img class='rounded' style='width:150px;height:150px;' src='/public/img-storage/{$img}' alt=''>
                         </div>
 
                         <div    style='width:calc(100% - 160px);padding-left:5px;padding-right:5px;min-width:200px'
                                 class='flex flex-col mb-3' 
                         >
                             <p style='min-width:200px;min-height:50px' class='block p-2 '>{$cartRepo['product_description']}</p>
-                            <p style='min-width:200px;' class='block mx-2'><span id=''>$quantity</span> x {$cartRepo['product_price']}€</p>
-                            <p style='min-width:200px;' class='block mx-2'><span id=''>Prix : </span> {$totalPrice} €</p>
+                            <p style='min-width:200px;' class='block mx-2'>Quantité : <span>{$quantity}</span></p>
+                            <p style='min-width:200px;' class='block mx-2'>Prix : <span>{$cartRepo['product_price']} </span>€</p>
+                            <p style='min-width:200px;' class='block mx-2'>Total : <span class='one-cart-total-price'>{$totalPrice}</span> €</p>
+                            <button class='remove-product' data-id='{$productId}' style='width:150px' class='mt-5 mb-2 text-center bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-1 px-1 border border-gray-500 hover:border-transparent rounded'
+                            >Retirer l'article</button>
                         </div>
                     </div> 
                 </a>
@@ -140,6 +134,19 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
         $totalCost[] = $totalPrice ; 
     }
     return $totalCost;
+}
+
+
+function isSame(array $listoOfValue, int $idCurrentProduct) /* : ?int */
+{   
+    foreach ($listoOfValue as $key => $val) {
+        
+        if($key === $idCurrentProduct)
+        {
+            return  intval($val['quantity']);
+        }
+    }
+    return 0;
 }
 
 /**
@@ -159,28 +166,6 @@ function displayPictureAssociated(array $pictures) : void
         ";
     }
 }
-
-/**
- * Shop/show/[id]/product-slug
- */
-function displayProductQuantityIfExist(int $productId) : void
-{   
-    
-    if(isset($_SESSION['_cart']) && count($_SESSION['_cart']) > 0 )
-    {
-        foreach ($_SESSION['_cart'] as $key => $cart) {
-            
-            if(intval($key) === intval($productId))
-            {
-                echo $cart;
-                return;
-            }
-        }
-    }else{
-        echo 1 ;
-    }
-}
-
 
 function totalPriceForOneCart(string $price, int $quantity) : float
 {   

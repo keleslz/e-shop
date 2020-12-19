@@ -10,11 +10,18 @@ use App\Lib\Input\InputError;
 use App\Repository\Repository;
 use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
+use App\Service\User\UserCreation;
+use App\Service\User\UserUpdateEmail;
+use App\Service\User\UserUpdatePassword;
 use App\AbstractClass\AbstractController;
+use App\Service\User\UserDelete;
+use App\Services\User\UserAuthentification;
 
 class UserController extends AbstractController
 {
-    
+    /**
+     * User dashboard
+     */
     public function dashboard()
     {
         (new UserSession())->ifNotConnected();
@@ -22,13 +29,13 @@ class UserController extends AbstractController
 
         $userData = (new UserRepository())->findOneBy('user','id', $userSession['id']);
 
+        (new Repository())->disconnect();
+
         $this->render('admin/user/dashboard', [
             'email' => $userData['email'],
             'law' => $userData['law'],
             'session'=> (new Session())
         ]);
-
-        (new Repository())->disconnect();
     }
 
     /**
@@ -36,10 +43,9 @@ class UserController extends AbstractController
      */
     public function signIn()
     {    
-        
         $error = [];
-        $session = new UserSession();
-        $session->ifConnected();
+        $userSession = new UserSession();
+        $userSession->ifConnected();
         
         if( count($_POST) > 0 )
         {
@@ -47,38 +53,17 @@ class UserController extends AbstractController
             $error = InputError::get($data);
             
             if(!in_array( false, $data))
-            {      
-                $repo = new UserRepository();
-                $exist = $repo->findOneBy('user','email', $_POST['email']) ;
-                $passValid = password_verify( $_POST['password'], $exist['password'] ?? false );
-
-                if ( $exist && $passValid )
-                {   
-                    if( intval($exist['law']) === 65535 ) 
-                    {
-                        $session->create($exist);
-                        $session->set('user','success', 'Vous êtes connecté');
-                        $this->redirectTo('user/dashboard');
-                    
-                    }else {
-                        $session->create($exist);
-                        $session->set('user','success', 'Vous êtes connecté');
-                        $this->redirectTo('shop/accueil');
-                    }
-                    
-                }else
-                {
-                    $session->set('user','error', "Veuillez vérifier vos identifiants de connexion");
-                }
+            {     
+                (new UserAuthentification())->checkAuthentification($_POST['email'], $_POST['password'], $this);
             }
         }
 
+        (new Repository())->disconnect();
+
         $this->render('admin/user/sign-in', [
             'error' => $error,
-            'session' => $session
+            'session' => $userSession
         ]);
-        
-        (new Repository())->disconnect();
     }
 
     /**
@@ -98,32 +83,18 @@ class UserController extends AbstractController
             $error = InputError::get($data);
 
             if(!in_array( false, $data))
-            {   
-                $repo = new UserRepository();
-                $exist = $repo->findOneBy('user', 'email', $_POST['email']) ;
-
-                if ( $exist === false ) 
-                {   
-                    $user = new User();
-                    $user->setEmail($_POST['email']);
-                    $user->setPassword($_POST['password']);
-                    $repo->create($user) 
-                    ? (new Session())->set('user','success', 'Votre compte a été crée') 
-                    : (new Session())->set('user','error', 'Désolé une erreur est survenue lors de votre inscription') ;
-                }else{
-                    (new Session())->set('user','error', 'Désolé mais ce compte existe déjà') ;
-
-                }
-
+            {
+                (new UserCreation())->new($_POST['email'], $_POST['password']);
             }
         }
         
+        (new Repository())->disconnect();
+
         $this->render('admin/user/sign-up', [
             'state' => $state,
             'error' => $error,
             'session' => (new Session())
         ]);
-        (new Repository())->disconnect();
     }
 
     /**
@@ -140,17 +111,13 @@ class UserController extends AbstractController
         if(count($_POST) > 0)
         {
             $input = new Input();
-            $user = new User();
             $post = $input->cleaner($_POST);
             
-            if($input->password($post['password'])) 
-            {
-                $user->updateEmailOnly($userData, $post, $this);
-                $user->updatePassword($userData, $post, $this);
-            }else{
-                $session->set('user','error', (new InputError())::password());
-            }
+            (new UserUpdateEmail($userData, $post));
+            (new UserUpdatePassword($userData, $post));
         }
+
+        (new Repository())->disconnect();
 
         $this->render('admin/user/edition', [
             'session' => (new Session()),
@@ -158,7 +125,6 @@ class UserController extends AbstractController
             'law' => $userData['law'] ?? null 
         ]);
         
-        // (new Repository())->disconnect();
     }
     
     /**
@@ -170,37 +136,21 @@ class UserController extends AbstractController
         (new Repository())->disconnect();
         session_start();
         session_unset();
-        $this->redirectTo('shop/accueil');
+        $this->redirectTo('shop/home');
     }
 
+    /**
+     * Delete user
+     */
     public function delete()
     {   
         $session = new UserSession();
         $userRepo = new UserRepository(); 
         $session->ifNotConnected();
         $session->ifAdmin();
-
+        
         $idUser = $session->get('_userStart')['id'];
         $user  = $userRepo->findOneBy('user','id', intval($idUser));
-
-        if(!$userRepo)
-        {
-            $session->set('user','error','Désolé une erreur est survenue');
-            $this->redirectTo('/shop/accueil');
-            die();
-        }
-
-        if($userRepo->delete('user','id', intval($idUser)))
-        {   
-            session_destroy();
-            session_unset();
-            (new Repository())->disconnect();
-            (new Session())->set('user','success', 'Votre compte a bien été supprimé');
-            $this->redirectTo('user/signup');
-        }else{
-            $session->set('user','success', 'Une erreur est survenue nous vous prions de réessayer ultèrieurement');
-            (new Repository())->disconnect();
-            $this->redirectTo('shop/accueil');
-        }
+        (new UserDelete( $user ));
     }
 }

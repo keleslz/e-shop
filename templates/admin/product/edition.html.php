@@ -7,7 +7,7 @@
 
 <?php if( $product ) : ?>
     
-<?php require_once ROOT . DS . 'templates/partials/nav/admin-nav.html.php' ?>
+<?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
 <h1 class="h1">Editer "<?=$product['product_name']?>"</h1>
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>
@@ -22,7 +22,7 @@
         </div>
 
         <div class="flex justify-center  mb-3 p-2 shadow-md">
-            <img class="medium-picture mb-2" src="/img-storage/<?= $currentImg['img_name'] ?? 'default-image.jpg' ?>" alt="" >
+            <img class="medium-picture mb-2" src="/public/img-storage/<?= $currentImg['img_name'] ?? 'default-image.jpg' ?>" alt="" >
         </div>
         
         <form enctype="multipart/form-data" method="post" class="flex flex-wrap pb-10">
