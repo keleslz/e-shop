@@ -1,0 +1,111 @@
+$bg-color : rgba(204, 204, 204 , 1);
+$bg-color-transparent : rgba(204, 204, 204 , 0);
+$radius : 5px;
+$card-radius : 10px;
+$txt-color : #333; 
+$category : rgb(34, 80, 206);
+$blink :  2s ease-in 1s blinks infinite;
+
+.card {
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    padding: 20px 15px 10px 15px;
+    border-radius: $card-radius;
+    margin: 10px;
+
+    img {
+        border: 0!important;
+        border-radius: $radius;
+        width: 200px;
+        height: 150px;
+        margin-bottom: 10px;
+        animation: $blink;
+    }
+
+    span {
+        color: $txt-color;
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+        margin: 10px 0 0 0;
+        width: 100%;
+        height: 20px;
+    }
+
+    .category {
+        display: inline-block;
+        text-align: left;
+        width: 100%;
+        height: 20px;
+        color: $category;
+        font-size: 14px; 
+        margin-top: 20px;
+    }
+
+    .title {
+        overflow: hidden;
+        font-weight: 500;
+    }
+
+}
+
+#card-loader
+{
+    width: 100%;
+    min-height: 100vh;
+    
+    .card {
+        display: inline-block;
+        width: 200px;
+        height: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        padding: 20px 15px 10px 15px;
+        border-radius: $card-radius;
+        margin: 10px;
+
+        img {
+            border: 0!important;
+            border-radius: $radius;
+            width: 200px;
+            height: 150px;
+            margin-bottom: 10px;
+            background: $bg-color;
+            animation: $blink;
+        }
+
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            margin: 10px 0 0 0;
+            background: $bg-color;
+            width: 100%;
+            height: 20px;
+            animation: $blink;
+        }
+
+        .category {
+            display: inline-block;
+            text-align: left;
+            background: $bg-color;
+            width: 100%;
+            height: 20px;
+        }
+    }
+}
+
+@keyframes blinks {
+    0% {
+        background:$bg-color;
+    }
+    
+    50% {
+        background: $bg-color-transparent;
+    }
+    
+    100% {
+        background:$bg-color;
+    }
+}

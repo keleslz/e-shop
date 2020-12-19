@@ -8,7 +8,7 @@ export class ProductDisplayer {
     }
 
     run = () => {
-
+        
         if(this.container)
         {
             const data = this.fetch();
@@ -22,11 +22,8 @@ export class ProductDisplayer {
     fetch = () => {
         return fetch(this.url)
             .then( (response) => 
-            {
-                if(response.status === 200)
-                {
-                    return response.json();
-                }
+            {   
+                return response.json();
             })
             .catch( () => {this.error()} )
         ;
@@ -35,7 +32,15 @@ export class ProductDisplayer {
     handle = (data) => {
 
         data.then((d)=>{
+            if(d === undefined)
+            {
+                return;
+            }
+
             this.createCard(d);
+            this.stopLoader();
+            this.stopCardLoad();
+
         })
     }
     
@@ -78,7 +83,6 @@ export class ProductDisplayer {
         return categoryName;
     }
 
-
     /**
      * Set property card
      * @param {string} category  product category
@@ -87,7 +91,7 @@ export class ProductDisplayer {
     setCardProperty = (categoryName, product) => {   
         const a = document.createElement('a');
         const card = document.createElement('div');
-        const category = document.createElement('div');
+        const category = document.createElement('span');
         const img = document.createElement('img');
         const title = document.createElement('span');
         const price = document.createElement('span');
@@ -96,18 +100,20 @@ export class ProductDisplayer {
         const productName = product.product_name.replace(' ', '_');
 
         a.href = '/public/shop/show/' + productId + '/' + productName;
-        card.classList.add('card-container');
+        img.src= '/public/img-storage/default-image.jpg';
+        card.classList.add('card');
         title.classList.add('title');
         price.classList.add('price');
         category.classList.add('category');
         
         card.setAttribute('data-id', productId);
         const productPrice = product.product_price.replace('.',',');
-        title.textContent = product.product_name;
+        title.textContent = product.product_name.toUpperCase();
         price.textContent = productPrice + ' €';
         category.textContent = categoryName;
 
         this.container.append(a);
+
         a.append(card);
         card.append(img);
         card.append(title);
@@ -115,11 +121,29 @@ export class ProductDisplayer {
         card.append(category);
     }
 
+    /**
+     * Display error
+     */
     error = () => {
         const i = document.createElement('i');
         i.classList.add('error');
-        document.querySelector('.cont').prepend(i);
+        this.container.append(i);
         i.innerHTML = 'Désolé une erreur est survenue';
     }
 
+    /**
+     * Stop loading animation
+     */
+    stopLoader = () => {
+        const loader = document.getElementById('loader');
+        loader.classList.add('hidden');
+    }
+
+    /**
+     * Stop loading card animation
+     */
+    stopCardLoad = () => {
+        const card = document.getElementById('card-loader');
+        card.remove();
+    }
 }

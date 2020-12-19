@@ -4,7 +4,7 @@ import { getOneCategory } from './lib/category/getOneCategory.js';
 import { getQuantity } from './lib/cart/getQuantity.js';
 import { remove } from './lib/cart/remove.js';
 import { ProductDisplayer } from './lib/ProductDisplayer.js';
-
+import { DepartmentList } from './lib/payment/DepartmentList.js';
 //Elements
 
 new Dropdownbox({
@@ -19,5 +19,8 @@ new ProductDisplayer('product-container');
 AddToCart;
 getQuantity;
 remove;
+
 //category
 getOneCategory
+
+// new DepartmentList();

@@ -7,10 +7,68 @@
 <?php $this->var['session']->display() ?>
 
 <div class="cont">
-
+    
     <div class="flex flex-wrap p-5" style="min-height:100vh" >
 
-        <div id="product-container"></div>
+        <div id="product-container">
+
+            <div id="loader">
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div> 
+
+            <div id="card-loader">
+
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+                <div class="card">
+                    <img >
+                    <span class="title"></span>
+                    <span class="price"></span>
+                    <span class="category"></span>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 

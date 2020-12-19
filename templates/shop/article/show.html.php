@@ -46,7 +46,7 @@
                 </form>
                     
                 <a href="/public/shop/cart"  style="height:50px!important"  
-                    class="remove-product text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
+                    id="remove-product" class="text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
                 >
                     Acheter maintenant
                 </a>
