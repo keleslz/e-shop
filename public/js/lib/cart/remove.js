@@ -1,3 +1,5 @@
+//TODO Ajouter desactiation du bouton passer à la caisse si le panier est vide
+
 /**
  * remove product on cart
  */
@@ -7,7 +9,7 @@ export const remove = $( () => {
     {
         return;
     }
-
+    
     /**
      * Remove product
      */
@@ -43,14 +45,13 @@ export const remove = $( () => {
         });
     }
 
-    
     /**
      * Refresh price
      * @param {HTMLButtonElement} $button parent of one cart
      */
     const refreshPrice = ($button) => {
         let $totalPrice = $('#price');
-        let price = parseInt($('#price').html());
+        let price = $('#price').html();
         $.each(  $button.siblings(), (key, value) => {
 
             const val = value.children[0];
@@ -61,8 +62,8 @@ export const remove = $( () => {
 
                 if(haveClass)
                 {
-                   const productPrice = Math.round(val.innerHTML);
-                   price =  price - productPrice
+                   const productPrice = parseFloat(val.innerHTML);
+                   price =  Math.round((price - productPrice) * 100) /100
                    return;
                 }
             }
@@ -79,8 +80,6 @@ export const remove = $( () => {
         let count = parseInt(span.html()) - 1;
         span[0].innerHTML = count ;
     }
-
-
 
     /**
      * Destroy product
@@ -102,6 +101,16 @@ export const remove = $( () => {
         $i.html('Une erreur est survenue');
     }
     
-  
+    /**
+     * Disable Go to purchase button
+     */
+    const disableGotToPurchaseButton = (price) => {
+
+        if(parseFloat(price) === 0)
+        {
+            price.addClass('disable');
+        }
+    }
+
     eventRemove();
 })

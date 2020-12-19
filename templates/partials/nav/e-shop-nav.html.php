@@ -5,6 +5,7 @@
     <ul id="navbar-category" class="list-none  dropdown" style="height:30px;">
         <a class=" text-center hover:text-gray-400 text-white px-2" href="#">Categories</a>
         <div id="" style="position:absolute;z-index:100" class="items bg-black hidden pt-2">
+            <a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='#all'>Toutes</a>
             <?php displayCategoriesList($this->var['categories']); ?>
         </div>
     </ul>

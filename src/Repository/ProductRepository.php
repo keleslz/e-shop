@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use PDO;
 use App\Entity\Product;
 use App\Repository\Repository;
 
@@ -42,7 +43,7 @@ class ProductRepository extends Repository
 
     public function findAllCards() 
     {
-        $sql =" SELECT product_id, product_name, product_price, product_slug, product_status, img_name
+        $sql =" SELECT product_id, product_name, product_price, product_slug, product_status, img_name, id_category
                 FROM product 
                 LEFT JOIN img 
                 ON product.id_img = img.img_id 
@@ -50,7 +51,7 @@ class ProductRepository extends Repository
 
         $query = self::$pdo->query($sql);
         
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function update (int $id, Product $product) : bool

@@ -28,7 +28,6 @@ class ShopController extends AbstractController
 
         $this->render('shop/article/home', [
             'categories' => (new CategoryRepository())->findAll('category'),
-            'products' => (new ProductRepository())->findAllCards(),
             'session' => $session,
             'adminSessionLaw' => $adminSession['law'] ?? null,
             'adminSession' => $adminSession ??  null,
@@ -262,6 +261,8 @@ class ShopController extends AbstractController
             die();
         }
 
+        //TODO Paiement avec Api stripe puis redirection vers Bill/show/??{param}
+
         /**
          * Payment with stripe API then redictTo Bill/show
          * Facture create and send by mail and can be downloaded
@@ -278,6 +279,7 @@ class ShopController extends AbstractController
 
         $this->redirectTo('shop/home'); */
 
-        $this->redirectTo('bill/generate');
+        // redirection vers -> $this->redirectTo('bill/generate'); 
+        // redirection vers -> $this->redirectTo('shop/home'); 
     }
 }
