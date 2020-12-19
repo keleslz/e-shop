@@ -10,7 +10,7 @@
 
 <?= ifNotConnectedMessage($adminSession) ?>
 
-<div class="h-screen flex justify-center items-start pt-10 text-sm font-sans w-full mb-32">
+<div id="delivery-container" class="h-screen flex justify-center items-start pt-10 text-sm font-sans w-full mb-32">
 
     <form  method="post" class="flex flex-col px-5 pt-6 pb-10 rounded-t-lg shadow-lg">
 
@@ -47,8 +47,10 @@
         </div>
         
         <div class="flex flex-col py-2 ">      
-            <label class="mb-2" for="department">Departement</label>
-            <input type="text" name="department" required value="<?= $save['department'] ?? '' ?>">
+          <label class="mb-2" for="department">Departement</label>
+            <select id="department-list-select" name="department" required>
+                <option value="">-- Choisissez -- </option>
+            </select>
         </div>
 
         <div class="flex flex-col mt-10 ">      
@@ -57,6 +59,5 @@
             >Etape 2
             </button>
         </div>
-
     </form>
 </div>

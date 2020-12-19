@@ -17,7 +17,7 @@ export class ProductDisplayer {
     }
 
     /**
-     * fetch product
+     * fetch products
      */
     fetch = () => {
         return fetch(this.url)

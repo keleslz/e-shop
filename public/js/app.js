@@ -23,4 +23,4 @@ remove;
 //category
 getOneCategory
 
-// new DepartmentList();
+new DepartmentList();

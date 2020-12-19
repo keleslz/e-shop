@@ -50,12 +50,14 @@
             <small><span class="text-blue-500">Au dos </span> de votre carte bleu</small>
             <input class="p-1" type="text" name="cryptoNumber" placeholder="123" required value="<?= $save['cryptoNumber'] ?? '' ?>">
         </div>
-        
-        <div class="flex flex-col py-2 ">      
-            <label class="mb-2" for="department">Departement</label>
-            <input class="p-1" type="text" name="department" required placeholder="Bouche-du-Rhône"value="<?= $save['department'] ?? '' ?>">
-        </div>
 
+        <div class="flex flex-col py-2 ">      
+          <label class="mb-2" for="department">Departement</label>
+            <select id="department-list-select" name="department" required>
+                <option value="">-- Choisissez -- </option>
+            </select>
+        </div>
+        
         <div class="flex flex-col mt-10 ">      
             <button id="checkout-button" class="mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white 
                 py-1 px-1 border border-blue-500 hover:border-green-500 rounded" type="submit"

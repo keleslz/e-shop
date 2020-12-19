@@ -22,6 +22,10 @@ $blink :  2s ease-in 1s blinks infinite;
         height: 150px;
         margin-bottom: 10px;
         animation: $blink;
+
+        &:hover {
+            background: #000;
+        }
     }
 
     span {

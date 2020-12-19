@@ -6,7 +6,6 @@ use PDO;
 use ImageRepository;
 use App\Entity\Image;
 use App\Entity\Product;
-use App\Entity\Category;
 use App\Lib\input\Input;
 use App\Lib\Session\Session;
 use App\Repository\Repository;
@@ -234,6 +233,9 @@ class ProductController extends AbstractController
         $repo->disconnect();
     }
 
+    /**
+     * get all product & category
+     */
     public function getAll()
     {
         $product = (new ProductRepository())->findAllCards();

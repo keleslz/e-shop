@@ -193,6 +193,9 @@
   margin-bottom: 10px;
   animation: 2s ease-in 1s blinks infinite;
 }
+.card img:hover {
+  background: #000;
+}
 .card span {
   color: #333;
   text-align: center;
