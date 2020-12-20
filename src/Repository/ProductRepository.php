@@ -136,4 +136,21 @@ class ProductRepository extends Repository
         return $query->fetch();
     }
 
+    /**
+     * Get one product price
+     */
+    public function findOnePrice(int $id)  : float
+    {
+        $sql =" SELECT product_price
+        FROM product 
+        WHERE product_id = :product_id ";
+
+        $query = self::$pdo->prepare($sql);
+        
+        $query->execute([
+            'product_id' => $id
+        ]);
+        return floatval($query->fetch(PDO::FETCH_ASSOC)['product_price']) ?? 0.00 ;
+    }
+
 }

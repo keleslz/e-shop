@@ -9,7 +9,7 @@
     ],
     "require": {
         "aura/autoload": "^2.0",
-        "stripe/stripe-php": "^7.61"
+        "stripe/stripe-php": "^7.67"
     }, 
     "autoload": {
         "psr-4": {

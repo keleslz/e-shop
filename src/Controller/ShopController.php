@@ -2,12 +2,12 @@
 namespace App\Controller;
 
 use App\Entity\Bill;
-use ImageRepository;
 use App\Entity\Client;
 use App\Lib\input\Input;
 use App\Repository\Repository;
 use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
@@ -41,7 +41,6 @@ class ShopController extends AbstractController
     public function show($param)
     {
         $userSession = new UserSession();
-
         $idProduct = intval(htmlspecialchars($param));
         $productRepo = new ProductRepository();
         $product = $productRepo->findOneBy('product','product_id', $idProduct);
@@ -61,6 +60,7 @@ class ShopController extends AbstractController
             $user = (new UserRepository())->findOneBy('user','id', intval($user['id']));
         }
         
+
 
         if( isset($product['id_category']) ){
             $currentProductCategory = $productRepo->findOneBy('category','category_id' , intval($product['id_category']));
@@ -170,7 +170,7 @@ class ShopController extends AbstractController
         (new Repository())->disconnect();
     }
 
-    public function payment()
+  /*   public function payment()
     {
         $userSession = new UserSession();
         $user = $_SESSION['_userStart'] ?? null;
@@ -236,7 +236,7 @@ class ShopController extends AbstractController
 
         (new Repository())->disconnect();
     }
-
+ */
 
     public function treatment()
     {     

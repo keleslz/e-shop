@@ -1,4 +1,5 @@
 <?php
+namespace App\Repository;
 
 use App\Entity\Image;
 use App\Repository\FileRepository;

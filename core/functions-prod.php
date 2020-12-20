@@ -90,7 +90,7 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
 {  
     $i = 0;
     $totalCost = null;
-
+    
     foreach ($cartsRepo as $key => $cartRepo) {
 
         $slug = $cartRepo['product_slug'];
@@ -137,7 +137,7 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
 }
 
 
-function isSame(array $listoOfValue, int $idCurrentProduct) /* : ?int */
+function isSame(array $listoOfValue, int $idCurrentProduct) : int 
 {   
     foreach ($listoOfValue as $key => $val) {
         

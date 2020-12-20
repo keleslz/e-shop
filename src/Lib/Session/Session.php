@@ -3,8 +3,10 @@ namespace App\Lib\Session;
 
 class Session 
 {   
+    
+    const NO_DISPLAY = ['_userStart','_cart','_customer'];
 
-      /**
+    /**
      * Run a session_start
      */
     public function __construct()
@@ -53,7 +55,7 @@ class Session
     {
         foreach ($_SESSION as $section => $types) {
 
-            if( is_array($_SESSION[$section]) && !($section === '_userStart') && !($section === '_cart') && !($section === '_customer') && $types !== null)
+            if( is_array($_SESSION[$section]) && !($section === self::NO_DISPLAY[0]) && !($section === self::NO_DISPLAY[1]) && !($section === self::NO_DISPLAY[2]) && $types !== null)
             {
                 foreach ($types as $key => $value) {
 
@@ -119,21 +121,5 @@ class Session
         }
     }
 
-    /**
-     * Create or add a product and his quantity in user cart
-     */
-    public function cart(array $post) : array
-    {   
-        $productId = intval($post['productId']);
 
-        if ( intval($post['quantity']) ===  0  ){
-
-            unset($_SESSION['_cart'][$productId]);
-
-        }else if( intval($post['quantity']) > 0 )
-        {
-            $_SESSION['_cart'][$productId] = intval($post['quantity']);
-        }
-        return isset($_SESSION['_cart']) ? $_SESSION['_cart'] : [];
-    }   
 }

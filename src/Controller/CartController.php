@@ -24,6 +24,7 @@ class CartController extends AbstractController
             
             if(is_array( (new Cart($product))->add() ))
             {   
+                header('Content-Type: application/json');
                 http_response_code(200);
                 echo json_encode(['cart' => $_SESSION['_cart'], 'count'=> count($_SESSION['_cart']) ]);
 
@@ -51,11 +52,12 @@ class CartController extends AbstractController
                 (new Session());
 
                 http_response_code(200);
-
+                
                 foreach( $_SESSION['_cart'] as $key => $value)
                 {
                     if( intval($value['id']) === intval($id))
                     {
+                        header('Content-Type: application/json');
                         echo json_encode(['quantity' => $value['quantity']]);
                         return;
                     }
@@ -76,6 +78,8 @@ class CartController extends AbstractController
             $productId = intval(htmlentities($_POST['id']));
             $state = false;
             (new Session());
+
+            header('Content-Type: application/json');
 
             if( isset($_SESSION['_cart']))
             {   
