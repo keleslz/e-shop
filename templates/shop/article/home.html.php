@@ -72,6 +72,10 @@
 
     </div>
 
+    <div id="get-more-product-container">
+        <button id="get-more-product" class="btn btn-gray">Voir plus</button>
+    </div>
+    
 </div>
 
 <?php require_once ROOT . DS . 'templates/partials/footer.html.php' ?>

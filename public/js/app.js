@@ -1,10 +1,10 @@
 import { Dropdownbox } from './lib/Dropdownbox.js';
 import { AddToCart } from './lib/cart/addToCart.js';
-import { getOneCategory } from './lib/category/getOneCategory.js';
 import { getQuantity } from './lib/cart/getQuantity.js';
 import { remove } from './lib/cart/remove.js';
 import { ProductDisplayer } from './lib/ProductDisplayer.js';
 import { DepartmentList } from './lib/payment/DepartmentList.js';
+
 //Elements
 
 new Dropdownbox({
@@ -13,14 +13,12 @@ new Dropdownbox({
     items : 'items'
 });
 
+//shop/home
 new ProductDisplayer('product-container');
 
 //Cart
 AddToCart;
 getQuantity;
 remove;
-
-//category
-getOneCategory
 
 new DepartmentList();

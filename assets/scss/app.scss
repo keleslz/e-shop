@@ -3,8 +3,10 @@
 @use './general/img.scss';
 @use './partials/general.scss';
 @use './shop/accueil.scss';
+
 @use './element/loader.scss';
 @use './element/card.scss';
+@use './element/button.scss';
 
 //QUERIES
 @use './queries/product-edit.scss';
