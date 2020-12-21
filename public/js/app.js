@@ -4,6 +4,7 @@ import { getQuantity } from './lib/cart/getQuantity.js';
 import { remove } from './lib/cart/remove.js';
 import { ProductDisplayer } from './lib/ProductDisplayer.js';
 import { DepartmentList } from './lib/payment/DepartmentList.js';
+import { Category } from './lib/Category.js';
 
 //Elements
 
@@ -15,6 +16,8 @@ new Dropdownbox({
 
 //shop/home
 new ProductDisplayer('product-container');
+
+new Category('product-container');
 
 //Cart
 AddToCart;

@@ -53,6 +53,12 @@ class CartController extends AbstractController
 
                 http_response_code(200);
                 
+                if(!isset($_SESSION['_cart']) || !is_array($_SESSION['_cart'] ))
+                {   
+                    echo json_encode(['quantity' => 1 ]);
+                    return;
+                }
+
                 foreach( $_SESSION['_cart'] as $key => $value)
                 {
                     if( intval($value['id']) === intval($id))

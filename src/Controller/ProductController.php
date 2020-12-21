@@ -3,22 +3,27 @@
 namespace App\Controller;
 
 use PDO;
-use ImageRepository;
 use App\Entity\Image;
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Lib\input\Input;
+use Stripe\Terminal\Reader;
 use App\Lib\Session\Session;
 use App\Repository\Repository;
 use App\Lib\File\FileValidator;
 use App\Lib\Session\UserSession;
 use App\Repository\FileRepository;
 use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
 
 class ProductController extends AbstractController
 {
+    const PRODUCT_NAME_TABLE = 'product';
+    const PRODUCT_CATEGORY_ID_FIELD = 'id_category';
+
     public function create()
     {
         $session = new Session();
@@ -234,7 +239,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * get all product & category
+     * get all product & category and display them
      */
     public function getAll()
     {
@@ -247,5 +252,41 @@ class ProductController extends AbstractController
         ]);
 
         (new Repository())->disconnect();
+    }
+
+    /**
+     * Get product by category thanks category id
+     * @param int $id product id
+     */
+    public function getProductByCategory($id)
+    {   
+        if(is_nan($id))
+        {
+            http_response_code(400);
+            echo json_encode(false);
+            die();
+        };
+
+        $id = intval(htmlspecialchars($id));
+        $productRepo = new ProductRepository();
+        $product = $productRepo->findAllBy( 
+            self::PRODUCT_NAME_TABLE ,
+            self::PRODUCT_CATEGORY_ID_FIELD,
+            intval($id)
+        );
+
+        $category = (new CategoryRepository())->findAll('category', PDO::FETCH_ASSOC);
+        $productRepo->disconnect();
+
+        if(is_array($product) && is_array($category))
+        {
+            http_response_code(200);
+            echo json_encode(['product' => $product, 'category' => $category]);
+            return;
+        }
+
+        http_response_code(400);
+        echo json_encode('Une erreur est suvenue Code : Produit par Categorie');
+        return;
     }
 }

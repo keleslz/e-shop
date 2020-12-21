@@ -1,11 +1,10 @@
-
+//TODO Faire des sticky-nav-bar important 
 <nav class="flex justify-around p-3 bg-black flex-wrap items-center">
     
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>
     <ul id="navbar-category" class="list-none  dropdown" style="height:30px;">
         <a class=" text-center hover:text-gray-400 text-white px-2" href="#">Categories</a>
         <div id="" style="position:absolute;z-index:100" class="items bg-black hidden pt-2">
-            <a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='#all'>Toutes</a>
             <?php displayCategoriesList($this->var['categories']); ?>
         </div>
     </ul>

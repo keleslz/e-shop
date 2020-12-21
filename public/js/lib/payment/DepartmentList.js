@@ -1,4 +1,3 @@
-// TODO Ajouter la liste des départements dans des <option> list
 export class DepartmentList {
     constructor () {
         this.jsonPath = '/public/js/data/department.json';

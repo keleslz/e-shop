@@ -59,7 +59,7 @@ function displayCategoriesList (array $categories)
 {
     foreach ($categories as $key => $category) {
 
-        echo "<a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='#{$category['category_name']}'>{$category['category_name']}</a>";
+        echo "<a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='?category/{$category['category_name']}' data-id='{$category['category_id']}' >{$category['category_name']}</a>";
     }
 }
 

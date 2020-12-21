@@ -4,8 +4,10 @@ export class ProductDisplayer {
     {   
         this.url = '/public/product/getAll';
         this.limit = 25;
-        this.moreButton = document.getElementById('get-more-product')
+        this.moreButton = document.getElementById('get-more-product');
         this.productContainer = document.getElementById(container);
+        this.categoryList = document.querySelectorAll('#navbar-category > div.items > a')
+
         this.run();
     }
 
@@ -162,8 +164,16 @@ export class ProductDisplayer {
     createMoreCard = (data) => {
 
         let limit = this.limit;
+        const loader = document.getElementById('loader');
 
         this.moreButton.addEventListener('click', (e)=> {
+            const active = document.querySelectorAll('#navbar-category > div.items > a[data-state="active"]');
+            
+            if(active.length > 0)
+            {   
+                e.target.removeEventListener('click', (e)=> e )
+                return;
+            }
 
             const product =  data.product;
 
@@ -181,7 +191,8 @@ export class ProductDisplayer {
 
                 const idCategory = parseInt(p.id_category);
                 const category =  this.setProductCategory(idCategory, data.category);
-                this.setCardProperty( category , p)
+                this.setCardProperty( category , p);
+                this.productContainer.append(loader)
             }
 
             limit = limit + this.limit;
