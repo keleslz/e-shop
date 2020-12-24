@@ -21,7 +21,7 @@ export class ProductDisplayer {
     }
 
     /**
-     * fetch products
+     * fetch products from server
      */
     fetch = () => {
         return fetch(this.url)
@@ -45,6 +45,11 @@ export class ProductDisplayer {
                 return;
             }
 
+            if(this.ifNoProduct(d.product.length))
+            {
+                return;
+            }
+            
             this.createCard(d);
             this.stopLoader();
             this.stopCardLoad();
@@ -168,7 +173,7 @@ export class ProductDisplayer {
 
         this.moreButton.addEventListener('click', (e)=> {
             const active = document.querySelectorAll('#navbar-category > div.items > a[data-state="active"]');
-            
+
             if(active.length > 0)
             {   
                 e.target.removeEventListener('click', (e)=> e )
@@ -197,5 +202,23 @@ export class ProductDisplayer {
 
             limit = limit + this.limit;
         })
+    }
+
+    /**
+     * If no product stop all loader animation 
+     * @param {Number} length 
+     * @returns {boolean}
+     */
+    ifNoProduct = (length) => {
+        if(length === 0)
+        {
+            this.stopLoader();
+            this.stopCardLoad();   
+            this.moreButton.remove();
+            this.productContainer.textContent = "Aucun produit n'a encore été ajouté"
+            
+            return true 
+        }
+        return false;
     }
 }

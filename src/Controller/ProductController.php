@@ -15,6 +15,7 @@ use App\Lib\Session\UserSession;
 use App\Repository\FileRepository;
 use App\Repository\UserRepository;
 use App\Repository\ImageRepository;
+use App\Repository\FilterRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
@@ -288,5 +289,47 @@ class ProductController extends AbstractController
         http_response_code(400);
         echo json_encode('Une erreur est suvenue Code : Produit par Categorie');
         return;
+    }
+
+    /**
+     * Get product by price
+     * @param string $param type 'asc' or desc
+     */
+    public function byFilter($param) : void
+    { 
+        header('Content-Type: application/json');
+        http_response_code(200);
+
+        $result = [];
+        $price = $param === 'asc-price' || $param === 'desc-price';
+        $name = $param === 'asc-name' || $param === 'desc-name';
+        $news = $param === 'asc-news' || $param === 'desc-news';
+
+        if ($price)
+        {
+            $asc = htmlspecialchars($param) === 'asc-price';
+
+            $asc
+                ? $result = (new FilterRepository())->findAllByFilter('product_price', 'asc')
+                : $result = (new FilterRepository())->findAllByFilter('product_price', 'desc')
+            ;
+            echo json_encode(['result' => $result ]);
+            return;
+        }
+
+        if ($name)
+        {
+            $asc = htmlspecialchars($param) === 'asc-name';
+
+            $asc
+                ? $result = (new FilterRepository())->findAllByFilter('product_name', 'asc')
+                : $result = (new FilterRepository())->findAllByFilter('product_name', 'desc')
+            ;
+            echo json_encode(['result' => $result ]);
+            return;
+        }
+
+        // TODO Ajouter filtre par nouveauté en ajoutant un created at au produit 
+        http_response_code(401);
     }
 }

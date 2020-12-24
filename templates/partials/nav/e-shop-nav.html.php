@@ -1,4 +1,3 @@
-//TODO Faire des sticky-nav-bar important 
 <nav class="flex justify-around p-3 bg-black flex-wrap items-center">
     
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>

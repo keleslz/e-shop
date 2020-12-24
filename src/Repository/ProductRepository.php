@@ -150,7 +150,9 @@ class ProductRepository extends Repository
         $query->execute([
             'product_id' => $id
         ]);
-        return floatval($query->fetch(PDO::FETCH_ASSOC)['product_price']) ?? 0.00 ;
-    }
 
+        $price = str_replace(',', '.', $query->fetch(PDO::FETCH_ASSOC)['product_price']) ?? null;
+        
+        return $price ?? 0;
+    }
 }

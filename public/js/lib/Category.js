@@ -56,14 +56,30 @@ export class Category {
         })
 
         return promise
-            .then((success) => {
-                this.refreshView(success); 
-                this.createMoreCard(success)
+            .then((data) => {
+                this.refreshView(data); 
+                this.createMoreCard(data)
             })
             .catch((e) => e)
         ;
     }
 
+    /**
+     * If no product stop all loader animation 
+     * @param {Number} length 
+     * @returns {boolean}
+     */
+    ifNoProduct = (length) => {
+        
+        if(length === 0)
+        {
+            this.moreButton.remove();
+            this.productContainer.textContent = "Aucun produit n'a encore été ajouté"
+            
+            return true 
+        }
+        return false;
+    }
     /**
      * refresh product list
      * @param {object}  data contains product and category array

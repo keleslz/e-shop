@@ -5,6 +5,7 @@ import { remove } from './lib/cart/remove.js';
 import { ProductDisplayer } from './lib/ProductDisplayer.js';
 import { DepartmentList } from './lib/payment/DepartmentList.js';
 import { Category } from './lib/Category.js';
+import { Sort } from './lib/Sort.js';
 
 //Elements
 
@@ -16,8 +17,8 @@ new Dropdownbox({
 
 //shop/home
 new ProductDisplayer('product-container');
-
 new Category('product-container');
+new Sort('filter-board-button', 'filter-choice-container');
 
 //Cart
 AddToCart;

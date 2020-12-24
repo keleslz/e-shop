@@ -13,6 +13,7 @@ class StripeController extends AbstractController
 { 
     /**
      * Create and display id key 
+     * Minimum payment is 0.50 USD
      */
     public function createCheckoutSession ()
     {

@@ -282,7 +282,7 @@
   min-height: 25px;
   padding: 5px;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid #666;
   border-radius: 5px;
   margin-bottom: 5px;
   align-self: center;
@@ -361,11 +361,55 @@
 
 .btn-gray {
   background: #fff;
-  color: #ccc;
+  color: #666;
 }
 .btn-gray:hover {
   background: #3d3a3a;
   color: #fff;
+}
+
+#filter-board {
+  margin: 10px;
+  width: 200px;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 4px #ccc;
+}
+#filter-board .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#filter-board div {
+  padding-top: 5px;
+}
+#filter-board div div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#filter-board div div span, #filter-board div div div {
+  padding-left: 20px;
+  width: 50%;
+  padding-bottom: 5px;
+}
+#filter-board div div:nth-child(1) {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+#filter-board div .symbol {
+  border-bottom: 1px solid #ccc;
+}
+#filter-board div .symbol > div > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+#filter-board div input {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 905px) {

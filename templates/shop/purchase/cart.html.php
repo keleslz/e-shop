@@ -8,7 +8,7 @@
 
 <div class="cont">
 
-    
+    <i id="info"></i>
     <?php if( is_array($cart) && count($cart) > 0 ) : ?>
 
         <h1 class="h2 block mb-10 shadow-sm">Votre panier</h1>
@@ -31,5 +31,5 @@
     <?php endif ?>
 
 </div>
-
+//TODO bloquer le bouton "Passer à la caisse" si le prix final du panier n'est pas supèrieur 0.50€ car Stripe n'accepte pas en dessous de 0.50$ 
 <script type="text/javascript" src="/public/js/api/stripe/checkout.js"></script>
