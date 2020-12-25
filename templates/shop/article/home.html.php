@@ -6,7 +6,6 @@
 
 <div class="cont">
     
-<?php require_once ROOT . DS . 'templates/partials/nav/e-shop-filter.html.php' ?>
     <div class="flex flex-wrap p-5" style="min-height:100vh" >
 
         <div id="product-container">

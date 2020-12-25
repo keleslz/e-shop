@@ -52,7 +52,11 @@ class User
     const REDIRECT_EDIT = '/public/user/edit';
     const REDIRECT_HOME = '/public/shop/home';
 
-    const HIGH_LAW_LEVEL = 65535;
+    const ADMIN_LAW_LEVEL = 65535;
+    const CONTRIBUTOR_SUPERIOR_LAW_LEVEL = 10_000;
+    const CONTRIBUTOR_LAW_LEVEL = 100;
+    const CLIENT_LAW_LEVEL= 1;
+    const ALL_LEVEL_LAW = [ self::ADMIN_LAW_LEVEL, self::CONTRIBUTOR_SUPERIOR_LAW_LEVEL, self::CONTRIBUTOR_LAW_LEVEL, self::CLIENT_LAW_LEVEL ];
 
     /**
      * Get the value of id

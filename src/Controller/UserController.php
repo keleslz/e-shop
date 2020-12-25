@@ -122,7 +122,8 @@ class UserController extends AbstractController
         $this->render('admin/user/edition', [
             'session' => (new Session()),
             'email' => $userData['email'],
-            'law' => $userData['law'] ?? null 
+            'law' => $userData['law'] ,
+            'createdAt' => $userData['created_at'] ,
         ]);
         
     }

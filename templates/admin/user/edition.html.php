@@ -1,5 +1,6 @@
 <?php $law = $this->var['law'] ?>
 <?php $email = $this->var['email'] ?>
+<?php $createdAt = $this->var['createdAt'] ?>
 
 <?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
@@ -27,17 +28,26 @@
                 <input class="p-2 border" type="password" name="password"  required>
             </div>
 
+            
             <div class="input-container mb-2">
-                <label class="inline-block " for="newPassword">Nouveau mot de passe</label>
-                <input class="p-2 border" type="password" name="newPassword">
+                <small>Modifier mon mot de passe</small>
             </div>
 
-            <div class="input-container mb-5">
-                <label class="inline-block " for="passwordConfirm">Confirmer nouveau mot de passe</label>
-                <input class="p-2 border" type="password" name="passwordConfirm">
+            <div class="hidden">
+                
+                <div class="input-container mb-2">
+                    <label class="inline-block " for="newPassword">Nouveau mot de passe</label>
+                    <input class="p-2 border" type="password" name="newPassword">
+                </div>
+
+                <div class="input-container mb-5">
+                    <label class="inline-block " for="passwordConfirm">Confirmer nouveau mot de passe</label>
+                    <input class="p-2 border" type="password" name="passwordConfirm">
+                </div>
             </div>
 
             <button class="bg-green-700 h-10 hover:bg-green-800 text-white font-bold py-2  mb-5 px-4 border border-green-700 rounded" type="submit">Enregistrer</button>
+            <span><?= $createdAt ?></span>
         </form>
 
         <?php displayDeleteAccountButton($law) ?>

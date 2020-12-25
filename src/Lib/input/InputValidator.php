@@ -9,6 +9,13 @@ use App\Entity\File;
  */
 abstract class InputValidator
 {   
+
+    const ADMIN_LAW_LEVEL = 65535;
+    const CONTRIBUTOR_SUPERIOR_LAW_LEVEL = 10_000;
+    const CONTRIBUTOR_LAW_LEVEL = 100;
+    const CLIENT_LAW_LEVEL= 1;
+    const ALL_LEVEL_LAW = [ self::ADMIN_LAW_LEVEL, self::CONTRIBUTOR_SUPERIOR_LAW_LEVEL, self::CONTRIBUTOR_LAW_LEVEL, self::CLIENT_LAW_LEVEL ];
+
     /**
      * Check if value name is conform else return false
      * @param string $name It's input value
@@ -193,6 +200,27 @@ abstract class InputValidator
             return false;
         }
     }
+
+    /**
+     * Check if law level's conform
+     */
+    public function law(string $userLaw) : bool
+    {   
+        foreach(self::ALL_LEVEL_LAW as $law)
+        {
+            if($law === intval(str_replace('_', '', $userLaw)))
+            {   
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    //---------------------------------------
 
     /**
      * Check if value name is conform else return false

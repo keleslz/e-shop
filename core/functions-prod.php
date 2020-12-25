@@ -63,6 +63,8 @@ function displayCategoriesList (array $categories)
     }
 }
 
+// shop/cart
+
 /**
  * Display user cart 
  * @param array|null
@@ -76,9 +78,6 @@ function displayCart($cart) : void
         return;
     }
 }
-
-
-// shop/cart
 
 /**
  * Display user cart list 
@@ -136,7 +135,9 @@ function displayCartList(array $cartsRepo, array $sessionCarts, bool $display = 
     return $totalCost;
 }
 
-
+/**
+ * Get quantity article and his product
+ */
 function isSame(array $listoOfValue, int $idCurrentProduct) : int 
 {   
     foreach ($listoOfValue as $key => $val) {
@@ -229,4 +230,46 @@ function displayDeleteAccountButton(int $law) : void
         ";
     }
 
+}
+
+// Administration 
+
+// SHOW
+function displayAllAccount(array $accounts) : void
+{
+    foreach($accounts as $account)
+    {      
+        $law = displayLawLevel( intval($account['law']));
+        //TODO Bouton suppression de compte et confirmation dans une petite classe js 
+        echo "
+            <ul class='p-3 m-2 border rounded' >
+                <li>
+                    <button class='p-1 px-2'>X</button>
+                    <li>Email : {$account['email']}</li>
+                    <li>Droit :  {$law}</li>
+                    <li>Crée le : {$account['created_at']}</li>
+                </li>
+            </ul>
+        ";
+    }
+}
+
+function displayLawLevel (int $law) : string
+{
+    if($law === 10_000)
+    {
+        return '<strong>Contributeur Superieur</strong>';
+    }
+    
+    if($law === 100)
+    {
+        return 'Contributeur';
+    }
+
+    if($law === 1)
+    {
+        return 'Client';
+    }
+    
+    return 'Erreur inattendu';
 }

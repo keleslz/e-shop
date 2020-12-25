@@ -17,7 +17,11 @@ export class Dropdownbox
      *  </ul> 
      */
     constructor()
-    {
+    {   
+        if(!document.querySelector('#navbar-category'))
+        {
+            return;
+        }
         this.container =  document.querySelector('#navbar-category').children;
         this.run()
     }

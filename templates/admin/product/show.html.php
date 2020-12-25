@@ -8,8 +8,12 @@
 
 <?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
-<h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Voir tous les produits</h1>
+<h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Produits</h1>
+
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>
+
+<li><a class="text-gray-700 hover:text-black pr-5" href="/public/product/create">Ajouter Produit</a></li>
+
 
 <div class="cont" style="min-height:100vh">
 

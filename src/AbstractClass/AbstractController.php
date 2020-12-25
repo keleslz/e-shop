@@ -6,7 +6,7 @@ abstract class AbstractController
 {   
     public array $var ;
 
-    const HIGH_LAW_LEVEL = 65535;
+    const ADMIN_LAW_LEVEL = 65535;
 
     /**
      * Call a template

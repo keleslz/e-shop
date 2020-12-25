@@ -64,4 +64,18 @@ class UserRepository extends Repository
         ]);; 
     }
 
+    /**
+     * Find all user which not admin but only inferior
+     * @param int $option PDO::FETCH_ASSOC, FETCH_BOUND, FETCH_CLASS,
+     * FETCH_INTO, FETCH_NAMED , FETCH_NUM , FETCH_OBJ , FETCH_PROPS_LATE 
+     */
+    public function findAll(string $tableName, int $fetchStyle = 0)  : array
+    {
+        $sql ="SELECT id, email, law, created_at  FROM $tableName WHERE law <> 65535";
+
+        $query = self::$pdo->query($sql);
+        
+        return $fetchStyle === 0 ? $query->fetchAll() : $query->fetchAll($fetchStyle); ;
+    }
+
 }
