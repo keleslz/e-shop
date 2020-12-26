@@ -17,7 +17,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
       
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -39,7 +39,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
 
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -74,7 +74,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
 
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -123,7 +123,8 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->ifSimpleContributor();
+      $session->isClient();
 
       $category = new Category();
       $input = new Input();

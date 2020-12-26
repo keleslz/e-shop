@@ -31,7 +31,7 @@ class ProductController extends AbstractController
         $userSession = new UserSession();
         $user = $userSession->get('_userStart');
         $userSession->ifNotConnected();
-        $userSession->ifNotContributor();
+        $userSession->isClient();
 
         $input = new Input();
 
@@ -87,12 +87,12 @@ class ProductController extends AbstractController
 
     public function show($param)
     {
-        $id = intval(strip_tags($param));
+        $id = intval(htmlspecialchars($param));
 
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
+        $session->isClient();
 
         $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -128,15 +128,15 @@ class ProductController extends AbstractController
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
+        $session->isClient();
         
         $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
-
+        
         $productRepo = new ProductRepository();
         $input = new Input();
         
         $product = $productRepo->findOneBy('product','product_id', $id);
-
+        
         if(!$product)
         {
             $session->set('product','error', 'Désolé une erreur est survenue');
@@ -153,7 +153,7 @@ class ProductController extends AbstractController
             $empty = $input->isEmpty($_POST);
             $uniqId = uniqid((string)(rand()*10));
             $conform = $input->hasGoodformat($post);
-
+            
             $imageValidator = new FileValidator($_FILES);
             
             if($imageValidator->full())
@@ -161,7 +161,7 @@ class ProductController extends AbstractController
                 $good  = $imageValidator->controle();
                 in_array(false, $good) ? $this->redirectTo("product/edition/$id") : null ;
             }
-
+            
             (new Image())->ifImageAssiociatedExist($id, $uniqId, $this);
             
             $picture = $_FILES['product_picture'] ?? [];
@@ -204,24 +204,26 @@ class ProductController extends AbstractController
     }
 
     public function delete($param)
-    {
+    {   
         $id = intval(strip_tags($param));
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
-
+        $session->ifSimpleContributor();
+        $session->isClient();
+        
         $repo = new ProductRepository();
         $productRepo = $repo->findOneBy('product', 'product_id', $id);
-
+        
         $product = new product();
 
         if($productRepo)
         {
+            
             $imageRepo = new ImageRepository();
             $paths = $imageRepo->findAllBy('img', 'id_product', $productRepo['product_id']);
             $productCoverId = $productRepo['id_img'];
-
+            
             $product->deleteCover($productCoverId, $productRepo);
             $product->deleteAllPathPictureAssociated($paths, $productRepo);
             $deleteProduct = $repo->delete('product', 'product_id', $productRepo['product_id'] );
@@ -289,47 +291,5 @@ class ProductController extends AbstractController
         http_response_code(400);
         echo json_encode('Une erreur est suvenue Code : Produit par Categorie');
         return;
-    }
-
-    /**
-     * Get product by price
-     * @param string $param type 'asc' or desc
-     */
-    public function byFilter($param) : void
-    { 
-        header('Content-Type: application/json');
-        http_response_code(200);
-
-        $result = [];
-        $price = $param === 'asc-price' || $param === 'desc-price';
-        $name = $param === 'asc-name' || $param === 'desc-name';
-        $news = $param === 'asc-news' || $param === 'desc-news';
-
-        if ($price)
-        {
-            $asc = htmlspecialchars($param) === 'asc-price';
-
-            $asc
-                ? $result = (new FilterRepository())->findAllByFilter('product_price', 'asc')
-                : $result = (new FilterRepository())->findAllByFilter('product_price', 'desc')
-            ;
-            echo json_encode(['result' => $result ]);
-            return;
-        }
-
-        if ($name)
-        {
-            $asc = htmlspecialchars($param) === 'asc-name';
-
-            $asc
-                ? $result = (new FilterRepository())->findAllByFilter('product_name', 'asc')
-                : $result = (new FilterRepository())->findAllByFilter('product_name', 'desc')
-            ;
-            echo json_encode(['result' => $result ]);
-            return;
-        }
-
-        // TODO Ajouter filtre par nouveauté en ajoutant un created at au produit 
-        http_response_code(401);
     }
 }

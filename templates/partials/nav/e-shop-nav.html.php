@@ -1,3 +1,5 @@
+<?php $law = intval($this->var['adminSessionLaw']) ?>
+
 <nav class="flex justify-around p-3 bg-black flex-wrap items-center">
     
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>
@@ -16,7 +18,7 @@
         
     <?php endif;?>
 
-    <?php if (intval($this->var['adminSessionLaw']) === 65535) : ?>
+    <?php if ( $law ===  65535 || $law === 1000 || $law === 100 ) : ?>
 
         <a class="text-center hover:text-gray-400 text-white" href="/public/user/dashboard">Retour à l'Admin</a>
 

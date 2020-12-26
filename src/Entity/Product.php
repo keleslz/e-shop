@@ -1,12 +1,12 @@
 <?php
 namespace App\Entity;
 
-use ImageRepository;
 use App\Entity\Image;
+use App\Lib\input\Input;
 use App\Lib\Session\Session;
+use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use App\AbstractClass\AbstractController;
-use App\Lib\input\Input;
 
 class Product 
 {

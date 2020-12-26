@@ -141,19 +141,18 @@ class UserController extends AbstractController
     }
 
     /**
-     * Delete user
+     * Delete current user
      */
     public function delete()
     {   
         $session = new UserSession();
         $userRepo = new UserRepository(); 
         $session->ifNotConnected();
-        $session->ifAdmin();
+        $session->ifCreator();
         
         $idUser = $session->get('_userStart')['id'];
         $user  = $userRepo->findOneBy('user','id', intval($idUser));
         (new UserDelete( $user ));
         $userRepo->disconnect();
-
     }
 }

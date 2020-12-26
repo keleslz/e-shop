@@ -25,7 +25,7 @@
             <label class="pb-2"  for="law" >Droit</label>
 
             <div class="my-1">
-                <input class="border-solid p-2 border-2 text-gray-700 border-gray-400 rounded" type="radio" name="law" value="10_000" checked required>
+                <input class="border-solid p-2 border-2 text-gray-700 border-gray-400 rounded" type="radio" name="law" value="1000" checked required>
                 <span class="mx-3">Contributeur Superieur</span>
             </div>
 

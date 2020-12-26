@@ -11,8 +11,6 @@ use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
 use App\Service\User\UserCreation;
 use App\AbstractClass\AbstractController;
-//TODO Verifier les droits par niveau de role, fixer les valeur des roles 100 1000 1000 etc..
-//TODO Verifier que le ifNot Contributor ne nous bloque pas 
 
 /**
  * Manage users account, affect status and more
@@ -28,8 +26,8 @@ class AdministrationController extends AbstractController
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
-
+        $session->ifSimpleContributor();
+        $session->isClient();
 
         $userRepo = new UserRepository();
         $userData = $userRepo->findOneBy(self::USER_TABLE_NAME,'id', $user['id']);
@@ -53,7 +51,8 @@ class AdministrationController extends AbstractController
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
+        $session->ifSimpleContributor();
+        $session->isClient();
 
         $userData = (new UserRepository())->findOneBy(self::USER_TABLE_NAME,'id', $user['id']);
         
@@ -67,7 +66,7 @@ class AdministrationController extends AbstractController
 
             if(!in_array( false, $data))
             {   
-                $law = intval(str_replace('_','', $_POST['law']));
+                $law = intval($_POST['law']);
                 (new UserCreation( $law ))->new($_POST['email'], $_POST['password']);
             }
         }
@@ -81,4 +80,6 @@ class AdministrationController extends AbstractController
             'error' => $error,
         ]);    
     }
+
+    //TODO Delete
 }

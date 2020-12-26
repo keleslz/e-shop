@@ -2,10 +2,10 @@
 namespace App\Entity;
 
 use App\Entity\File;
-use App\Lib\File\FileValidator;
-use ImageRepository;
 use App\Lib\Session\Session;
+use App\Lib\File\FileValidator;
 use App\Repository\FileRepository;
+use App\Repository\ImageRepository;
 
 class Image extends File
 {

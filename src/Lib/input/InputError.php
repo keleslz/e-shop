@@ -151,6 +151,11 @@ class InputError
         return 'Désolé une erreur est survenue';
     }
 
+    public static function accesDenied() : string
+    {
+        return 'Accès refusé';
+    }
+
     public static function quantity()
     {
         return 'Veuillez vérifier la quantité du produit';

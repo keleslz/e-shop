@@ -74,7 +74,7 @@ class UserDelete extends User
      */
     private function notAdmin() : void
     {
-        if( intval($this->law) === self::ADMIN_LAW_LEVEL)
+        if( intval($this->law) === self::CREATOR_LAW_LEVEL)
         {
             (new Session())->set('user','error','Impossible d\'effectuer cette action');
             header('Location:' . self::REDIRECT_HOME);

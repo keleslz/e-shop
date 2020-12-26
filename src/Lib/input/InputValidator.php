@@ -10,11 +10,11 @@ use App\Entity\File;
 abstract class InputValidator
 {   
 
-    const ADMIN_LAW_LEVEL = 65535;
-    const CONTRIBUTOR_SUPERIOR_LAW_LEVEL = 10_000;
-    const CONTRIBUTOR_LAW_LEVEL = 100;
+    const CREATOR_LAW_LEVEL = 65535;
+    const CONTRIBUTOR_SUPERIOR_LAW_LEVEL = 1000;
+    const SIMPLE_CONTRIBUTOR_LAW_LEVEL = 100;
     const CLIENT_LAW_LEVEL= 1;
-    const ALL_LEVEL_LAW = [ self::ADMIN_LAW_LEVEL, self::CONTRIBUTOR_SUPERIOR_LAW_LEVEL, self::CONTRIBUTOR_LAW_LEVEL, self::CLIENT_LAW_LEVEL ];
+    const ALL_LEVEL_LAW = [ self::CREATOR_LAW_LEVEL, self::CONTRIBUTOR_SUPERIOR_LAW_LEVEL, self::SIMPLE_CONTRIBUTOR_LAW_LEVEL, self::CLIENT_LAW_LEVEL ];
 
     /**
      * Check if value name is conform else return false
@@ -208,7 +208,7 @@ abstract class InputValidator
     {   
         foreach(self::ALL_LEVEL_LAW as $law)
         {
-            if($law === intval(str_replace('_', '', $userLaw)))
+            if($law === intval($userLaw))
             {   
                 return true;
             }

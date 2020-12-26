@@ -2,18 +2,21 @@
 namespace App\Controller;
 
 use App\Lib\Session\UserSession;
+use App\Repository\ImageRepository;
 use App\AbstractClass\AbstractController;
-use ImageRepository;
 
+//TODO Impossible d'acceder a la requete /public/image/delete/15 ()id produit , 
 class ImageController extends AbstractController
-{
+{   
+    
     public function delete($id)
     {
         $id = intval(strip_tags($id));
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
+        $session->ifSimpleContributor();
+        $session->isClient();
 
         $imageRepo = new ImageRepository();
         $image = $imageRepo->findOneBy('img', 'img_id', $id);
