@@ -62,6 +62,13 @@
 .h-screen #registre-product > *, .h-screen #registre-category > *, .h-screen .medium-form > * {
   width: 100%;
 }
+.h-screen #registre-product #edit-password, .h-screen #registre-category #edit-password, .h-screen .medium-form #edit-password {
+  font-size: 10px;
+}
+
+#edit-password, #delete-account-button {
+  font-size: 10px;
+}
 
 .h1 {
   font-size: 2rem !important;
@@ -331,11 +338,11 @@
 }
 
 .btn-r {
-  background: #cc2014;
+  background: #d82f23;
   color: #fff;
 }
 .btn-r:hover {
-  background: #be271c;
+  background: #b11e13;
 }
 
 .btn-green {

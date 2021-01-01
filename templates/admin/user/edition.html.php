@@ -28,12 +28,11 @@
                 <input class="p-2 border" type="password" name="password"  required>
             </div>
 
-            
             <div class="input-container mb-2">
-                <small>Modifier mon mot de passe</small>
+                <small id="edit-password" class="btn btn-gray">Modifier mon mot de passe</small>
             </div>
 
-            <div class="hidden">
+            <div id="item-hidden" class=" hidden">
                 
                 <div class="input-container mb-2">
                     <label class="inline-block " for="newPassword">Nouveau mot de passe</label>
@@ -47,7 +46,7 @@
             </div>
 
             <button class="bg-green-700 h-10 hover:bg-green-800 text-white font-bold py-2  mb-5 px-4 border border-green-700 rounded" type="submit">Enregistrer</button>
-            <span><?= $createdAt ?></span>
+            <small>Crée le <?= $createdAt ?></small>
         </form>
 
         <?php displayDeleteAccountButton($law) ?>

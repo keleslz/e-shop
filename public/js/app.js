@@ -7,6 +7,10 @@ import { DepartmentList } from './lib/payment/DepartmentList.js';
 import { Category } from './lib/Category.js';
 import { Sort } from './lib/Sort.js';
 
+/** Button */
+import { DeleteAccountButton } from './lib/DeleteAccountButton.js';
+import { EditPasswordButton } from './lib/EditPasswordButton.js';
+
 //Elements
 
 new Dropdownbox({
@@ -26,3 +30,7 @@ getQuantity;
 remove;
 
 new DepartmentList();
+
+//Edit Account
+new EditPasswordButton('edit-password');
+new DeleteAccountButton('delete-account-button');

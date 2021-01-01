@@ -226,9 +226,7 @@
 
                     <div class='input-container'>
 
-                        <button class='bg-red-700 h-10 hover:bg-red-800 text-white font-bold py-2 mx-auto px-4 border border-red-700 rounded' type='submit'>Supprimer mon compte </button>
-                        <small class='text-red-800 mb-5'>(suppression définitive)</small>
-
+                        <button id='delete-account-button' class='btn btn-r' type='submit'>Supprimer mon compte (définitivement)</button>
                     </div>
 
                 </form>
