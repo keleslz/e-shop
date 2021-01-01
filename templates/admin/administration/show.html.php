@@ -6,7 +6,7 @@
 
 <?php $this->var['session']->display() ?>
 
-<div class="cont flex items-center justify-center flex-wrap">
+<div id="user-list" class="cont flex items-center justify-center flex-wrap">
     <div class="p-5 shadow-xl rounded mb-12 mt-5">
         <h3 class="h2 p2 bg-white text-black">Comptes existant</h3>
         <?php displayAllAccount( $this->var['accounts'] )?>

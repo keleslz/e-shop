@@ -245,12 +245,12 @@
             //TODO Bouton suppression de compte et confirmation dans une petite classe js 
             echo "
                 <ul class='p-3 m-2 border rounded' >
-                    <li>
-                        <button class='p-1 px-2'>X</button>
+                    <div data-id='{$account['id']}'>
                         <li>Email : {$account['email']}</li>
                         <li>Droit :  {$law}</li>
                         <li>Crée le : {$account['created_at']}</li>
-                    </li>
+                        <button class='delete-account-button btn btn-r'>X</button>
+                    </div>
                 </ul>
             ";
         }

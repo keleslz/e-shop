@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use PDO;
 use App\Lib\Tool;
-use App\Entity\User;
 use App\Lib\input\Input;
 use App\Lib\Input\InputError;
 use App\Repository\Repository;
@@ -18,6 +17,9 @@ use App\AbstractClass\AbstractController;
 class AdministrationController extends AbstractController
 {   
     const USER_TABLE_NAME = 'user';
+    const EMAIL_TABLE_FIELD_NAME = 'email';
+    const USER_ID_FIELD = 'id';
+
     /**
      * Show all user account
      */
@@ -31,6 +33,7 @@ class AdministrationController extends AbstractController
 
         $userRepo = new UserRepository();
         $userData = $userRepo->findOneBy(self::USER_TABLE_NAME,'id', $user['id']);
+        //TODO Ajouter la securité si id n'existe pas 
         $accounts  = $userRepo->findAll(self::USER_TABLE_NAME, PDO::FETCH_ASSOC);
 
         (new Repository())->disconnect();
@@ -82,4 +85,55 @@ class AdministrationController extends AbstractController
     }
 
     //TODO Delete
+    /**
+     * Get an email and delete him
+     * @param string email id 
+     */
+    public function delete(string $id)
+    {   
+        header('Content-Type: application/json');
+        
+        $session = new UserSession();
+        $session->ifNotConnected();
+        $session->ifSimpleContributor();
+        
+        //TODO ajouter cette request sur les taces asynchones necessitant d'être caché
+        if($_SERVER['REQUEST_METHOD'] !== 'POST')
+        {
+            http_response_code(404);
+            die();
+        }
+
+        if(isset($_POST) && isset($id))
+        {   
+            $id = intval(htmlspecialchars($id));
+            $userRepo = new UserRepository();
+
+            if($id === 1)
+            {   
+                http_response_code(401);
+                die();
+            }
+
+            $userExist = $userRepo->findOneBy( self::USER_TABLE_NAME, self::USER_ID_FIELD, $id);
+
+            if(!$userExist)
+            {
+                http_response_code(401);
+                die();
+            }
+
+            $accounToDelete = $userRepo->delete( self::USER_TABLE_NAME, self::USER_ID_FIELD, intval($userExist['id']) );
+            $userRepo->disconnect();
+
+            header('Content-Type: application/json');
+
+            if( $accounToDelete )
+            {   
+                http_response_code(200);
+                die();
+            }
+        }
+        http_response_code(401);
+    }
 }

@@ -10,6 +10,7 @@ import { Sort } from './lib/Sort.js';
 /** Button */
 import { DeleteAccountButton } from './lib/DeleteAccountButton.js';
 import { EditPasswordButton } from './lib/EditPasswordButton.js';
+import { DeleteUser } from './lib/administration/DeleteUser.js';
 
 //Elements
 
@@ -34,3 +35,6 @@ new DepartmentList();
 //Edit Account
 new EditPasswordButton('edit-password');
 new DeleteAccountButton('delete-account-button');
+
+//Administration
+new DeleteUser('.delete-account-button');
