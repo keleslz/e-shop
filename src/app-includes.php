@@ -59,3 +59,6 @@ require_once ROOT . DS . 'src/Service/User/UserCreation.php'; // Get UserCreatio
 require_once ROOT . DS . 'src/Service/User/UserUpdateEmail.php'; // Get UserUpdateEmail service
 require_once ROOT . DS . 'src/Service/User/UserUpdatePassword.php'; // Get UserUpdatePassword service
 require_once ROOT . DS . 'src/Service/User/UserDelete.php'; // Get UserDelete service
+
+//-------Product
+require_once ROOT . DS . 'src/Service/Product/ProductCreation.php'; // Get ProductCreation service

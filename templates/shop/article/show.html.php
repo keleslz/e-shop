@@ -67,7 +67,7 @@
     </div>
 
 <?php else : ?>
-    <?php $this->redirectTo('/public/shop/home') ?>
+    <?php $this->redirectTo('shop/home') ?>
 <?php endif ?>
 
 <?php require_once ROOT . DS . 'templates/partials/footer.html.php' ?>

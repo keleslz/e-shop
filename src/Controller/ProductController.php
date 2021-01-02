@@ -18,14 +18,19 @@ use App\Repository\ImageRepository;
 use App\Repository\FilterRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Service\Product\ProductCreation;
 use App\AbstractClass\AbstractController;
+use App\Service\Product\ProductEdition;
 
 class ProductController extends AbstractController
 {
     const PRODUCT_NAME_TABLE = 'product';
     const PRODUCT_CATEGORY_ID_FIELD = 'id_category';
 
-    public function create()
+    /**
+     * Create product
+     */
+    public function create() : void
     {
         $session = new Session();
         $userSession = new UserSession();
@@ -50,25 +55,10 @@ class ProductController extends AbstractController
             $picture = $_FILES['product_picture'];
             $fileValidator = new FileValidator($picture);
 
-            if($fileValidator->full())
-            {   
-                $good  = $fileValidator->controle();
-                in_array(false, $good) ? $this->redirectTo('product/create') : '';
-            }
-            
-            if(!isset($post['status']))
-            {
-                $session->set('product', 'error', 'Veuillez selectionner le statut du produit : online (On) / offline (Off)');
-                return $this->redirectTo("product/create");
-            }
-            
             if (empty($empty) && !in_array(false, $conform))
-            {   
-                $idImage = (new Image())->ifImageExistCreate($picture);
-                $product = new Product();
-                $productRepo = new ProductRepository();
-                $product->create($post, $productRepo, $session , $idImage);
-            }
+            {
+                (new ProductCreation( $fileValidator, $this, $post ))->create();
+            } 
         }
 
         $this->render('admin/product/create', [
@@ -85,6 +75,10 @@ class ProductController extends AbstractController
         (new Repository())->disconnect();
     }
 
+    
+    /**
+     * Show product
+     */
     public function show($param)
     {
         $id = intval(htmlspecialchars($param));
@@ -105,7 +99,6 @@ class ProductController extends AbstractController
         if( isset($currentProduct['id_category']) ){
             $currentProductCategory = $category->findOneBy('category','category_id' , intval($currentProduct['id_category']));
         }
-
         $this->render('admin/product/show', [
             'email' => $userData['email'],
             'products' => $products,
@@ -121,6 +114,10 @@ class ProductController extends AbstractController
         (new Repository())->disconnect();
     }
 
+    
+    /**
+     * Edit product
+     */
     public function edition($param)
     {
         $id = intval(strip_tags($param));
@@ -131,11 +128,9 @@ class ProductController extends AbstractController
         $session->isClient();
         
         $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
-        
-        $productRepo = new ProductRepository();
         $input = new Input();
         
-        $product = $productRepo->findOneBy('product','product_id', $id);
+        $product = (new ProductRepository())->findOneBy('product','product_id', $id);
         
         if(!$product)
         {
@@ -154,39 +149,17 @@ class ProductController extends AbstractController
             $uniqId = uniqid((string)(rand()*10));
             $conform = $input->hasGoodformat($post);
             
-            $imageValidator = new FileValidator($_FILES);
-            
-            if($imageValidator->full())
-            {   
-                $good  = $imageValidator->controle();
-                in_array(false, $good) ? $this->redirectTo("product/edition/$id") : null ;
-            }
-            
-            (new Image())->ifImageAssiociatedExist($id, $uniqId, $this);
-            
-            $picture = $_FILES['product_picture'] ?? [];
-            $fileValidator = new FileValidator($picture);
-            
-            if($fileValidator->full())
-            {
-                $good  = $fileValidator->controle();
-                in_array(false, $good) ? $this->redirectTo("product/edition/$id") : null ;
-            }
-                
-            if(!isset($post['status']))
-            {
-                return $this->redirectTo("product/create");
-            }
-            
             if(in_array(false, $conform))
             {
                 return $this->redirectTo("product/edition/$id");
             }
 
+            $imageValidator = new FileValidator($_FILES);
+            
             if(empty($empty))
             {
-                (new Product())->edition($post, $uniqId, $id, $this);
-            }
+                (new ProductEdition($imageValidator, $this, $post, $id))->edit($uniqId);
+            } 
         }
 
         $this->render('admin/product/edition', [
@@ -203,6 +176,10 @@ class ProductController extends AbstractController
         (new Repository())->disconnect();
     }
 
+    
+    /**
+     * Delete product
+     */
     public function delete($param)
     {   
         $id = intval(strip_tags($param));
@@ -219,7 +196,6 @@ class ProductController extends AbstractController
 
         if($productRepo)
         {
-            
             $imageRepo = new ImageRepository();
             $paths = $imageRepo->findAllBy('img', 'id_product', $productRepo['product_id']);
             $productCoverId = $productRepo['id_img'];

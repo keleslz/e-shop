@@ -45,30 +45,29 @@ class ShopController extends AbstractController
         $productRepo = new ProductRepository();
         $product = $productRepo->findOneBy('product','product_id', $idProduct);
         $currentProductCategory = null;
-        
         if(!$product)
         {
             $userSession->set('product','error', 'Désolé une erreur est survenue');
             $this->redirectTo('shop/home');
             die();
         }
-
+        
         $user = $_SESSION['_userStart'] ?? null;
-
+        
         if(isset($user['id']))
         {
             $user = (new UserRepository())->findOneBy('user','id', intval($user['id']));
         }
         
-
-
         if( isset($product['id_category']) ){
             $currentProductCategory = $productRepo->findOneBy('category','category_id' , intval($product['id_category']));
         }
-
+        
+        
         $picture = new ImageRepository();
         $productImg = $picture->findImageProduct( $product['id_img'] ?? null);
         
+
         $this->render('shop/article/show', [
             'categories' => (new CategoryRepository())->findAll('category'),
             'product' => $product,

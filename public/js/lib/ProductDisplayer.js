@@ -94,7 +94,9 @@ export class ProductDisplayer {
 
         return categoryName;
     }
-
+    /*
+        TODO remplacer le nom du produit dans l'url par son slug && afficher seulement si le produit est en ligne
+    */
     /**
      * Set property card
      * @param {string} category  product category
@@ -110,7 +112,7 @@ export class ProductDisplayer {
 
         const productId = product.product_id;
         const productName = product.product_name.replace(' ', '_');
-
+        
         a.href = '/public/shop/show/' + productId + '/' + productName;
         img.src= '/public/img-storage/default-image.jpg';
         img.style.animation = 'null';
