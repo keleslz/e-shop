@@ -109,11 +109,15 @@ export class Category {
         const length = product.length < this.limit ? product.length : this.limit
 
         for (let i = 0; i <  length  ; i++) { 
+            
             const p = product[i];
-            const idCategory = parseInt(p.id_category);
-            const category =  this.setProductCategory(idCategory, data.category);
 
-            this.setCardProperty( category , p)
+            if(parseInt(p.product_status) > 0)
+            {
+                const idCategory = parseInt(p.id_category);
+                const category =  this.setProductCategory(idCategory, data.category);
+                this.setCardProperty( category , p)
+            }
         }
     }
     
@@ -197,7 +201,6 @@ export class Category {
                 
                 if(active.length === 0)
                 {   
-                    console.log("Category Désactivé");
                     return;
                 }
 
@@ -214,7 +217,6 @@ export class Category {
                     
                     if( !p )
                     {   
-                        console.log(p)
                         e.target.textContent = "Vous avez vu tous les nouveaux articles de la catégorie";
                         e.target.style.width = 'max-content';
                         e.preventDefault();

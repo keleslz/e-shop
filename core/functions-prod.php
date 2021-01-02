@@ -1,17 +1,17 @@
 <?php
 
 /** Admin Category */
-    function displayProductCategory(int $idProductCategory, array $categoryList, $name = true) : void
+    function displayProductCategory(int $idProductCategory, array $categoryList, $name = true) 
     {   
         foreach ($categoryList as $key => $category) {
 
             if(intval($category['category_id']) === $idProductCategory )
             {   
                 if($name === true)
-                {
-                    echo $category['category_name'];
+                {   
+                    return $category['category_name'];
                 }else{
-                    echo intval($category['category_id']);
+                    return intval($category['category_id']);
                 }
             }
         }
@@ -275,8 +275,9 @@
         return 'Erreur inattendu';
     }
 
-/** Product/show/id */
+/** Product */
 
+    /** product/show/id */
     function deleteProductButton(string $currentProductId) : string
     {   
         if(intval($_SESSION['_userStart']['law']) > 100)
@@ -293,3 +294,75 @@
 
         return '';
     }
+
+    /** product/show */
+
+    function displayProductWithCategory(array $products, array $categories) : void
+    {
+        foreach ($products as $key => $product) {
+
+            $image = $product['img_name']  ?? 'default-image.jpg';
+            $status = intval($product['product_status']) === 1 ? 'En ligne' : 'Hors-ligne '; 
+            $category = intval($product['id_category'])  === -1 ? 'Non classée' :  displayProductCategory( intval($product['id_category']), $categories) ;
+            $category = $category ?? 'Non classée';
+
+            if( intval($product['id_category']) > 0 ) 
+            {
+                echo "<a href='/public/product/show/{$product['product_id']}'>
+                    <div  class='m-5 hover:border-white cursor-pointer hover:shadow-xl'>
+                
+                        <img class='flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200' src='/public/img-storage/$image' alt='Image alternative  bientot dispo'>
+                        <div class='shadow-lg border-gray-200 text-center ' >
+                            <span class='block my-2 mb-' >{$product['product_name']}</span>
+                            <span class='block my-2 border-2 border-gray-300' >{$product['product_price']} €</span>
+                            <div class='flex flex-1 justify-center ' style='width:192px;height:25px;overflow:hidden'>
+                                <p class='text-right pr-2' >{$product['product_description']}</p>
+                            </div>
+                            <div class='flex flex-1 justify-center' style='width:192px;height:25px;overflow:hidden'>
+                                <p class='text-center'>$status</p><span class='text-gray-500'></span>
+                            </div>
+                            <div class='flex flex-1 justify-center'>
+                                <p class='text-center '>{$category}</p><span class='text-gray-500'></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>";
+            }
+
+            
+        }
+    }
+
+    function displayProductWithoutCategory(array $products, array $categories)
+    {
+        foreach($products as $product)
+        {   
+            if( intval($product['id_category']) < 0 ) 
+            {
+                $statut = intval($product['product_status']) === 1 ? 'En ligne' : 'Hors-ligne ';
+                $category = intval($product['id_category'])  !== -1 ? displayProductCategory( intval($product['id_category']), $categories) : 'Non classée';
+                $image = $product['img_name']  ?? 'default-image.jpg' ;
+
+                echo "<a href='/public/product/show/{$product['product_id']}'>
+                    <div  class='m-5 hover:border-white cursor-pointer hover:shadow-xl'>
+                
+                        <img class='flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200' src='/public/img-storage/$image' alt='Image alternative  bientot dispo'>
+                        <div class='shadow-lg border-gray-200 text-center ' >
+                            <span class='block my-2 mb-' >{$product['product_name']}</span>
+                            <span class='block my-2 border-2 border-gray-300' >{$product['product_price']} €</span>
+                            <div class='flex flex-1 justify-center ' style='width:192px;height:25px;overflow:hidden'>
+                                <p class='text-right pr-2' >{$product['product_description']}</p>
+                            </div>
+                            <div class='flex flex-1 justify-center' style='width:192px;height:25px;overflow:hidden'>
+                                <p class='text-center'>$statut</p><span class='text-gray-500'></span>
+                            </div>
+                            <div class='flex flex-1 justify-center'>
+                                <p class='text-center '>$category</p><span class='text-gray-500'></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>";
+            }
+        }
+    }
+

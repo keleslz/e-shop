@@ -9,6 +9,7 @@ use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
+use App\Repository\ProductRepository;
 
 class CategoryController extends AbstractController
 {

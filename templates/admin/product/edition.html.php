@@ -18,7 +18,7 @@
 
     <div class="medium-form pt-10 px-5 shadow-xl rounded mb-10">
         <div>
-            <span class="inline-block text-left ml-0 my-2 italic text-blue-400 border-b-2 mb-5" ><?php (intval($product['id_category']) !== -1) ? displayProductCategory($product['id_category'], $categories) : 'Non classée' ?></span>
+            <span class="inline-block text-left ml-0 my-2 italic text-blue-400 border-b-2 mb-5" ><?= (intval($product['id_category']) === -1) ? 'Non classée' : displayProductCategory($product['id_category'], $categories) ; ?></span>
         </div>
 
         <div class="flex justify-center  mb-3 p-2 shadow-md">
@@ -49,7 +49,7 @@
             <div class="input-container my-3">
                 <select class="border-2 rounded-lg border-gray-400 p-1 w-full" name="category_id" id="category_id">
 
-                    <option  class="text-red" value="<?= (intval($product['id_category']) !== -1) ? displayProductCategory($product['id_category'], $categories, false) : 'Non classée' ?>">-- Selectionner une categorie --</option>
+                    <option  class="text-red" value="Non classée">-- Selectionner une categorie --</option>
 
                     <?php foreach ($categories as $key => $value) : ?>
 

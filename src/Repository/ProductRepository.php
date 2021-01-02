@@ -155,4 +155,18 @@ class ProductRepository extends Repository
         
         return $price ?? 0;
     }
+
+    /**
+     * Update all product category field to -1 
+     */
+    public function updateProductCategory(int $id) : bool
+    {
+        $sql = "UPDATE product SET id_category = -1 WHERE id_category = :id_category";
+
+        $query = self::$pdo->prepare($sql);
+
+        return $query->execute([
+            'id_category' => $id
+        ]);
+    }
 }

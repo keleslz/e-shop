@@ -32,7 +32,6 @@ class ShopController extends AbstractController
             'adminSessionLaw' => $adminSession['law'] ?? null,
             'adminSession' => $adminSession ??  null,
             'cart' => $session->get('_cart'),
-            'email' => 'merde'
         ]);
 
         (new Repository())->disconnect();

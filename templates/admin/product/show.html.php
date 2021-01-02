@@ -5,19 +5,25 @@
 <?php $price = $this->var['price'] ?>
 <?php $categories = $this->var['categories'] ?>
 
-
 <?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
 <h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Produits</h1>
 
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>
 
-<li><a class="text-gray-700 hover:text-black pr-5" href="/public/product/create">Ajouter Produit</a></li>
+<div class="flex p-2">
+    <a class="btn btn-gray" href="/public/product/create">Ajouter Produit</a>
+</div>
 
 
 <div class="cont" style="min-height:100vh">
 
-<?php $this->var['session']->display() ?>
+    <h2 class="h2 bg-white text-gray-900 pb-3">Produit non classée</h2>
+    <div class="flex overflow-x-auto p-5 border border-black bg-gray-100">
+        <?php displayProductWithoutCategory($products, $categories) ?>
+    </div>
+
+    <?php $this->var['session']->display() ?>
 
     <?php if( $currentProduct ) : ?>
 
@@ -52,37 +58,12 @@
     <?php endif ?>
 
     <div class="flex flex-wrap p-5" >
-
         <?php if( count($products) > 0) : ?>
-
-            <?php foreach ($products as $key => $product) : ?>
-                
-                <a href="/public/product/show/<?= $product['product_id']?>">
-                    <div  class="m-5 hover:border-white cursor-pointer hover:shadow-xl">
-                
-                        <img class="flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200" src="/public/img-storage/<?= $product['img_name']  ?? 'default-image.jpg' ?>" alt="Image alternative  bientot dispo">
-                        <div class="shadow-lg border-gray-200 text-center " >
-                            <span class="block my-2 mb-" ><?=$product['product_name']?></span>
-                            <span class="block my-2 border-2 border-gray-300" ><?=$product['product_price']?> €</span>
-                            <div class="flex flex-1 justify-center " style="width:192px;height:25px;overflow:hidden">
-                                <p class="text-right pr-2" ><?= $product['product_description']?></p>
-                            </div>
-                            <div class="flex flex-1 justify-center" style="width:192px;height:25px;overflow:hidden">
-                                <p class="text-center"><?= intval($product['product_status']) === 1 ? 'En ligne' : 'Hors-ligne '; ?></p><span class="text-gray-500"></span>
-                            </div>
-                            <div class="flex flex-1 justify-center">
-                                <p class="text-center "><?= intval($product['id_category'])  !== -1 ? displayProductCategory( intval($product['id_category']), $categories) : 'Non classée' ?></p><span class="text-gray-500"></span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-            <?php endforeach ?>
-
+     
+            <?php displayProductWithCategory($products, $categories); ?>
             <?php else :?>
             <p class="text-2xl text-center pt-5 text-gray-700" >Aucun produit vous pouvez en enregistrer <a href="/public/product/create" class="text-black border-b-2 border-black">ici</a></p>
         <?php endif ;?>
-
     </div>
 
 </div>

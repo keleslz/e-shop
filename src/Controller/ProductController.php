@@ -246,6 +246,11 @@ class ProductController extends AbstractController
      */
     public function getProductByCategory($id)
     {   
+        if($_SERVER['REQUEST_METHOD'] !== 'POST')
+        {
+            throw new Exception();
+        }
+        
         if(is_nan($id))
         {
             http_response_code(400);
