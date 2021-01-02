@@ -24,7 +24,7 @@ export class ProductDisplayer {
      * fetch products from server
      */
     fetch = () => {
-        return fetch(this.url)
+        return fetch(this.url, {method:'post'})
             .then( (response) => 
             {   
                 return response.json();
@@ -66,10 +66,13 @@ export class ProductDisplayer {
 
         for (let i = 0; i <  length  ; i++) { 
             const p = product[i];
-            const idCategory = parseInt(p.id_category);
-            const category =  this.setProductCategory(idCategory, data.category);
-
-            this.setCardProperty( category , p)
+            
+            if(parseInt(p.product_status) > 0)
+            {
+                const idCategory = parseInt(p.id_category);
+                const category =  this.setProductCategory(idCategory, data.category);
+                this.setCardProperty( category , p)
+            }
         }
     }
 
@@ -111,9 +114,9 @@ export class ProductDisplayer {
         const price = document.createElement('span');
 
         const productId = product.product_id;
-        const productName = product.product_name.replace(' ', '_');
+        const slug = product.product_slug;
         
-        a.href = '/public/shop/show/' + productId + '/' + productName;
+        a.href = '/public/shop/show/' + productId + '/' + slug;
         img.src= '/public/img-storage/default-image.jpg';
         img.style.animation = 'null';
         
@@ -126,7 +129,7 @@ export class ProductDisplayer {
         const productPrice = product.product_price.replace('.',',');
         title.textContent = product.product_name.toUpperCase();
         price.textContent = productPrice + ' €';
-        category.textContent = categoryName;
+        category.textContent = categoryName === '' ? 'Produit non-classé' : categoryName ;
 
         this.productContainer.append(a);
 

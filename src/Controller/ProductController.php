@@ -21,6 +21,7 @@ use App\Repository\CategoryRepository;
 use App\Service\Product\ProductCreation;
 use App\AbstractClass\AbstractController;
 use App\Service\Product\ProductEdition;
+use Exception;
 
 class ProductController extends AbstractController
 {
@@ -43,7 +44,6 @@ class ProductController extends AbstractController
         $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
         $empty = [];
-        $good = [];
         $input->save($_POST);
         
         if(count($_POST) > 0)
@@ -75,7 +75,6 @@ class ProductController extends AbstractController
         (new Repository())->disconnect();
     }
 
-    
     /**
      * Show product
      */
@@ -117,6 +116,7 @@ class ProductController extends AbstractController
     
     /**
      * Edit product
+     * @param string $param product id
      */
     public function edition($param)
     {
@@ -221,13 +221,20 @@ class ProductController extends AbstractController
      * get all product & category and display them
      */
     public function getAll()
-    {
-        $product = (new ProductRepository())->findAllCards();
+    {   
+        
+        if($_SERVER['REQUEST_METHOD'] !== 'POST')
+        {
+            throw new Exception();
+            die(); 
+        }
+
+        $products = (new ProductRepository())->findAllCards();
         $category = (new CategoryRepository())->findAll('category', PDO::FETCH_ASSOC);
 
         echo json_encode([
             'category' => $category,
-            'product' => $product
+            'product' => $products
         ]);
 
         (new Repository())->disconnect();
