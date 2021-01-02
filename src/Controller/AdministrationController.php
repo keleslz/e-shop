@@ -30,7 +30,7 @@ class AdministrationController extends AbstractController
         $session->ifNotConnected();
         $session->ifSimpleContributor();
         $session->isClient();
-
+        
         $userRepo = new UserRepository();
         $userData = $userRepo->findOneBy(self::USER_TABLE_NAME,'id', $user['id']);
         //TODO Ajouter la securité si id n'existe pas 
@@ -97,7 +97,7 @@ class AdministrationController extends AbstractController
         $session->ifNotConnected();
         $session->ifSimpleContributor();
         
-        //TODO ajouter cette request sur les taces asynchones necessitant d'être caché
+        //TODO ajouter cette request sur les traces asynchones necessitant d'être caché
         if($_SERVER['REQUEST_METHOD'] !== 'POST')
         {
             http_response_code(404);

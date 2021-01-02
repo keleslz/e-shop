@@ -109,8 +109,6 @@ export class Dropdownbox
             })  
         }
     }
-
-    //TODO ajouter style cursor:pointer
 }
 
 /* 

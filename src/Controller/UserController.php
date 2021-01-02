@@ -16,6 +16,7 @@ use App\Service\User\UserUpdatePassword;
 use App\AbstractClass\AbstractController;
 use App\Service\User\UserDelete;
 use App\Services\User\UserAuthentification;
+use DateTime;
 
 class UserController extends AbstractController
 {
@@ -24,10 +25,11 @@ class UserController extends AbstractController
      */
     public function dashboard()
     {
-        (new UserSession())->ifNotConnected();
-        $userSession = $_SESSION['_userStart'];
+        $userSession =  new UserSession();
+        $userSession->ifNotConnected();
+        $user = $userSession->get('_userStart');
 
-        $userData = (new UserRepository())->findOneBy('user','id', $userSession['id']);
+        $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
         (new Repository())->disconnect();
 
@@ -123,7 +125,7 @@ class UserController extends AbstractController
             'session' => (new Session()),
             'email' => $userData['email'],
             'law' => $userData['law'] ,
-            'createdAt' => $userData['created_at'] ,
+            'createdAt' => (new DateTime($userData['created_at']))->format('d/m/Y à H:i') ,
         ]);
         
     }

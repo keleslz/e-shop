@@ -41,7 +41,9 @@
                 </div>
 
                 <div class="button-container flex flex-wrap">
-                    <form class="flex justify-center" action="/public/product/edition/<?= $currentProduct['product_id']?>" method="post"><button class="text-center bg-gray-500 m-2 w-1/2 rounded hover:bg-gray-600 hover:text-white" type="submit">Modifier</button></form>
+                    <form class="flex justify-center" action="/public/product/edition/<?= $currentProduct['product_id']?>" method="post">
+                        <button class="text-center bg-gray-500 m-2 w-1/2 rounded hover:bg-gray-600 hover:text-white" type="submit">Modifier</button>
+                    </form>
                     <?= deleteProductButton(intval($currentProduct['product_id'])) ?>
                 </div>
             </div>

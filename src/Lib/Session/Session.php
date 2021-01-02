@@ -3,7 +3,8 @@ namespace App\Lib\Session;
 
 class Session 
 {   
-    
+    //TODO Ajouter expiration de session
+    /** Session which will be no display to alert user */
     const NO_DISPLAY = ['_userStart','_cart','_customer'];
 
     /**
@@ -13,7 +14,7 @@ class Session
     {   
         $this->run();
     }
-    
+
     public function run()
     {
         if(session_status() !== 2)
@@ -23,7 +24,10 @@ class Session
     }
 
     /**
-     * Example : 'file','error','Error while file creation'
+     * Create a new value in $_SESSION array and can be diplayed to the user
+     * @param string $section ex : 'user'
+     * @param string $type ex : 'success'
+     * @param string $value ex : 'Connection reussie !'
      */
     public function set(string $section, string $type , $value) : void
     {   
@@ -47,15 +51,17 @@ class Session
         ? $_SESSION[$section] = null 
         : $_SESSION[$section][$type] = null;
     }
-
+    
     /**
      * Display all current errors except '_userStart', '_cart' array
      */
     public function display()
     {
+        //TODO Creer une methode qui gerera chaque element du tableau NO_DISPLAY proprement
         foreach ($_SESSION as $section => $types) {
 
-            if( is_array($_SESSION[$section]) && !($section === self::NO_DISPLAY[0]) && !($section === self::NO_DISPLAY[1]) && !($section === self::NO_DISPLAY[2]) && $types !== null)
+            if( is_array($_SESSION[$section]) && 
+            !($section === self::NO_DISPLAY[0]) && !($section === self::NO_DISPLAY[1]) && !($section === self::NO_DISPLAY[2]) && $types !== null)
             {
                 foreach ($types as $key => $value) {
 

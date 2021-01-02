@@ -5,12 +5,13 @@ use App\Lib\Session\UserSession;
 use App\Repository\ImageRepository;
 use App\AbstractClass\AbstractController;
 
-//TODO Impossible d'acceder a la requete /public/image/delete/15 ()id produit , 
-class ImageController extends AbstractController
+class PictureController extends AbstractController
 {   
-    
+    /**
+     * Delete picture associated to a product 
+     */
     public function delete($id)
-    {
+    {   
         $id = intval(strip_tags($id));
         $session = new UserSession();
         $user = $session->get('_userStart');

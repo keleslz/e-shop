@@ -111,7 +111,7 @@
                             src="/public/img-storage/<?= $image['img_name']?>" alt="L'alternatif arrive bientot"
                         >
                         <form  class="flex justify-center align-center"
-                            action="/public/image/delete/<?= $image['img_id'] ?>
+                            action="/public/picture/delete/<?= $image['img_id'] ?>
                             " method="post">
                             <button type="submit"
                                 class="bg-red-700 h-10 hover:bg-red-800 text-white font-bold py-2 px-4 border border-green-700 rounded mt-12"

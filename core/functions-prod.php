@@ -242,7 +242,6 @@
         foreach($accounts as $account)
         {      
             $law = displayLawLevel( intval($account['law']));
-            //TODO Bouton suppression de compte et confirmation dans une petite classe js 
             echo "
                 <ul class='p-3 m-2 border rounded' >
                     <div data-id='{$account['id']}'>
@@ -283,7 +282,7 @@
         if(intval($_SESSION['_userStart']['law']) > 100)
         {
             return "
-            form 
+            <form 
                 class='flex justify-center' action='/public/product/delete/$currentProductId' 
                 method='post' onclick='window.confirm('Êtes-vous sur de vouloir supprimer ce produit ?')' 
             >
