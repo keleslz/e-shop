@@ -4,10 +4,12 @@
 @use './partials/general.scss';
 @use './shop/accueil.scss';
 
+//Elements
 @use './element/loader.scss';
 @use './element/card.scss';
 @use './element/button.scss';
 @use './element/filter-board.scss';
+@use './element/sticky.scss';
 
 //QUERIES
 @use './queries/product-edit.scss';

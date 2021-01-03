@@ -67,14 +67,15 @@ export class Category {
     /**
      * If no product stop all loader animation 
      * @param {Number} length 
+     * @param {String} message 
      * @returns {boolean}
      */
-    ifNoProduct = (length) => {
+    ifNoProduct = (length , message) => {
         
         if(length === 0)
         {
-            this.moreButton.remove();
-            this.productContainer.textContent = "Aucun produit n'a encore été ajouté"
+            this.moreButton.classList.add('hidden');
+            this.productContainer.textContent = message ? message : "Aucun produit n'a encore été ajouté";
             
             return true 
         }
@@ -87,6 +88,19 @@ export class Category {
     refreshView = (data) => {
         
         if(typeof(data)  === 'object' ){
+
+            const message = "Oops.. Il n'y a actuellement aucun produit dans cette categorie..";  
+
+            if(this.ifNoProduct(data.product.length, message))
+            {
+                return;
+            }
+
+            if(this.moreButton.classList.contains('hidden'))
+            {
+                this.moreButton.classList.remove('hidden')
+            }
+            
             this.removeCurrentCard();
             this.createCard(data);
         } else{

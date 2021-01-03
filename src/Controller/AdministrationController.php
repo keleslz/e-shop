@@ -84,12 +84,11 @@ class AdministrationController extends AbstractController
         ]);    
     }
 
-    //TODO Delete
     /**
      * Get an email and delete him
      * @param string email id 
      */
-    public function delete(string $id)
+    public function delete(string $id) : void
     {   
         header('Content-Type: application/json');
         

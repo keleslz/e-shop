@@ -18,12 +18,13 @@
 
 <div class="cont" style="min-height:100vh">
 
+    <?php $this->var['session']->display() ?>
+
     <h2 class="h2 bg-white text-gray-900 pb-3">Produit non classée</h2>
-    <div class="flex overflow-x-auto p-5 border border-black bg-gray-100">
+    <div class="flex overflow-x-auto p-5 border border-red-900 bg-red-100">
         <?php displayProductWithoutCategory($products, $categories) ?>
     </div>
 
-    <?php $this->var['session']->display() ?>
 
     <?php if( $currentProduct ) : ?>
 
@@ -56,6 +57,8 @@
         </div>
 
     <?php endif ?>
+
+    <h2 class="h2 bg-white text-gray-900 py-3 mt-2">Produit classée</h2>
 
     <div class="flex flex-wrap p-5" >
         <?php if( count($products) > 0) : ?>

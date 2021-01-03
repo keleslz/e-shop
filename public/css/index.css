@@ -139,6 +139,11 @@
   margin-bottom: 20px;
 }
 
+body {
+  min-height: 100vh;
+  height: max-content !important;
+}
+
 .home-banner {
   height: 200px;
 }
@@ -417,6 +422,16 @@
 }
 #filter-board div input {
   cursor: pointer;
+}
+
+.stick {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100;
+}
+
+.no-stick {
+  position: static !important;
 }
 
 @media screen and (max-width: 905px) {

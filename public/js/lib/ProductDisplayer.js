@@ -97,9 +97,7 @@ export class ProductDisplayer {
 
         return categoryName;
     }
-    /*
-        TODO remplacer le nom du produit dans l'url par son slug && afficher seulement si le produit est en ligne
-    */
+    
     /**
      * Set property card
      * @param {string} category  product category

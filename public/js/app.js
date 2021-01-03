@@ -11,6 +11,7 @@ import { Sort } from './lib/Sort.js';
 import { DeleteAccountButton } from './lib/DeleteAccountButton.js';
 import { EditPasswordButton } from './lib/EditPasswordButton.js';
 import { DeleteUser } from './lib/administration/DeleteUser.js';
+import { Sticky } from './lib/Sticky.js';
 
 //Elements
 
@@ -19,6 +20,8 @@ new Dropdownbox({
     container : 'dropdown',
     items : 'items'
 });
+
+new Sticky();
 
 //shop/home
 new ProductDisplayer('product-container');

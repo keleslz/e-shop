@@ -1,6 +1,6 @@
 <?php $law = intval($this->var['adminSessionLaw']) ?>
 
-<nav class="flex justify-around p-3 bg-black flex-wrap items-center">
+<nav id="nav" class="flex justify-around p-3 bg-black flex-wrap items-center">
     
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>
     <ul id="navbar-category" class="list-none  dropdown" style="height:30px;">

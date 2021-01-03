@@ -41,6 +41,7 @@ class Repository
             if( !($_SERVER['REQUEST_URI'] === '/user/signin' || $_SERVER['REQUEST_URI'] === '/user/signup') )
             {
                 include_once ROOT . DS . 'templates/error/error.html.php';
+                header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             }
             die();
         }

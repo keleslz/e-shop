@@ -1,6 +1,5 @@
-/*
-    TODO Ne pas trier les donées en les recuperant sur le serveur mais plutot trier celle deja presente sur la page en 
-    TODO conservant le tri désiré a chaque fois que l'on fait "voir plus" !! important !!
+/*  TODO Ne pas trier les donées en les recuperant sur le serveur mais plutot trier celle deja presente sur la page en 
+     conservant le tri désiré a chaque fois que l'on fait "voir plus" !! important !!
 */
 export class Sort {
 

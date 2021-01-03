@@ -308,8 +308,8 @@
 
             if( intval($product['id_category']) > 0 ) 
             {
-                echo "<a href='/public/product/show/{$product['product_id']}'>
-                    <div  class='m-5 hover:border-white cursor-pointer hover:shadow-xl'>
+                echo "<a class='max-w-max m-5 ' style='height:max-content'  href='/public/product/show/{$product['product_id']}'>
+                    <div  class='hover:border-white cursor-pointer hover:shadow-xl'>
                 
                         <img class='flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200' src='/public/img-storage/$image' alt='Image alternative  bientot dispo'>
                         <div class='shadow-lg border-gray-200 text-center ' >
@@ -319,17 +319,15 @@
                                 <p class='text-right pr-2' >{$product['product_description']}</p>
                             </div>
                             <div class='flex flex-1 justify-center' style='width:192px;height:25px;overflow:hidden'>
-                                <p class='text-center'>$status</p><span class='text-gray-500'></span>
+                                <p class='text-center  p-1'>$status</p>
                             </div>
-                            <div class='flex flex-1 justify-center'>
-                                <p class='text-center '>{$category}</p><span class='text-gray-500'></span>
+                            <div class='flex flex-1 justify-center bg-white'>
+                                <p class='text-center   p-1'>{$category}</p>
                             </div>
                         </div>
                     </div>
                 </a>";
             }
-
-            
         }
     }
 
@@ -343,21 +341,21 @@
                 $category = intval($product['id_category'])  !== -1 ? displayProductCategory( intval($product['id_category']), $categories) : 'Non classée';
                 $image = $product['img_name']  ?? 'default-image.jpg' ;
 
-                echo "<a href='/public/product/show/{$product['product_id']}'>
-                    <div  class='m-5 hover:border-white cursor-pointer hover:shadow-xl'>
+                echo "<a class='max-w-max m-5 ' style='height:max-content' href='/public/product/show/{$product['product_id']}'>
+                    <div  class='hover:border-white cursor-pointer hover:shadow-xl'>
                 
                         <img class='flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200' src='/public/img-storage/$image' alt='Image alternative  bientot dispo'>
                         <div class='shadow-lg border-gray-200 text-center ' >
-                            <span class='block my-2 mb-' >{$product['product_name']}</span>
-                            <span class='block my-2 border-2 border-gray-300' >{$product['product_price']} €</span>
+                            <span class='block py-2 pb-2 bg-white' >{$product['product_name']}</span>
+                            <span class='block py-2  bg-white border-2 border-gray-300' >{$product['product_price']} €</span>
                             <div class='flex flex-1 justify-center ' style='width:192px;height:25px;overflow:hidden'>
-                                <p class='text-right pr-2' >{$product['product_description']}</p>
+                                <p class='text-right pr-2  bg-white ' >{$product['product_description']}</p>
                             </div>
-                            <div class='flex flex-1 justify-center' style='width:192px;height:25px;overflow:hidden'>
-                                <p class='text-center'>$statut</p><span class='text-gray-500'></span>
+                            <div class='flex flex-1 justify-center bg-white' style='width:192px;height:25px;overflow:hidden'>
+                                <p class='text-center p-1'>$statut</p>
                             </div>
-                            <div class='flex flex-1 justify-center'>
-                                <p class='text-center '>$category</p><span class='text-gray-500'></span>
+                            <div class='flex flex-1 justify-center bg-white'>
+                                <p class='text-center bg-white d-block p-1'>$category</p>
                             </div>
                         </div>
                     </div>
