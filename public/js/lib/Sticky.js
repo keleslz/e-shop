@@ -3,9 +3,8 @@
  */
 export class Sticky
 {
-    constructor() {
-        this.nav = document.getElementById('nav');
-        this.actualPositionScroll();
+    constructor(element) {
+        this.nav = document.getElementById(element);
         this.run();
     }
 
@@ -16,6 +15,7 @@ export class Sticky
 
         if(this.nav)
         {   
+            this.actualPositionScroll();
             this.event();
         }
     }
@@ -35,14 +35,14 @@ export class Sticky
      * scroll bar actual position
      */
     actualPositionScroll = () => {
-        this.addOrRemoveClass(this.nav);
+        this.addOrRemoveClass();
     }
 
     /**
      * Add or remove sticky/no-sticky
      * @param {HTMLelement} nav 
      */
-    addOrRemoveClass = (nav) => {
+    addOrRemoveClass = () => {
 
         const enable = 'stick';
         const disable = 'no-stick';
@@ -50,16 +50,16 @@ export class Sticky
 
         if( window.scrollY > activationPoint)
         {   
-            if(nav.classList.contains(disable))
-            {
-                nav.classList.remove(disable);
+            if(this.nav.classList.contains(disable))
+            {   
+                this.nav.classList.remove(disable);
             }
-            nav.classList.add(enable);
+            this.nav.classList.add(enable);
         }else{
-            if( nav.classList.contains(enable) ) {
-                nav.classList.remove(enable);
+            if( this.nav.classList.contains(enable) ) {
+                this.nav.classList.remove(enable);
             }
-            nav.classList.add(disable);
+            this.nav.classList.add(disable);
         }
     }
 }

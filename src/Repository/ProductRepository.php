@@ -38,7 +38,7 @@ class ProductRepository extends Repository
 
         $query = self::$pdo->query($sql);
         
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function findAllCards() 
@@ -168,5 +168,33 @@ class ProductRepository extends Repository
         return $query->execute([
             'id_category' => $id
         ]);
+    }
+
+    /**
+     * Get all product without category
+     */
+    public function findAllWithoutCategoryCount() : array
+    {
+        $sql =" SELECT COUNT(*)
+                FROM product
+                WHERE id_category = -1";
+
+        $query = self::$pdo->query($sql);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Get all product with category
+     */
+    public function findAllWithCategory() : array
+    {
+        $sql =" SELECT product_id, product_name, product_price, product_slug, product_status, img_name, id_category
+                FROM product
+                WHERE id_category <> -1";
+
+        $query = self::$pdo->query($sql);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }

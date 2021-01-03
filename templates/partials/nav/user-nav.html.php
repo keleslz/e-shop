@@ -1,6 +1,6 @@
 <?php $law = $this->var['law'] ?>
 
-<nav class="flex justify-around p-3 bg-black flex-wrap">
+<nav id="nav" class="flex justify-around p-3 bg-black flex-wrap">
     <li class="mb-2 list-none pr-5"><a class="hover:text-gray-400 text-white" href="/public/user/dashboard">Tableau de board</a></li>
     <div>
         <li class="mb-2 list-none pr-5"><a class="hover:text-gray-400 text-white" href="/public/user/edit">Mon profil : <?= $this->var['email']?></a></li>

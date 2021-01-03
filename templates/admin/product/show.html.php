@@ -4,6 +4,8 @@
 <?php $currentCategoryName = $this->var['currentCategoryName'] ?>
 <?php $price = $this->var['price'] ?>
 <?php $categories = $this->var['categories'] ?>
+<?php $productCount = $this->var['productCount'] ?>
+<?php $productWithoutCategoryCount = $this->var['productWithoutCategoryCount'] ?>
 
 <?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
@@ -19,12 +21,15 @@
 <div class="cont" style="min-height:100vh">
 
     <?php $this->var['session']->display() ?>
-
-    <h2 class="h2 bg-white text-gray-900 pb-3">Produit non classée</h2>
-    <div class="flex overflow-x-auto p-5 border border-red-900 bg-red-100">
-        <?php displayProductWithoutCategory($products, $categories) ?>
-    </div>
-
+    
+    <?php if( !$currentProduct ) : ?>   
+        <div>
+            <h2 class="h2 bg-white text-gray-900 pb-3 justify-around ">Produit non classée <span class="mx-1 "><?=  $productWithoutCategoryCount . '/' .  $productCount ?></span><button id="product-button-without-category" class="mx-2 btn btn-gray">Voir</button></h2>
+        </div>
+        <div id="product-without-category" class="hidden flex overflow-x-auto p-5 border border-red-900 bg-red-100">
+            <?php  displayProductWithoutCategory($products, $categories) ?>
+        </div>
+    <?php endif ;?> 
 
     <?php if( $currentProduct ) : ?>
 
@@ -58,16 +63,17 @@
 
     <?php endif ?>
 
-    <h2 class="h2 bg-white text-gray-900 py-3 mt-2">Produit classée</h2>
+    <?php if( !$currentProduct ) : ?>   
+        <h2 class="h2 bg-white text-gray-900 py-3 mt-2 justify-around">Produit classée<span class="mx-1 "><?= intval($productCount) - intval($productWithoutCategoryCount) ?></span><button id="product-button-with-category" class="mx-2 btn btn-gray">Voir</button></h2>
 
-    <div class="flex flex-wrap p-5" >
-        <?php if( count($products) > 0) : ?>
-     
-            <?php displayProductWithCategory($products, $categories); ?>
-            <?php else :?>
-            <p class="text-2xl text-center pt-5 text-gray-700" >Aucun produit vous pouvez en enregistrer <a href="/public/product/create" class="text-black border-b-2 border-black">ici</a></p>
-        <?php endif ;?>
-    </div>
-
+        <div id="product-with-category" class="hidden flex flex-wrap p-5" >
+            <?php if( count($products) > 0 ) : ?>
+        
+                <?php displayProductWithCategory($products, $categories); ?>
+                <?php else :?>
+                <p class="text-2xl text-center pt-5 text-gray-700" >Aucun produit vous pouvez en enregistrer <a href="/public/product/create" class="text-black border-b-2 border-black">ici</a></p>
+            <?php endif ;?>
+        </div>
+    <?php endif ;?> 
 </div>
         

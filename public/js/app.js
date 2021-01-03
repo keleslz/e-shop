@@ -12,6 +12,7 @@ import { DeleteAccountButton } from './lib/DeleteAccountButton.js';
 import { EditPasswordButton } from './lib/EditPasswordButton.js';
 import { DeleteUser } from './lib/administration/DeleteUser.js';
 import { Sticky } from './lib/Sticky.js';
+import { Hide } from './lib/Hide.js';
 
 //Elements
 
@@ -21,7 +22,7 @@ new Dropdownbox({
     items : 'items'
 });
 
-new Sticky();
+new Sticky('nav');
 
 //shop/home
 new ProductDisplayer('product-container');
@@ -41,3 +42,7 @@ new DeleteAccountButton('delete-account-button');
 
 //Administration
 new DeleteUser('.delete-account-button');
+
+//Element
+new Hide('product-button-with-category', 'product-with-category');
+new Hide('product-button-without-category', 'product-without-category');

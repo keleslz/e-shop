@@ -91,13 +91,16 @@ class ProductController extends AbstractController
 
         $repo = new ProductRepository();
         $products = $repo->findAllProductAndImage();
+        $productWithoutCategoryCount = $repo->findAllWithoutCategoryCount()[0]['COUNT(*)'];
+
         $currentProduct = $repo->findOneBy('product', 'product_id', $id);
         $currentimg = (new FileRepository())->findImageProduct($currentProduct['id_img'] ?? null);  
         $category = new CategoryRepository();
-        
+
         if( isset($currentProduct['id_category']) ){
             $currentProductCategory = $category->findOneBy('category','category_id' , intval($currentProduct['id_category']));
         }
+
         $this->render('admin/product/show', [
             'email' => $userData['email'],
             'products' => $products,
@@ -108,6 +111,8 @@ class ProductController extends AbstractController
             'price' => $currentProduct['product_price'] ?? null,
             'categories' => $category->findAll('category'),
             'law' => intval($userData['law']),
+            'productCount' =>  count($products),
+            'productWithoutCategoryCount' =>  $productWithoutCategoryCount,
         ] );
         
         (new Repository())->disconnect();
