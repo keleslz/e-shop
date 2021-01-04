@@ -1,9 +1,13 @@
+/**Color **/
 $bg-color : rgba(204, 204, 204 , 1);
 $bg-color-transparent : rgba(204, 204, 204 , 0);
+$category : rgb(34, 80, 206);
+$white : #fff;
+
 $radius : 5px;
 $card-radius : 10px;
+
 $txt-color : #333; 
-$category : rgb(34, 80, 206);
 $blink :  2s ease-in 1s blinks infinite;
 
 .card {
@@ -53,6 +57,34 @@ $blink :  2s ease-in 1s blinks infinite;
         font-weight: 500;
     }
 
+}
+
+.card-no-pic {
+    
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    padding: 20px 15px 10px 15px;
+    border-radius: $card-radius;
+    margin: 10px;
+    background-color: $white;
+    cursor: pointer;
+
+    &:first-child {
+
+        :nth-child(1),
+        :nth-child(2)
+        {
+            padding: 3px;
+        }
+
+        :nth-child(2) {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+    }
 }
 
 #card-loader

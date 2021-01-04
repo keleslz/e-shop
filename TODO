@@ -23,6 +23,11 @@ Lors du commit lister les fichiers modifiés pour n'ajouter que ceux la pour pro
         Session : 
             Verifier que l'affichage de session n'affiche pas _cart 
 
+    On recupere le mail de information de livraison on taf avec
+    On envoi un mail a l'utilisateur pour lui dire que sa commande a été pris en compte
+    Puis coté admin on valide la commande et ca notifie le user que sa commande est 
+        parti et qu'il recevra dans 5 jours ouvré
+
 2. FRONT
     JS : 
 
@@ -39,4 +44,5 @@ Lors du commit lister les fichiers modifiés pour n'ajouter que ceux la pour pro
 
     Boites à idée : 
         - Ajouter multi filtres de produits par categories via Ajax
+
 

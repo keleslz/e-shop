@@ -2,10 +2,13 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Entity\User;
+use App\Entity\Order;
 use Stripe\Checkout\Session;
-use App\Lib\Input\InputError;
 use App\Lib\Session\CartSession;
-use App\Repository\ProductRepository;
+use App\Lib\Session\UserSession;
+use App\Repository\UserRepository;
+use App\Repository\OrderRepository;
 use App\AbstractClass\AbstractController;
 use App\Lib\Session\Session as mySession;
 
@@ -17,7 +20,19 @@ class StripeController extends AbstractController
      */
     public function createCheckoutSession ()
     {
+      if($_SERVER['REQUEST_METHOD'] !== 'POST')
+      {
+        http_response_code(404);
+        die();
+      }
       $sum = (new CartSession())->getTotalPrice() * 100;
+
+      if($sum < 50)
+      {
+        http_response_code(404);
+        $this->redirectTo('shop/cart');
+        die();
+      }
 
       \Stripe\Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
       header('Content-Type: application/json');
@@ -42,19 +57,29 @@ class StripeController extends AbstractController
       echo json_encode(['id' => $checkout_session->id]);
     }
 
-    public function checkout()
-    {
-      $this->render('stripe/checkout');
-    }
-
     /**
      * Case payment success
      */
     public function success()
     { 
       $session = new mySession();
+
+      if(!isset($_SESSION['_cart']) || empty($_SESSION['_cart']))
+      {
+          http_response_code(404);
+          $this->redirectTo('shop/home');
+          die();
+      }
+
+      $order = $_SESSION['_order'];
+
+      (new OrderRepository())->create($order)
+        ? $session->set('user','success', 'Merci pour votre confiance à très vite')
+        : $session->set('order','error', 'Erreur enregistrement commande')
+      ;
+      // TODO envoi email
+      
       unset($_SESSION['_cart']);
-      $session->set('user','success', 'Merci pour votre confiance à très vite');
       $this->redirectTo('shop/home');
     }
 
@@ -64,7 +89,7 @@ class StripeController extends AbstractController
     public function error()
     {
       $session = new mySession();
-      $session->set('user','error', "Une erreur est survenue lors du paiement, nous vous conseillons de vous rapprocher de votre banque et de réessayer ultèrieuement ou d'éssayer avec une autre carte de crédit");
+      $session->set('user','info', "Abandon du panier");
       $this->redirectTo('shop/home');
     }
 }

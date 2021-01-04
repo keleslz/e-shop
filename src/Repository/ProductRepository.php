@@ -197,4 +197,25 @@ class ProductRepository extends Repository
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Get total price of a cart
+     */
+    public function getTotalPrice(string $idList)
+    {      
+        
+        $sql =" SELECT product_id, product_price 
+                FROM product
+                WHERE product_id 
+                IN (:idList) 
+            ";
+
+        $query = self::$pdo->prepare($sql);
+
+        $query->execute([
+            'idList' => $idList
+        ]);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

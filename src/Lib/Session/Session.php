@@ -5,7 +5,7 @@ class Session
 {   
     //TODO Ajouter expiration de session
     /** Session which will be no display to alert user */
-    const NO_DISPLAY = ['_userStart','_cart','_customer'];
+    const NO_DISPLAY = ['_userStart','_cart','_customer','_order'];
 
     /**
      * Run a session_start

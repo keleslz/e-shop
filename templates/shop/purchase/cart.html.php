@@ -16,8 +16,8 @@
 
         <?php $totalCost = displayCartList($productsCart, $cart) ?>
 
-        <a href="#" id="checkout-button">
-            <div style="height:max-content;position:fixed; top:200px; right:10px" class="cursor-pointer bg-green-700 h-10 hover:bg-green-800 text-white font-bold py-2  mb-5 px-4 border border-green-700 rounded">
+        <a href="/public/shop/delivery" id="go-to-info-customer">
+            <div style="height:max-content;position:fixed; top:200px; right:10px" class="card-no-pic">
             <p class="text-center">Total : <span id="price"><?= totalPriceForAllCart($totalCost) ?></span> €</p>
                 <span>Passer à la caisse</span>
             </div>
@@ -31,5 +31,3 @@
     <?php endif ?>
 
 </div>
-//TODO bloquer le bouton "Passer à la caisse" si le prix final du panier n'est pas supèrieur 0.50€ car Stripe n'accepte pas en dessous de 0.50$ 
-<script type="text/javascript" src="/public/js/api/stripe/checkout.js"></script>

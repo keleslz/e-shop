@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Bill;
+use App\Entity\Order;
 use App\Entity\Client;
 use App\Lib\input\Input;
 use App\Repository\Repository;
@@ -11,9 +12,15 @@ use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
+use App\Lib\Session\CartSession;
+use App\Lib\Session\Session;
 
 class ShopController extends AbstractController
 {
+    const USER_TABLE_NAME = 'user';
+    const EMAIL_TABLE_FIELD_NAME = 'email';
+    const USER_ID_FIELD = 'id';
+
     public function home()
     {   
         $session = new UserSession();
@@ -120,7 +127,7 @@ class ShopController extends AbstractController
         $user = $_SESSION['_userStart'] ?? null;
 
         $adminSession = [];
-                
+        
         if(isset($user['id']))
         {
             $adminSession = (new UserRepository())->findOneBy('user','id', intval($user['id']));
@@ -132,7 +139,7 @@ class ShopController extends AbstractController
 
         if(!count($cart) > 0)
         {
-            $userSession->set('shop', 'error', 'Désolé une erreur est survenue');
+            $userSession->set('shop', 'error', 'Accès refusé : Panier vide');
             $this->redirectTo('shop/home');
             die();
         }
@@ -148,7 +155,8 @@ class ShopController extends AbstractController
             if (empty($empty) && !in_array(false, $conform))
             {   
                 $_SESSION['_customer']['delivery'] = (new Client($post));
-                $this->redirectTo('shop/payment');
+                $this->redirectTo('stripe/createCheckoutSession');
+                
             }else{
                 $post = $input->cleaner($_POST);
                 $input->save($post);
@@ -166,6 +174,53 @@ class ShopController extends AbstractController
         ]);
 
         (new Repository())->disconnect();
+    }
+
+    /**
+     * Store customer delivery information on session
+     */
+    public function registreUserOnSession() : void
+    {
+        header('Content-Type: application/json;charset=utf-8');
+        
+        if($_SERVER['REQUEST_METHOD'] !== 'POST')
+        {
+            http_response_code(404);
+        }
+
+        if(!isset($_POST) || empty($_POST))
+        { 
+            http_response_code(401);
+        }  
+
+        $input = new Input();
+        $post = $input->cleaner($_POST);
+        $empty = $input->isEmpty($_POST);
+        $conform = $input->hasGoodformat($_POST);
+        
+        if (empty($empty) && is_array($conform) && !in_array(false, $conform))
+        {   
+            $session =  new CartSession();
+            $user = $session->get('_userStart');
+            $cart = $session->get('_cart');
+            
+            $totalPrice = $session->getTotalPrice($cart);
+            $order = (new Order($post))->setArticle($cart)->setTotal($totalPrice);
+            
+            if(isset($user['id']))
+            {   
+                $userRepo = (new UserRepository())->findOneBy(self::USER_TABLE_NAME, self::USER_ID_FIELD, intval($user['id']));
+                $userId = is_array($userRepo) ? intval($userRepo['id']) : null ;
+                $order->setUserId($userId);
+            }
+            
+            $_SESSION['_order'] = $order;
+            var_dump($order);
+            http_response_code(200);
+            return;
+        }
+
+        http_response_code(401);
     }
 
   /*   public function payment()

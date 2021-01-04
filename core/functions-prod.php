@@ -129,8 +129,12 @@
                                 <p style='min-width:200px;' class='block mx-2'>Quantité : <span>{$quantity}</span></p>
                                 <p style='min-width:200px;' class='block mx-2'>Prix : <span>{$cartRepo['product_price']} </span>€</p>
                                 <p style='min-width:200px;' class='block mx-2'>Total : <span class='one-cart-total-price'>{$totalPrice}</span> €</p>
-                                <button class='remove-product' data-id='{$productId}' style='width:150px' class='mt-5 mb-2 text-center bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-1 px-1 border border-gray-500 hover:border-transparent rounded'
-                                >Retirer l'article</button>
+                                <button 
+                                    style='width:150px' 
+                                    class='remove-product btn btn-r m-1 mt-2'
+                                    data-id='{$productId}' 
+                                >Retirer l'article
+                                </button>
                             </div>
                         </div> 
                     </a>
