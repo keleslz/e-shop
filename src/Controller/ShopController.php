@@ -207,16 +207,17 @@ class ShopController extends AbstractController
 
             $totalPrice = $session->getTotalPrice($cart);
             $order = (new Order($post))->setArticle($cart)->setTotal($totalPrice);
-            
+            $userRepo = new UserRepository();
+
             if(isset($user['id']))
             {   
-                $userRepo = (new UserRepository())->findOneBy(self::USER_TABLE_NAME, self::USER_ID_FIELD, intval($user['id']));
+                $userRepo = $userRepo->findOneBy(self::USER_TABLE_NAME, self::USER_ID_FIELD, intval($user['id']));
                 $userId = is_array($userRepo) ? intval($userRepo['id']) : null ;
                 $order->setUserId($userId);
             }
-            
             $_SESSION['_order'] = $order;
             
+            $userRepo->disconnect();
             http_response_code(200);
             return;
         }

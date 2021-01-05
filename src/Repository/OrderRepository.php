@@ -27,7 +27,7 @@ class OrderRepository extends Repository
             'order_zip' => $order->getZip(),
             'order_city' => $order->getCity(),
             'order_department' => $order->getDepartment(),
-            'order_article' => (string) $order->getArticle(),
+            'order_article' => json_encode($order->getArticle()),
             'order_total_price' => $order->getTotal(),
             'id_user' => $order->getUserId()
             ]);

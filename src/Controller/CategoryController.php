@@ -26,6 +26,7 @@ class CategoryController extends AbstractController
       $category = new Category();
 
       $categories = $categoryRepo->findAll('category');
+      $categoryRepo->disconnect();
 
       $this->render('admin/category/show',  [
          'email' => $userData['email'],

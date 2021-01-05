@@ -95,7 +95,7 @@ class Category
                 die();
             }
         }
-        
+        $categoryRepo->disconnect();
         $session->set('category','success', 'Categorie(s) supprimée(s)');
         $controller->redirectTo('category/show');
         die();

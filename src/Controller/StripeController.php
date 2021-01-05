@@ -73,7 +73,9 @@ class StripeController extends AbstractController
 
       $order = $_SESSION['_order'];
 
-      if($store = (new OrderRepository())->create($order))
+      $orderRepo = new OrderRepository();
+
+      if($store = $orderRepo->create($order))
       {
         $session->set('user','success', 'Merci pour votre confiance à très vite');
       }else{
@@ -81,6 +83,8 @@ class StripeController extends AbstractController
       };
       
       // TODO envoi email
+
+      $order->disconnect();
 
       if($store) {
 
