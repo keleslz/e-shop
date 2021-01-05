@@ -64,7 +64,7 @@ class StripeController extends AbstractController
     { 
       $session = new mySession();
 
-      if(!isset($_SESSION['_cart']) || empty($_SESSION['_cart']))
+      if(!isset($_SESSION['_cart']) || empty($_SESSION['_cart']) || !isset($_SESSION['_order']) || empty($_SESSION['_order']))
       {
           http_response_code(404);
           $this->redirectTo('shop/home');
@@ -73,13 +73,20 @@ class StripeController extends AbstractController
 
       $order = $_SESSION['_order'];
 
-      (new OrderRepository())->create($order)
-        ? $session->set('user','success', 'Merci pour votre confiance à très vite')
-        : $session->set('order','error', 'Erreur enregistrement commande')
-      ;
-      // TODO envoi email
+      if($store = (new OrderRepository())->create($order))
+      {
+        $session->set('user','success', 'Merci pour votre confiance à très vite');
+      }else{
+        $session->set('order','error', 'Erreur enregistrement commande');
+      };
       
-      unset($_SESSION['_cart']);
+      // TODO envoi email
+
+      if($store) {
+
+        unset($_SESSION['_cart']);
+      }
+
       $this->redirectTo('shop/home');
     }
 

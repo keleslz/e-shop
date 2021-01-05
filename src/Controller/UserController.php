@@ -14,6 +14,7 @@ use App\Service\User\UserCreation;
 use App\Service\User\UserUpdateEmail;
 use App\Service\User\UserUpdatePassword;
 use App\AbstractClass\AbstractController;
+use App\Repository\OrderRepository;
 use App\Service\User\UserDelete;
 use App\Services\User\UserAuthentification;
 use DateTime;
@@ -31,12 +32,21 @@ class UserController extends AbstractController
 
         $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
+        if(($userData['law']) > 1 )
+        {
+            $orderRepo = (new OrderRepository());
+            $ordersValidated = $orderRepo->findAllValidated();
+            $ordersRejected = $orderRepo->findAllRejected();
+            $ordersNoValidated = $orderRepo->findAllNoValidated();
+        }
+
         (new Repository())->disconnect();
 
         $this->render('admin/user/dashboard', [
             'email' => $userData['email'],
             'law' => $userData['law'],
-            'session'=> (new Session())
+            'session'=> (new Session()),
+            'orders' => ['validated' => $ordersValidated ?? [], 'noValidated' => $ordersNoValidated ?? [], 'rejected' =>  $ordersRejected ?? [] ],
         ]);
     }
 

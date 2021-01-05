@@ -25,15 +25,20 @@ class Order {
 
     private string $department;
 
-    private array $article = [];
+    private $article = [];
 
     private float $total;
 
     private array $info;
 
-    private $createAt;
+    private $createdAt;
 
-    public function __construct(array $info) 
+    /**
+     * @var bool $state if order was validated or not
+     */
+    private bool $state = false; 
+
+    public function __construct(array $info = []) 
     {
         $this->info = $info;
         $this->init();
@@ -44,6 +49,11 @@ class Order {
      */
     public function init() : self
     {   
+        if(count($this->info) === 0)
+        {
+            return $this;
+        }
+        
         $this->name = $this->info['name'];
         $this->surname = $this->info['surname'];
         $this->email = $this->info['email'];
@@ -61,6 +71,15 @@ class Order {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */ 
+    public function setId(int $id) : self
+    {   
+        $this->id = intval($id);
+        return $this;
     }
     
     /**
@@ -95,9 +114,8 @@ class Order {
     /**
      * Set the value of name
      *
-     * @return  self
      */ 
-    public function setName($name)
+    public function setName($name) : self
     {
         $this->name = $name;
 
@@ -115,9 +133,8 @@ class Order {
     /**
      * Set the value of Surname
      *
-     * @return  self
      */ 
-    public function setSurname($surname)
+    public function setSurname($surname) : self
     {
         $this->surname = $surname;
 
@@ -135,9 +152,8 @@ class Order {
     /**
      * Set the value of email
      *
-     * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail($email) : self
     {
         $this->email = $email;
 
@@ -155,9 +171,8 @@ class Order {
     /**
      * Set the value of address
      *
-     * @return  self
      */ 
-    public function setAddress($address)
+    public function setAddress($address) : self
     {
         $this->address = $address;
 
@@ -175,9 +190,8 @@ class Order {
     /**
      * Set the value of zip
      *
-     * @return  self
      */ 
-    public function setZip($zip)
+    public function setZip($zip) : self
     {
         $this->zip = $zip;
 
@@ -195,9 +209,8 @@ class Order {
     /**
      * Set the value of city
      *
-     * @return  self
      */ 
-    public function setCity($city)
+    public function setCity($city) : self
     {
         $this->city = $city;
 
@@ -215,9 +228,8 @@ class Order {
     /**
      * Set the value of department
      *
-     * @return  self
      */ 
-    public function setDepartment($department)
+    public function setDepartment($department) : self
     {
         $this->department = $department;
 
@@ -226,16 +238,18 @@ class Order {
 
     /**
      * Get article list
+     * @param array|string
      */ 
-    public function getArticle() : array
+    public function getArticle() 
     {
         return $this->article;
     }
 
     /**
      * Set the value of article
+     * @param array|string $article
      */ 
-    public function setArticle(array $article) : self
+    public function setArticle($article) : self
     {
         $this->article = $article;
 
@@ -253,20 +267,47 @@ class Order {
     /**
      * Set the value of total
      */ 
-    public function setTotal($total) : self
+    public function setTotal(float $total) : self
     {
         $this->total = $total;
 
         return $this;
     }
-    
+
     /**
      * Get the value of date of creation
      */ 
     public function getCreatedAt() : string 
     {
-        $now = new DateTime('now', new DateTimeZone('europe/paris'));
+        return $this->createdAt;
+    }
+    
+    
+    /**
+     * Set the value of date of creation
+     */ 
+    public function setCreatedAt($createdAt) : self
+    {
+        $this->createdAt = $createdAt;
 
-        return $this->createdAt = $now->format('Y-m-d H:m:i');
+        return $this;
+    }
+    /**
+     * Get the value of state
+     */ 
+    public function getState() : string 
+    {
+        return $this->state;
+    }
+    
+    
+    /**
+     * Set the value of state
+     */ 
+    public function setState(bool $state) : self
+    {
+        $this->state = $state;
+
+        return $this;
     }
 }

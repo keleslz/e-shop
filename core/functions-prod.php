@@ -1,79 +1,153 @@
 <?php
 
-/** Admin Category */
-    function displayProductCategory(int $idProductCategory, array $categoryList, $name = true) 
-    {   
-        foreach ($categoryList as $key => $category) {
+/** Admin */
+    /**Category */
+        function displayProductCategory(int $idProductCategory, array $categoryList, $name = true) 
+        {   
+            foreach ($categoryList as $key => $category) {
 
-            if(intval($category['category_id']) === $idProductCategory )
-            {   
-                if($name === true)
+                if(intval($category['category_id']) === $idProductCategory )
                 {   
-                    return $category['category_name'];
-                }else{
-                    return intval($category['category_id']);
+                    if($name === true)
+                    {   
+                        return $category['category_name'];
+                    }else{
+                        return intval($category['category_id']);
+                    }
                 }
             }
         }
-    }
 
-
-    function displayCategories(array $categories) : void
-    {   
-       
-        if( count($categories) > 0 && intval($_SESSION['_userStart']['law']) < 1000 )  /** Is simple contributor */
+        function displayCategories(array $categories) : void
         {   
-            foreach ($categories as $category => $value) {
+        
+            if( count($categories) > 0 && intval($_SESSION['_userStart']['law']) < 1000 )  /** Is simple contributor */
+            {   
+                foreach ($categories as $category => $value) {
 
-                $id = $value['category_id'];
-                $name = $value['category_name'];
+                    $id = $value['category_id'];
+                    $name = $value['category_name'];
 
-                echo "
-                    <div class='flex items-center w-100 border-b-2 mb-3 pb-1'>
-                        <label class='inline-block text-center' style='width:50%' for='category'>$name</label>
-                        <a href='/public/category/edit/$id' class='bg-gray-700 h-10 hover:bg-gray-800 text-white font-bold p-1 border border-gray-700 rounded' type='submit'>Editer</a>
-                    </div>
-                ";
+                    echo "
+                        <div class='flex items-center w-100 border-b-2 mb-3 pb-1'>
+                            <label class='inline-block text-center' style='width:50%' for='category'>$name</label>
+                            <a href='/public/category/edit/$id' class='bg-gray-700 h-10 hover:bg-gray-800 text-white font-bold p-1 border border-gray-700 rounded' type='submit'>Editer</a>
+                        </div>
+                    ";
+                }
+                
             }
-            
+            else if( count($categories) > 0) /** Is contributor or admin */
+            {
+                foreach ($categories as $category => $value) {
+
+                    $id = $value['category_id'];
+                    $name = $value['category_name'];
+
+                    echo "
+                        <div class='flex items-center w-100 border-b-2 mb-3 pb-1'>
+                            <input class='inline-block' style='width:50%' type='checkbox' id='$name-$id' name='$name' value='$id'>
+                            <label class='inline-block text-center' style='width:50%' for='category'>$name</label>
+                            <a href='/public/category/edit/$id' class='bg-gray-700 h-10 hover:bg-gray-800 text-white font-bold p-1 border border-gray-700 rounded' type='submit'>Editer</a>
+                        </div>
+                    ";
+                }
+
+                echo "<button class='text-center bg-red-500 m-2 w-1/3 rounded hover:bg-red-600 hover:text-white py-1' type='submit'>Supprimer</button>";
+                
+            } else{ /** No category */
+
+                echo    "<p class='text-2xl text-center py-5 text-gray-700'>
+                            Aucune catégorie vous pouvez en enregistrer 
+                            <a href='/public/category/create' class='text-black border-b-2 border-black'>ici</a>
+                        </p>";
+            }
         }
-        else if( count($categories) > 0) /** Is contributor or admin */
+
+
+        /** General Navbar Shop */
+        function displayCategoriesList (array $categories)
         {
-            foreach ($categories as $category => $value) {
+            foreach ($categories as $key => $category) {
 
-                $id = $value['category_id'];
-                $name = $value['category_name'];
-
+                echo "<a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='?category/{$category['category_name']}' data-id='{$category['category_id']}' >{$category['category_name']}</a>";
+            }
+        }
+        
+    /** Dashboard */
+        /** Orderslist */
+        function displayOrdersList(array $orders, bool $displayButton = false) : void
+        {   
+            foreach($orders as $order)
+            {   
+                $articles = displayArticles($order->getArticle());
+                $price = str_replace('.', ',', $order->getTotal()) . '€';
+                $buttons = displayButtons($displayButton, $order->getId()); 
+                
                 echo "
-                    <div class='flex items-center w-100 border-b-2 mb-3 pb-1'>
-                        <input class='inline-block' style='width:50%' type='checkbox' id='$name-$id' name='$name' value='$id'>
-                        <label class='inline-block text-center' style='width:50%' for='category'>$name</label>
-                        <a href='/public/category/edit/$id' class='bg-gray-700 h-10 hover:bg-gray-800 text-white font-bold p-1 border border-gray-700 rounded' type='submit'>Editer</a>
-                    </div>
+                    <ul class='m-3'>
+                        <li><span>Nom : </span>{$order->getName()}</li>
+                        <li><span>Prenom : </span>{$order->getSurname()}</li>
+                        <li><span>Email : </span>{$order->getEmail()}</li>
+                        <li><span>Adresse : </span>{$order->getAddress()}</li>
+                        <li><span>Code postale : </span>{$order->getZip()}</li>
+                        <li><span>Ville : </span>{$order->getCity()}</li>
+                        <li><span>Departement : </span>{$order->getDepartment()}</li>
+                        <ul>
+                        <span>Articles</span>
+                            <div class='my-2'>
+                                {$articles}
+                            </div>
+                            <ul><span>Total </span>{$price}</ul>
+                        </ul>
+                        {$buttons}
+                        <li class='text-black-900'>{$order->getCreatedAt()}</li>
+                    </ul>
                 ";
+
+            }
+        }
+
+        /**
+         * Display article list with quantity
+         */
+        function displayArticles(string $articles) : string
+        {   
+            $articleList = (array) json_decode($articles);
+            $string = '';
+
+            foreach( $articleList as $article)
+            {
+                $string .= '<li class="hidden">' . (string) $article->id . '</li>';
+                $string .= '<li>' . (string) $article->name . ' x ' . $article->quantity .  '</li>';
             }
 
-            echo "<button class='text-center bg-red-500 m-2 w-1/3 rounded hover:bg-red-600 hover:text-white py-1' type='submit'>Supprimer</button>";
-            
-        } else{ /** No category */
-
-            echo    "<p class='text-2xl text-center py-5 text-gray-700'>
-                        Aucune catégorie vous pouvez en enregistrer 
-                        <a href='/public/category/create' class='text-black border-b-2 border-black'>ici</a>
-                    </p>";
+            return $string;
         }
-    }
 
-/** General Navbar Shop */
+        /**
+         * Display or not  the buttons
+         * @param bool $display if true display button else not
+         */
+        function displayButtons(bool $display, ?int $id) : string
+        {   
+            $buttons = "
+                <li class='mt-2'>
+                    <button class='btn btn-green' data-id='{$id}' data-choice='accept'>Accepter</button>
+                </li>
 
-    function displayCategoriesList (array $categories)
-    {
-        foreach ($categories as $key => $category) {
-
-            echo "<a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='?category/{$category['category_name']}' data-id='{$category['category_id']}' >{$category['category_name']}</a>";
+                <li class='mt-2'>
+                    <button class='btn btn-r' data-id='{$id}' data-choice='reject'>Refuser</button>
+                </li>
+            " ;
+            if($display)
+            {
+                return $buttons;
+            }
+            return '';
         }
-    }
 
+        
 /** shop/cart */
 
     /**

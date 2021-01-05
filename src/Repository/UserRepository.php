@@ -75,7 +75,7 @@ class UserRepository extends Repository
 
         $query = self::$pdo->query($sql);
         
-        return $fetchStyle === 0 ? $query->fetchAll() : $query->fetchAll($fetchStyle); ;
+        return $fetchStyle === 0 ? $query->fetchAll() : $query->fetchAll($fetchStyle);
     }
 
 }

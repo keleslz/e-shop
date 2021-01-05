@@ -28,6 +28,10 @@ new Sticky('nav');
 new DisableGoToCheckout('go-to-info-customer','price');
 new Hide('product-button-with-category', 'product-with-category');
 new Hide('product-button-without-category', 'product-without-category');
+new Hide('order-button-to-validated', 'order-to-validated');
+new Hide('order-button-validated', 'order-validated');
+new Hide('order-button-rejected', 'order-rejected');
+
 
 /* --------------- shop ---------------------------*/ 
 /** home */

@@ -146,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `order` (
   `order_department` varchar(255) NOT NULL,
   `order_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `order_article` TEXT(1000) NOT NULL,
-  `order_state` BOOLEAN NOT NULL DEFAULT false,
+  `order_state` int(1) NOT NULL DEFAULT 0,
+  `order_total_price` FLOAT NOT NULL,
   `id_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

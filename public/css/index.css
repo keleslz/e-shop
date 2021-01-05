@@ -456,6 +456,93 @@ body {
   position: static !important;
 }
 
+.f-div-2 {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.f-div-2 > * {
+  width: calc(50% - 160px);
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.f-div-2-start {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+.f-div-2-start > * {
+  width: calc(50% - 160px);
+  min-width: 200px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.f-div-y-l {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.f-div-y-l > * {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.f-div-2-8 {
+  display: flex;
+  flex-direction: row;
+}
+.f-div-2-8 > :first-child {
+  width: 30%;
+}
+.f-div-2-8 > :last-child {
+  width: 70%;
+}
+
+.f-div-4 {
+  height: max-content;
+  display: flex;
+  flex-wrap: wrap;
+}
+.f-div-4 h3 {
+  text-align: center;
+}
+.f-div-4 img {
+  width: 150px;
+  height: 100px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+.f-div-4 div {
+  min-height: 170px;
+  width: 200px;
+}
+.f-div-4 div p {
+  width: 150px;
+  margin: 0 25px 0 25px;
+  font-size: 8px;
+  min-height: 50px;
+  text-align: center;
+}
+
+.f-div-space {
+  display: flex;
+  justify-content: center;
+  flex-wrap: center;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 905px) {
   .mini-pic-list-container {
     display: flex;
