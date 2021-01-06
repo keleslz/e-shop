@@ -51,7 +51,7 @@
     <?php endif; ?>
 
     <h2  class="h2 bg-white text-black mt-3">Historique de mes commandes<span></span><button  id="order-history-button"  class="mx-2 btn btn-gray">Voir</button></h2>
-    <div id="order-history" class="p-3 flex flex-wrap align-center">
+    <div id="order-history" class="hidden p-3 flex flex-wrap align-center">
         <?php displayOrdersListForClient($myOrders) ?>
     </div>
     
