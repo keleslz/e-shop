@@ -15,10 +15,10 @@ import { DeleteUser } from './lib/administration/DeleteUser.js';
 import { Hide } from './lib/Hide.js';
 import { DisableGoToCheckout } from './lib/DisableGoToCheckout.js'
 import { sendCustomerData } from './lib/delivery/sendCustomerData.js';
+import { updateStateOrder } from './lib/updateStateOrder.js';
 
 
-//Elements
-
+/** Elements */
 new Dropdownbox({
     header : 'category-header',
     container : 'dropdown',
@@ -42,7 +42,6 @@ new Sort('filter-board-button', 'filter-choice-container');
 /** delivery */
 new DepartmentList();
 sendCustomerData
-// new RegistreCustomer('checkout-button');
 
 /* --------------- Cart ---------------------------*/ 
 AddToCart;
@@ -56,3 +55,6 @@ new DeleteAccountButton('delete-account-button');
 
 /* --------------- Administration ---------------------------*/ 
 new DeleteUser('.delete-account-button');
+
+/* --------------- Order ---------------------------*/ 
+updateStateOrder;

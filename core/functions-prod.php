@@ -78,6 +78,10 @@
         /** Orderslist */
         function displayOrdersList(array $orders, bool $displayButton = false) : void
         {   
+            if(count($orders) === 0) {
+                echo '<p>Rien a signaler par ici ..</p>';
+                return;
+            }
             foreach($orders as $order)
             {   
                 $articles = displayArticles($order->getArticle());
@@ -85,7 +89,7 @@
                 $buttons = displayButtons($displayButton, $order->getId()); 
                 
                 echo "
-                    <ul class='m-3'>
+                    <ul class='m-3 px-2 border-r'>
                         <li><span>Nom : </span>{$order->getName()}</li>
                         <li><span>Prenom : </span>{$order->getSurname()}</li>
                         <li><span>Email : </span>{$order->getEmail()}</li>
@@ -133,11 +137,11 @@
         {   
             $buttons = "
                 <li class='mt-2'>
-                    <button class='btn btn-green' data-id='{$id}' data-choice='accept'>Accepter</button>
+                    <button class='btn btn-green valid' data-id='{$id}' data-choice='accept'>Accepter</button>
                 </li>
 
                 <li class='mt-2'>
-                    <button class='btn btn-r' data-id='{$id}' data-choice='reject'>Refuser</button>
+                    <button class='btn btn-r reject' data-id='{$id}' data-choice='reject'>Refuser</button>
                 </li>
             " ;
             if($display)
@@ -294,7 +298,8 @@
         return $text;
     }
 
-/** User/edit */
+/** User */
+    /* User/edit */
     function displayDeleteAccountButton(int $law) : void
     {
         if($law < 65535)
@@ -310,7 +315,69 @@
                 </form>
             ";
         }
+    }
+    
 
+    function displayOrdersListForClient(array $orders, bool $displayButton = false) : void
+    {   
+        if(count($orders) === 0 )
+        {
+            echo "<p 
+                class='bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative ' 
+                role='alert'>Commencez à remplir votre panier en cliquant <a href='/public/shop/home' 
+                class='underline'>ici</a></p>";
+            return; 
+        }
+        //TODO  problem header alreay sent when displaying orders
+        foreach($orders as $order)
+        {   
+            $articles = displayArticles($order->getArticle());
+            $price = str_replace('.', ',', $order->getTotal()) . '€';
+            $buttons = displayButtons($displayButton, $order->getId()); 
+            $state = displayOrderStateForClient(intval($order->getState()));
+
+            echo "      
+                <ul class='m-3 px-2 border-r'>
+                    <li><span>Etat d'avancement : </span>{$state}</li>
+                    <li><span>Nom : </span>{$order->getName()}</li>
+                    <li><span>Prenom : </span>{$order->getSurname()}</li>
+                    <li><span>Email : </span>{$order->getEmail()}</li>
+                    <li><span>Adresse : </span>{$order->getAddress()}</li>
+                    <li><span>Code postale : </span>{$order->getZip()}</li>
+                    <li><span>Ville : </span>{$order->getCity()}</li>
+                    <li><span>Departement : </span>{$order->getDepartment()}</li>
+                    <ul>
+                    <span>Articles commandés : </span>
+                        <div class='my-2'>
+                            {$articles}
+                        </div>
+                        <ul><span>Total </span>{$price}</ul>
+                    </ul>
+                    {$buttons}
+                    <li class='text-black-900'>{$order->getCreatedAt()}</li>
+                </ul>
+            ";
+        }
+    }
+
+    function displayOrderStateForClient(int $state) : string 
+    {
+        if($state === 1)
+        {
+            return 'Votre commande a été validée et sera expédié dans un délai de 1 jour ouvré';
+        }
+        
+        if($state === 0)
+        {
+            return 'Commande en attente de validation';
+        }
+
+        if($state === -1)
+        {
+            return "Nous sommes dans le regret de vous annoncé que cette commande ne pourra être honoré veuillez contacte e-shop@contact.fr pour plus d'information";
+        }
+
+        return '';
     }
 
 /** Administration/show */

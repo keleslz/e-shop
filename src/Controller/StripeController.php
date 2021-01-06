@@ -81,10 +81,9 @@ class StripeController extends AbstractController
       }else{
         $session->set('order','error', 'Erreur enregistrement commande');
       };
-      
       // TODO envoi email
-
-      $order->disconnect();
+      
+      $orderRepo->disconnect();
 
       if($store) {
 

@@ -144,4 +144,60 @@ class OrderRepository extends Repository
         }
         return $orders;
     }
+
+    /**
+     * find all by field occurence and return an array with new Order() instance
+     * @param string $tableName table target
+     * @param string $field target field in table
+     * @param mixed $value target field in table
+     */
+    public function findAllBy (string $tableName, string $field , $value) : array
+    {
+        $sql =" SELECT * FROM $tableName WHERE $field = :$field";
+
+        $query = self::$pdo->prepare($sql);
+
+        $query->execute([
+            ":$field" => $value
+        ]);
+
+        $orders = [];
+
+        foreach( $query->fetchAll(PDO::FETCH_ASSOC) as $order )
+        {
+            $orders[] = (new Order())
+                ->setId(intval($order['order_id']))
+                ->setName($order['order_name'])
+                ->setSurname($order['order_surname'])
+                ->setEmail($order['order_email'])
+                ->setAddress($order['order_address'])
+                ->setZip($order['order_zip'])
+                ->setCity($order['order_city'])
+                ->setDepartment($order['order_department'])
+                ->setCreatedAt($order['order_created_at'])
+                ->setArticle($order['order_article'])
+                ->setTotal($order['order_total_price'])
+                ->setState($order['order_state'])
+            ;
+        }
+
+        return $orders;
+    }
+    
+    public function updateState(int $id, int $state) : bool
+    {
+        $sql = "UPDATE `order`
+                SET order_state = :order_state
+                WHERE order_id = :order_id"
+            ;
+
+        $query = self::$pdo->prepare($sql);
+
+        $exec = $query->execute([
+            'order_state' => $state,
+            'order_id' => $id
+        ]);
+
+        return $exec;
+    }
 }

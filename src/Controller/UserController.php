@@ -30,16 +30,18 @@ class UserController extends AbstractController
         $userSession->ifNotConnected();
         $user = $userSession->get('_userStart');
 
-        $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
-
+        $userData = (new UserRepository())->findOneBy('user','id', intval($user['id']));
+        $orderRepo = (new OrderRepository());
+        
         if(($userData['law']) > 1 )
         {
-            $orderRepo = (new OrderRepository());
             $ordersValidated = $orderRepo->findAllValidated();
             $ordersRejected = $orderRepo->findAllRejected();
             $ordersNoValidated = $orderRepo->findAllNoValidated();
         }
-
+        
+        $myOrders = $orderRepo->findAllBy('`order`','id_user', intval($user['id']));
+        
         (new Repository())->disconnect();
 
         $this->render('admin/user/dashboard', [
@@ -47,6 +49,7 @@ class UserController extends AbstractController
             'law' => $userData['law'],
             'session'=> (new Session()),
             'orders' => ['validated' => $ordersValidated ?? [], 'noValidated' => $ordersNoValidated ?? [], 'rejected' =>  $ordersRejected ?? [] ],
+            'myOrders' => $myOrders
         ]);
     }
 
