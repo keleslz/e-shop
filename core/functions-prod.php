@@ -337,8 +337,8 @@
             $state = displayOrderStateForClient(intval($order->getState()));
 
             echo "      
-                <ul class='m-3 px-2 border-r'>
-                    <li><span>Etat d'avancement : </span>{$state}</li>
+                <ul class='card-no-pic'>
+                    <li><span>Etat d'avancement</span>{$state}</li>
                     <li><span>Nom : </span>{$order->getName()}</li>
                     <li><span>Prenom : </span>{$order->getSurname()}</li>
                     <li><span>Email : </span>{$order->getEmail()}</li>

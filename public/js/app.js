@@ -16,6 +16,7 @@ import { Hide } from './lib/Hide.js';
 import { DisableGoToCheckout } from './lib/DisableGoToCheckout.js'
 import { sendCustomerData } from './lib/delivery/sendCustomerData.js';
 import { updateStateOrder } from './lib/updateStateOrder.js';
+import { OpenCartNoPicAnimation } from './lib/OpenCartNoPicAnimation.js';
 
 
 /** Elements */
@@ -31,6 +32,8 @@ new Hide('product-button-without-category', 'product-without-category');
 new Hide('order-button-to-validated', 'order-to-validated');
 new Hide('order-button-validated', 'order-validated');
 new Hide('order-button-rejected', 'order-rejected');
+new Hide('order-history-button', 'order-history');
+new OpenCartNoPicAnimation('.card-no-pic');
 
 
 /* --------------- shop ---------------------------*/ 

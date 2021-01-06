@@ -17,7 +17,7 @@
         <?php $totalCost = displayCartList($productsCart, $cart) ?>
 
         <a href="/public/shop/delivery" id="go-to-info-customer">
-            <div style="height:max-content;position:fixed; top:200px; right:10px" class="card-no-pic">
+            <div style="height:max-content;position:fixed; top:200px; right:10px" class="card-to-cart">
             <p class="text-center">Total : <span id="price"><?= totalPriceForAllCart($totalCost) ?></span> €</p>
                 <span>Passer à la caisse</span>
             </div>
