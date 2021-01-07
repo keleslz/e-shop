@@ -16,7 +16,7 @@ Lors du commit lister les fichiers modifiés pour n'ajouter que ceux la pour pro
         Créer système
     
     6. Id
-        Hasher tous les id de toutes les tables
+        Utiliser des id differents des id sql (ex : uuid)
         
     Bug :
         Produits :

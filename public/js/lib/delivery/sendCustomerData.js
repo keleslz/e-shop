@@ -9,7 +9,6 @@ export const sendCustomerData = $(()=> {
 
     $button.click((e)=>{
         e.preventDefault();
-        console.log();
         sendData();
     })
 
@@ -23,11 +22,12 @@ export const sendCustomerData = $(()=> {
             url : url,
             dataType : 'json',
             data : customerData() ,                         
-            success : (res) => {
-                const data = JSON.parse(res);
-            },
             error : (err) => {
-                error();
+
+                if(err.tatus !== 200)
+                {
+                    error();
+                }
             }
         })
     }
@@ -47,8 +47,24 @@ export const sendCustomerData = $(()=> {
             department : $('select[name="department"]')[0].value
         }
     }
+    
+    /**
+     * destroy html element after a time given
+     * @param {HTMLElement} i
+     */
+    const destroy = (i) =>
+    {
+        setTimeout( () => {
+            i.remove()
+        }, 1500)
+    }
 
     const error = () => {
-
+        const $title = $('form h3')[0];
+        const $i = $('<i></i>');
+        $i.addClass('error');
+        $i.html( '<strong>Tous les champs sont obligatoires</strong>')
+        $i.insertBefore($title);
+        destroy($i[0]);
     }
 });

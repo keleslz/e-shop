@@ -25,7 +25,8 @@ class OrderController {
             http_response_code(401);
             die();
         }  
-        
+
+        //TODO ajouter les droit (si n'est pas admin 401 die)        
         $post = (new Input())->cleaner($_POST['data']);
         
         $state = $post['choice'] === 'accept' ? 1 : -1;

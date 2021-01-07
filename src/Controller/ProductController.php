@@ -270,7 +270,7 @@ class ProductController extends AbstractController
             self::PRODUCT_CATEGORY_ID_FIELD,
             intval($id)
         );
-
+        //TODO Ajouter l'image assoicer au produit qui sera recupére en async par Category.js
         $category = (new CategoryRepository())->findAll('category', PDO::FETCH_ASSOC);
         $productRepo->disconnect();
 

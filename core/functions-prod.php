@@ -328,7 +328,6 @@
                 class='underline'>ici</a></p>";
             return; 
         }
-        //TODO  problem header alreay sent when displaying orders
         foreach($orders as $order)
         {   
             $articles = displayArticles($order->getArticle());

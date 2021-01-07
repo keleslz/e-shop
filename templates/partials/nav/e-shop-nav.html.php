@@ -9,7 +9,7 @@
             <?php displayCategoriesList($this->var['categories']); ?>
         </div>
     </ul>
-    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="#Nouveautés">Nouveautés</a></li>
+    <!-- <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="#Nouveautés">Nouveautés</a></li> -->
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/cart">Panier<?php displayCart($this->var['cart'])?></a></li>
 
     <?php if (is_array($this->var['adminSession']) && count($this->var['adminSession']) > 0) : ?>

@@ -9,7 +9,7 @@
      method: "POST",
    })
      .then(function (response) {
-       console.log(response)
+      //  console.log(response)
        return response.json();
      })
      .then(function (session) {
@@ -20,12 +20,12 @@
        // error, you should display the localized error message to your
        // customer using error.message.
        if (result.error) {
-         console.log(result)
+        //  console.log(result)
          alert(result.error.message);
        }
      })
      .catch(function (error) {
-        console.error(error);
+        // console.error(error);
      });
  });
 

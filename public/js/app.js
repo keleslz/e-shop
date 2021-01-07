@@ -35,7 +35,6 @@ new Hide('order-button-rejected', 'order-rejected');
 new Hide('order-history-button', 'order-history');
 new OpenCartNoPicAnimation('.card-no-pic');
 
-
 /* --------------- shop ---------------------------*/ 
 /** home */
 new ProductDisplayer('product-container');

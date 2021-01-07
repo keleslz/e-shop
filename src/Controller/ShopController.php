@@ -186,11 +186,15 @@ class ShopController extends AbstractController
         if($_SERVER['REQUEST_METHOD'] !== 'POST')
         {
             http_response_code(404);
+            echo json_encode(['success' => false]);
+            die();
         }
 
         if(!isset($_POST) || empty($_POST))
         { 
             http_response_code(401);
+            echo json_encode(['success' => false]);
+            die();
         }  
 
         $input = new Input();
@@ -221,7 +225,7 @@ class ShopController extends AbstractController
             http_response_code(200);
             return;
         }
-
+        echo json_encode(['success' => false]);
         http_response_code(401);
     }
 }

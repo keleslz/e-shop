@@ -585,6 +585,27 @@ body {
   flex-direction: column;
 }
 
+.success {
+  padding: 5px;
+  background: #4eaf73;
+  color: #fff;
+  max-height: 30px;
+}
+
+.error {
+  padding: 5px;
+  background: #d82f23;
+  color: #fff;
+  max-height: 30px;
+}
+
+.info {
+  padding: 5px;
+  background: #5f90cf;
+  color: #fff;
+  max-height: 30px;
+}
+
 @media screen and (max-width: 905px) {
   .mini-pic-list-container {
     display: flex;
