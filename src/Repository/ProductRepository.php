@@ -38,7 +38,7 @@ class ProductRepository extends Repository
 
         $query = self::$pdo->query($sql);
         
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function findAllCards() 
@@ -136,4 +136,86 @@ class ProductRepository extends Repository
         return $query->fetch();
     }
 
+    /**
+     * Get one product price
+     */
+    public function findOnePrice(int $id)  : float
+    {
+        $sql =" SELECT product_price
+        FROM product 
+        WHERE product_id = :product_id ";
+
+        $query = self::$pdo->prepare($sql);
+        
+        $query->execute([
+            'product_id' => $id
+        ]);
+
+        $price = str_replace(',', '.', $query->fetch(PDO::FETCH_ASSOC)['product_price']) ?? null;
+        
+        return $price ?? 0;
+    }
+
+    /**
+     * Update all product category field to -1 
+     */
+    public function updateProductCategory(int $id) : bool
+    {
+        $sql = "UPDATE product SET id_category = -1 WHERE id_category = :id_category";
+
+        $query = self::$pdo->prepare($sql);
+
+        return $query->execute([
+            'id_category' => $id
+        ]);
+    }
+
+    /**
+     * Get all product without category
+     */
+    public function findAllWithoutCategoryCount() : array
+    {
+        $sql =" SELECT COUNT(*)
+                FROM product
+                WHERE id_category = -1";
+
+        $query = self::$pdo->query($sql);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Get all product with category
+     */
+    public function findAllWithCategory() : array
+    {
+        $sql =" SELECT product_id, product_name, product_price, product_slug, product_status, img_name, id_category
+                FROM product
+                WHERE id_category <> -1";
+
+        $query = self::$pdo->query($sql);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Get total price of a cart
+     */
+    public function getTotalPrice(string $idList)
+    {      
+        
+        $sql =" SELECT product_id, product_price 
+                FROM product
+                WHERE product_id 
+                IN (:idList) 
+            ";
+
+        $query = self::$pdo->prepare($sql);
+
+        $query->execute([
+            'idList' => $idList
+        ]);
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

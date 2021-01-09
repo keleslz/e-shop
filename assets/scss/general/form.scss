@@ -37,8 +37,16 @@
         &>*{
             width: 100%;
         }
+
+        #edit-password {
+            font-size: 10px;
+        }
     }
 
+}
+
+#edit-password, #delete-account-button {
+    font-size: 10px;
 }
 
 .h1 {

@@ -4,16 +4,32 @@
 <?php $currentCategoryName = $this->var['currentCategoryName'] ?>
 <?php $price = $this->var['price'] ?>
 <?php $categories = $this->var['categories'] ?>
-
+<?php $productCount = $this->var['productCount'] ?>
+<?php $productWithoutCategoryCount = $this->var['productWithoutCategoryCount'] ?>
 
 <?php require_once ROOT . DS . 'templates/partials/nav/user-nav.html.php' ?>
 
-<h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Voir tous les produits</h1>
+<h1 class="h1 flex justify-around p-3 bg-black flex-wrap text-white">Produits</h1>
+
 <?php require_once ROOT . DS . 'templates/partials/nav/admin-product-nav.html.php' ?>
+
+<div class="flex p-2">
+    <a class="btn btn-gray" href="/public/product/create">Ajouter Produit</a>
+</div>
+
 
 <div class="cont" style="min-height:100vh">
 
-<?php $this->var['session']->display() ?>
+    <?php $this->var['session']->display() ?>
+    
+    <?php if( !$currentProduct ) : ?>   
+        <div>
+            <h2 class="h2 bg-white text-gray-900 pb-3 justify-around ">Produit non classée <span class="mx-1 "><?=  $productWithoutCategoryCount . '/' .  $productCount ?></span><button id="product-button-without-category" class="mx-2 btn btn-gray">Voir</button></h2>
+        </div>
+        <div id="product-without-category" class="hidden flex overflow-x-auto p-5 border border-red-900 bg-red-100">
+            <?php  displayProductWithoutCategory($products, $categories) ?>
+        </div>
+    <?php endif ;?> 
 
     <?php if( $currentProduct ) : ?>
 
@@ -37,47 +53,27 @@
                 </div>
 
                 <div class="button-container flex flex-wrap">
-                    <form class="flex justify-center" action="/public/product/edition/<?= $currentProduct['product_id']?>" method="post"><button class="text-center bg-gray-500 m-2 w-1/2 rounded hover:bg-gray-600 hover:text-white" type="submit">Modifier</button></form>
-                    <form class="flex justify-center" action="/public/product/delete/<?= $currentProduct['product_id']?>" method="post" onclick="window.confirm('Êtes-vous sur de vouloir supprimer ce produit ?')" ><button class="text-center bg-red-500 m-2 w-1/2 rounded hover:bg-red-600 hover:text-white" type="submit">Supprimer</button></form>
+                    <form class="flex justify-center" action="/public/product/edition/<?= $currentProduct['product_id']?>" method="post">
+                        <button class="text-center bg-gray-500 m-2 w-1/2 rounded hover:bg-gray-600 hover:text-white" type="submit">Modifier</button>
+                    </form>
+                    <?= deleteProductButton(intval($currentProduct['product_id'])) ?>
                 </div>
             </div>
         </div>
 
     <?php endif ?>
 
-    <div class="flex flex-wrap p-5" >
+    <?php if( !$currentProduct ) : ?>   
+        <h2 class="h2 bg-white text-gray-900 py-3 mt-2 justify-around">Produit classée<span class="mx-1 "><?= intval($productCount) - intval($productWithoutCategoryCount) ?></span><button id="product-button-with-category" class="mx-2 btn btn-gray">Voir</button></h2>
 
-        <?php if( count($products) > 0) : ?>
-
-            <?php foreach ($products as $key => $product) : ?>
-                
-                <a href="/public/product/show/<?= $product['product_id']?>">
-                    <div  class="m-5 hover:border-white cursor-pointer hover:shadow-xl">
-                
-                        <img class="flex m-auto flex-wrap w-48 h-48 rounded-t-xl border-2 border-gray-200" src="/public/img-storage/<?= $product['img_name']  ?? 'default-image.jpg' ?>" alt="Image alternative  bientot dispo">
-                        <div class="shadow-lg border-gray-200 text-center " >
-                            <span class="block my-2 mb-" ><?=$product['product_name']?></span>
-                            <span class="block my-2 border-2 border-gray-300" ><?=$product['product_price']?> €</span>
-                            <div class="flex flex-1 justify-center " style="width:192px;height:25px;overflow:hidden">
-                                <p class="text-right pr-2" ><?= $product['product_description']?></p>
-                            </div>
-                            <div class="flex flex-1 justify-center" style="width:192px;height:25px;overflow:hidden">
-                                <p class="text-center"><?= intval($product['product_status']) === 1 ? 'En ligne' : 'Hors-ligne '; ?></p><span class="text-gray-500"></span>
-                            </div>
-                            <div class="flex flex-1 justify-center">
-                                <p class="text-center "><?= intval($product['id_category'])  !== -1 ? displayProductCategory( intval($product['id_category']), $categories) : 'Non classée' ?></p><span class="text-gray-500"></span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-            <?php endforeach ?>
-
-            <?php else :?>
-            <p class="text-2xl text-center pt-5 text-gray-700" >Aucun produit vous pouvez en enregistrer <a href="/public/product/create" class="text-black border-b-2 border-black">ici</a></p>
-        <?php endif ;?>
-
-    </div>
-
+        <div id="product-with-category" class="hidden flex flex-wrap p-5" >
+            <?php if( count($products) > 0 ) : ?>
+        
+                <?php displayProductWithCategory($products, $categories); ?>
+                <?php else :?>
+                <p class="text-2xl text-center pt-5 text-gray-700" >Aucun produit vous pouvez en enregistrer <a href="/public/product/create" class="text-black border-b-2 border-black">ici</a></p>
+            <?php endif ;?>
+        </div>
+    <?php endif ;?> 
 </div>
         

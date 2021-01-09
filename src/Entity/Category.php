@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Lib\input\Input;
 use App\Lib\Session\Session;
 use App\Lib\Input\InputError;
+use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 
 class Category
@@ -81,12 +82,12 @@ class Category
 
             $idCategory = intval($category);
             
-            $found = $categoryRepo->findOneBy('category', 'category_id', $idCategory ) ;
+            $categoryExist = $categoryRepo->findOneBy('category', 'category_id', $idCategory ) ;
             
-            if($found !== false)
-            {
-                $state = $categoryRepo->delete('category', 'category_id', intval($found['category_id'])) ;
-                
+            if($categoryExist !== false)
+            {   
+                $categoryRepo->delete('category', 'category_id', intval($categoryExist['category_id'])) ;
+                (new ProductRepository())->updateProductCategory($idCategory);
             }else{
                 
                 $session->set('category','error', (new InputError())::basicError());
@@ -94,8 +95,7 @@ class Category
                 die();
             }
         }
-                
-        
+        $categoryRepo->disconnect();
         $session->set('category','success', 'Categorie(s) supprimée(s)');
         $controller->redirectTo('category/show');
         die();

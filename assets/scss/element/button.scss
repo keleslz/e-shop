@@ -1,0 +1,127 @@
+$txt : #fff;
+$txt-dark : rgb(61, 58, 58);
+
+$blue :  rgb(95, 144, 207);
+$blue-hover :  rgb(62, 128, 214);
+
+$red : rgb(216, 47, 35);
+$red-hover :   rgb(177, 30, 19);
+
+$green : rgb(78, 175, 115);
+$green-hover : rgb(47, 155, 88) ;
+
+$orange : #FF6800 ;
+$orange-hover : #bb5b0c ;
+
+$gray :  #666;
+$gray-dark : rgb(61, 58, 58);
+
+.btn {
+
+    width: 100px;
+    min-height: 25px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    align-self: center;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+        color: $txt;
+    }
+
+}
+
+.btns-row {
+
+    background: transparent;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5px;
+
+    form {
+        display: flex;
+        align-items: center;
+
+        button {
+            padding-bottom: 3px;
+            border: 0;
+            background: transparent;
+        }
+    }
+
+    a , button {
+        color: #ccc;
+        padding: 3px;
+        border-bottom: 1px solid rgba(200,200,200 , 0) ;
+        
+        &:hover {
+            color: #eee!important;
+            border-bottom: 1px solid #eee ;
+            cursor: pointer;
+        }
+    }
+
+}
+
+
+.btn-b {
+    
+    background:  $blue;
+    color: $txt;
+    &:hover {
+        background: $blue-hover;
+    }
+}
+
+
+.btn-r {
+    
+    background:  $red;
+    color: $txt;
+    &:hover {
+        background:  $red-hover;
+    }
+}
+
+
+.btn-green {
+
+    background-color: $green;
+    color: $txt;
+
+    &:hover {
+        background: $green-hover;
+        color: $txt;
+    }
+}
+
+
+.btn-o {
+    background:$orange;
+    color: $txt;
+    border: 0;
+    font-weight: medium;
+    padding: 10px;
+    font-size: 10px;
+
+    &:hover {
+        background:$orange-hover;
+    }
+}
+
+.btn-gray {
+
+    background: $txt ;
+    color:$gray;
+    &:hover {
+        background: $gray-dark;
+        color: $txt;
+    }
+}

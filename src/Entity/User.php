@@ -47,12 +47,16 @@ class User
     const ID_TABLE_FIELD_NAME = 'id';
     const LAW_TABLE_FIELD_NAME = 'law';
 
-    const REDIRECT_SIGNIN = '/public/admin/signin';
-    const REDIRECT_SIGNUP = '/public/admin/signup';
+    const REDIRECT_SIGNIN = '/public/user/signin';
+    const REDIRECT_SIGNUP = '/public/user/signup';
     const REDIRECT_EDIT = '/public/user/edit';
     const REDIRECT_HOME = '/public/shop/home';
 
-    const HIGH_LAW_LEVEL = 65535;
+    const CREATOR_LAW_LEVEL = 65535;
+    const CONTRIBUTOR_SUPERIOR_LAW_LEVEL = 1000;
+    const SIMPLE_CONTRIBUTOR_LAW_LEVEL = 100;
+    const CLIENT_LAW_LEVEL= 1;
+    const ALL_LEVEL_LAW = [ self::CREATOR_LAW_LEVEL, self::CONTRIBUTOR_SUPERIOR_LAW_LEVEL, self::SIMPLE_CONTRIBUTOR_LAW_LEVEL, self::CLIENT_LAW_LEVEL ];
 
     /**
      * Get the value of id

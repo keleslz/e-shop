@@ -16,7 +16,6 @@
             
             <form action="/public/category/delete" method="post">
                 <?php displayCategories($categories) ?>
-                <?php displayButtonSubmit($categories) ?>
             </form>
     </div>
 </div>

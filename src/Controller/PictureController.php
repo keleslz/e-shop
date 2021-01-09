@@ -2,18 +2,22 @@
 namespace App\Controller;
 
 use App\Lib\Session\UserSession;
+use App\Repository\ImageRepository;
 use App\AbstractClass\AbstractController;
-use ImageRepository;
 
-class ImageController extends AbstractController
-{
+class PictureController extends AbstractController
+{   
+    /**
+     * Delete picture associated to a product 
+     */
     public function delete($id)
-    {
+    {   
         $id = intval(strip_tags($id));
         $session = new UserSession();
         $user = $session->get('_userStart');
         $session->ifNotConnected();
-        $session->ifNotContributor();
+        $session->ifSimpleContributor();
+        $session->isClient();
 
         $imageRepo = new ImageRepository();
         $image = $imageRepo->findOneBy('img', 'img_id', $id);

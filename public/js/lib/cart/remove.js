@@ -1,5 +1,3 @@
-//TODO Ajouter desactiation du bouton passer à la caisse si le panier est vide
-
 /**
  * remove product on cart
  */

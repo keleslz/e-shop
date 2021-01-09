@@ -1,15 +1,15 @@
+<?php $law = intval($this->var['adminSessionLaw']) ?>
 
-<nav class="flex justify-around p-3 bg-black flex-wrap items-center">
+<nav id="nav" class="flex justify-around p-3 bg-black flex-wrap items-center">
     
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/home">Accueil</a></li>
     <ul id="navbar-category" class="list-none  dropdown" style="height:30px;">
         <a class=" text-center hover:text-gray-400 text-white px-2" href="#">Categories</a>
         <div id="" style="position:absolute;z-index:100" class="items bg-black hidden pt-2">
-            <a class=' px-2 flex items text-left hover:text-black text-white hover:bg-white' href='#all'>Toutes</a>
             <?php displayCategoriesList($this->var['categories']); ?>
         </div>
     </ul>
-    <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="#Nouveautés">Nouveautés</a></li>
+    <!-- <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="#Nouveautés">Nouveautés</a></li> -->
     <li class="list-none pr-5"><a class="text-center hover:text-gray-400 text-white" href="/public/shop/cart">Panier<?php displayCart($this->var['cart'])?></a></li>
 
     <?php if (is_array($this->var['adminSession']) && count($this->var['adminSession']) > 0) : ?>
@@ -18,7 +18,7 @@
         
     <?php endif;?>
 
-    <?php if (intval($this->var['adminSessionLaw']) === 65535) : ?>
+    <?php if ( $law ===  65535 || $law === 1000 || $law === 100 ) : ?>
 
         <a class="text-center hover:text-gray-400 text-white" href="/public/user/dashboard">Retour à l'Admin</a>
 

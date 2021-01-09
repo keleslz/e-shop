@@ -1,0 +1,104 @@
+.f-div-2
+{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    &>* {
+        width: calc(50% - 160px);
+        display: flex;
+        margin: 10px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.f-div-2-start {
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: left;
+
+    &>* {
+        width: calc(50% - 160px);
+        min-width: 200px;
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+}
+
+.f-div-y-l
+{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+    &>* {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.f-div-2-8{
+
+    display: flex;
+    flex-direction: row;
+
+    &>:first-child{
+        width: 30%;
+    }
+
+    &>:last-child
+    {
+        width: 70%;
+    }
+}
+
+//Separate 4 child of an element
+.f-div-4
+{
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+
+    h3 {
+        text-align: center;
+    }
+
+    img {
+        width: 150px;
+        height: 100px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    & div {
+
+        min-height: 170px;
+        width: 200px;
+
+        & p {
+            width: 150px;
+            margin: 0 25px 0 25px;
+            font-size: 8px;
+            min-height: 50px;
+            text-align: center;
+        }
+    }
+}
+
+.f-div-space
+{
+    display: flex;
+    justify-content: center;
+    flex-wrap: center;
+    flex-direction: column;
+}

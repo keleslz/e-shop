@@ -45,7 +45,7 @@
                     </div>
                 </form>
                     
-                <a href="/public/shop/cart"  style="height:50px!important"  
+                <a href="/public/shop/delivery"  style="height:50px!important"  
                     id="remove-product" class="text-center mb-2 bg-transparent hover:bg-green-500 text-blue-700 font-semibold hover:text-white p-2 mx-2 border border-blue-500 hover:border-transparent rounded" 
                 >
                     Acheter maintenant
@@ -67,7 +67,7 @@
     </div>
 
 <?php else : ?>
-    <?php $this->redirectTo('/public/shop/home') ?>
+    <?php $this->redirectTo('shop/home') ?>
 <?php endif ?>
 
 <?php require_once ROOT . DS . 'templates/partials/footer.html.php' ?>

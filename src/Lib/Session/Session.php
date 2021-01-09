@@ -3,15 +3,18 @@ namespace App\Lib\Session;
 
 class Session 
 {   
+    //TODO Ajouter expiration de session
+    /** Session which will be no display to alert user */
+    const NO_DISPLAY = ['_userStart','_cart','_customer','_order'];
 
-      /**
+    /**
      * Run a session_start
      */
     public function __construct()
     {   
         $this->run();
     }
-    
+
     public function run()
     {
         if(session_status() !== 2)
@@ -21,7 +24,10 @@ class Session
     }
 
     /**
-     * Example : 'file','error','Error while file creation'
+     * Create a new value in $_SESSION array and can be diplayed to the user
+     * @param string $section ex : 'user'
+     * @param string $type ex : 'success'
+     * @param string $value ex : 'Connection reussie !'
      */
     public function set(string $section, string $type , $value) : void
     {   
@@ -45,15 +51,17 @@ class Session
         ? $_SESSION[$section] = null 
         : $_SESSION[$section][$type] = null;
     }
-
+    
     /**
      * Display all current errors except '_userStart', '_cart' array
      */
     public function display()
     {
+        //TODO Creer une methode qui gerera chaque element du tableau NO_DISPLAY proprement
         foreach ($_SESSION as $section => $types) {
 
-            if( is_array($_SESSION[$section]) && !($section === '_userStart') && !($section === '_cart') && !($section === '_customer') && $types !== null)
+            if( is_array($_SESSION[$section]) && 
+            !($section === self::NO_DISPLAY[0]) && !($section === self::NO_DISPLAY[1]) && !($section === self::NO_DISPLAY[2]) && $types !== null)
             {
                 foreach ($types as $key => $value) {
 
@@ -119,21 +127,5 @@ class Session
         }
     }
 
-    /**
-     * Create or add a product and his quantity in user cart
-     */
-    public function cart(array $post) : array
-    {   
-        $productId = intval($post['productId']);
 
-        if ( intval($post['quantity']) ===  0  ){
-
-            unset($_SESSION['_cart'][$productId]);
-
-        }else if( intval($post['quantity']) > 0 )
-        {
-            $_SESSION['_cart'][$productId] = intval($post['quantity']);
-        }
-        return isset($_SESSION['_cart']) ? $_SESSION['_cart'] : [];
-    }   
 }

@@ -3,8 +3,15 @@
 @use './general/img.scss';
 @use './partials/general.scss';
 @use './shop/accueil.scss';
+
+//Elements
 @use './element/loader.scss';
 @use './element/card.scss';
+@use './element/button.scss';
+@use './element/filter-board.scss';
+@use './element/sticky.scss';
+@use './element/div.scss';
+@use './element/alert.scss';
 
 //QUERIES
 @use './queries/product-edit.scss';

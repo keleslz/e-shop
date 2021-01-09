@@ -29,52 +29,52 @@ class InputError
     
     // start purchase
 
-    public static function name() : string 
-    {
-        return 'Veuillez vérifier le champ nom';
-    }
+        public static function name() : string 
+        {
+            return 'Veuillez vérifier le champ nom';
+        }
 
-    public static function surname() : string 
-    {
-        return 'Veuillez vérifier le champ prenom';
-    }
+        public static function surname() : string 
+        {
+            return 'Veuillez vérifier le champ prenom';
+        }
 
-    public static function address() : string 
-    {
-        return 'Veuillez vérifier le champ addresse';
-    }
+        public static function address() : string 
+        {
+            return 'Veuillez vérifier le champ addresse';
+        }
 
-    public static function zip() : string 
-    {
-        return 'Veuillez vérifier le champ code postale';
-    }
+        public static function zip() : string 
+        {
+            return 'Veuillez vérifier le champ code postale';
+        }
 
-    
-    public static function city() : string 
-    {
-        return 'Veuillez vérifier le champ ville';
-    }
-    
-    public static function department() : string 
-    {
-        return 'Veuillez vérifier le champ departement';
-    }
-    
-    public static function creditCardNumber() : string 
-    {
-        return 'Veuillez vérifier le champ carte de crédit';
-    }
+        
+        public static function city() : string 
+        {
+            return 'Veuillez vérifier le champ ville';
+        }
+        
+        public static function department() : string 
+        {
+            return 'Veuillez vérifier le champ departement';
+        }
+        
+        public static function creditCardNumber() : string 
+        {
+            return 'Veuillez vérifier le champ carte de crédit';
+        }
 
-    
-    public static function cryptoNumber() : string 
-    {
-        return 'Veuillez vérifier le champ numéro de cryptogramme';
-    }
+        
+        public static function cryptoNumber() : string 
+        {
+            return 'Veuillez vérifier le champ numéro de cryptogramme';
+        }
 
-    public static function expirationDate() : string
-    {
-        return "Veuillez vérifier le champ date d'expiration";
-    }
+        public static function expirationDate() : string
+        {
+            return "Veuillez vérifier le champ date d'expiration";
+        }
 
     // end purchase
 
@@ -104,6 +104,11 @@ class InputError
         $a = ucfirst($input1);
         $b = ucfirst($input2);
         return "Veuillez vérifier que les champs <strong>\"{$a}\"</strong> et <strong>\"{$b}\"</strong> soient identiques";
+    }
+
+    public static function law() : string
+    {
+        return "Erreur code : Tentative d'intrusion";
     }
 
     public static function equal() : string 
@@ -144,6 +149,11 @@ class InputError
     public static function basicError() : string
     {
         return 'Désolé une erreur est survenue';
+    }
+
+    public static function accesDenied() : string
+    {
+        return 'Accès refusé';
     }
 
     public static function quantity()

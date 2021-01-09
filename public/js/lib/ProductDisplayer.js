@@ -3,24 +3,28 @@ export class ProductDisplayer {
     constructor(container)
     {   
         this.url = '/public/product/getAll';
-        this.container = document.getElementById(container);
+        this.limit = 25;
+        this.moreButton = document.getElementById('get-more-product');
+        this.productContainer = document.getElementById(container);
+        this.categoryList = document.querySelectorAll('#navbar-category > div.items > a')
+
         this.run();
     }
 
     run = () => {
         
-        if(this.container)
+        if(this.productContainer)
         {
-            const data = this.fetch();
-            this.handle(data);
+            const promise = this.fetch();
+            this.handle(promise);
         }
     }
 
     /**
-     * fetch products
+     * fetch products from server
      */
     fetch = () => {
-        return fetch(this.url)
+        return fetch(this.url, {method:'post'})
             .then( (response) => 
             {   
                 return response.json();
@@ -29,18 +33,27 @@ export class ProductDisplayer {
         ;
     }
 
+    /**
+     * Handle product and dispaly card;
+     * @param {Promise} data product promise 
+     */
     handle = (data) => {
 
-        data.then((d)=>{
+        return data.then((d)=>{
             if(d === undefined)
             {
                 return;
             }
 
+            if(this.ifNoProduct(d.product.length))
+            {
+                return;
+            }
+            
             this.createCard(d);
             this.stopLoader();
             this.stopCardLoad();
-
+            this.createMoreCard(d)
         })
     }
     
@@ -49,15 +62,17 @@ export class ProductDisplayer {
      */
     createCard = (data) => {
         const product =  data.product;
-        const limit = 25;
-        const length = product.length < limit ? product.length : limit
+        const length = product.length < this.limit ? product.length : this.limit
 
         for (let i = 0; i <  length  ; i++) { 
             const p = product[i];
-            const idCategory = parseInt(p.id_category);
-            const category =  this.setProductCategory(idCategory, data.category);
-
-            this.setCardProperty( category , p)
+            
+            if(parseInt(p.product_status) > 0)
+            {
+                const idCategory = parseInt(p.id_category);
+                const category =  this.setProductCategory(idCategory, data.category);
+                this.setCardProperty( category , p)
+            }
         }
     }
 
@@ -82,7 +97,7 @@ export class ProductDisplayer {
 
         return categoryName;
     }
-
+    
     /**
      * Set property card
      * @param {string} category  product category
@@ -97,10 +112,12 @@ export class ProductDisplayer {
         const price = document.createElement('span');
 
         const productId = product.product_id;
-        const productName = product.product_name.replace(' ', '_');
-
-        a.href = '/public/shop/show/' + productId + '/' + productName;
+        const slug = product.product_slug;
+        
+        a.href = '/public/shop/show/' + productId + '/' + slug;
         img.src= '/public/img-storage/default-image.jpg';
+        img.style.animation = 'null';
+        
         card.classList.add('card');
         title.classList.add('title');
         price.classList.add('price');
@@ -110,9 +127,9 @@ export class ProductDisplayer {
         const productPrice = product.product_price.replace('.',',');
         title.textContent = product.product_name.toUpperCase();
         price.textContent = productPrice + ' €';
-        category.textContent = categoryName;
+        category.textContent = categoryName === '' ? 'Produit non-classé' : categoryName ;
 
-        this.container.append(a);
+        this.productContainer.append(a);
 
         a.append(card);
         card.append(img);
@@ -127,7 +144,7 @@ export class ProductDisplayer {
     error = () => {
         const i = document.createElement('i');
         i.classList.add('error');
-        this.container.append(i);
+        this.productContainer.append(i);
         i.innerHTML = 'Désolé une erreur est survenue';
     }
 
@@ -137,6 +154,7 @@ export class ProductDisplayer {
     stopLoader = () => {
         const loader = document.getElementById('loader');
         loader.classList.add('hidden');
+        this.productContainer.append(loader);
     }
 
     /**
@@ -145,5 +163,65 @@ export class ProductDisplayer {
     stopCardLoad = () => {
         const card = document.getElementById('card-loader');
         card.remove();
+    }
+
+    /**
+     * Create more card
+     * @param {Array} data contains product and categoriy list 
+     */
+    createMoreCard = (data) => {
+
+        let limit = this.limit;
+        const loader = document.getElementById('loader');
+
+        this.moreButton.addEventListener('click', (e)=> {
+            const active = document.querySelectorAll('#navbar-category > div.items > a[data-state="active"]');
+
+            if(active.length > 0)
+            {   
+                e.target.removeEventListener('click', (e)=> e )
+                return;
+            }
+
+            const product =  data.product;
+
+            for (let i = limit  ; i <  limit + this.limit  ; i++) { 
+
+                let p = product[i];
+
+                if( !p )
+                {
+                    e.target.textContent = "Vous avez vu tous les nouveaux articles";
+                    e.target.style.width = 'max-content';
+                    e.preventDefault();
+                    return
+                }
+
+                const idCategory = parseInt(p.id_category);
+                const category =  this.setProductCategory(idCategory, data.category);
+                this.setCardProperty( category , p);
+                this.productContainer.append(loader)
+            }
+
+            limit = limit + this.limit;
+        })
+    }
+
+    /**
+     * If no product stop all loader animation 
+     * @param {Number} length 
+     * @returns {boolean}
+     */
+    ifNoProduct = (length) => {
+        if(length === 0)
+        {
+            this.stopLoader();
+            this.stopCardLoad();   
+            this.moreButton.remove();
+            this.productContainer.textContent = "Aucun produit n'a encore été ajouté"
+            
+            return true 
+        }
+        return false;
     }
 }

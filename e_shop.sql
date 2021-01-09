@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `category`
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `img` (
   `id_product` int(11) DEFAULT NULL,
   PRIMARY KEY (`img_id`),
   UNIQUE KEY `img_name` (`img_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `img`
@@ -82,10 +82,11 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_slug` varchar(255) NOT NULL,
   `product_price` varchar(10) NOT NULL,
   `product_status` tinyint(1) NOT NULL,
+  `product_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_img` int(11) DEFAULT NULL,
   `id_category` int(11) DEFAULT '-1',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `product`
@@ -108,8 +109,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(60) NOT NULL,
   `law` int(5) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
@@ -117,10 +120,36 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `email`, `password`, `law`) VALUES
 (1, 'admin@fr.fr', '$2y$10$re/MMXbk7qXgWFPT/XFJ5OMFZ.PSQNWNVfO1Bns4OZiStKpHfJ.mS', 65535),
-(2, 'b@fr.fr', '$2y$10$sH5Y7BsIYRiEvGrW8U0Cb..9RRq8zfPBkSfipbMTb3ZnqrZuQfpBS', 0),
+(2, 'b@fr.fr', '$2y$10$sH5Y7BsIYRiEvGrW8U0Cb..9RRq8zfPBkSfipbMTb3ZnqrZuQfpBS', 1),
 (3, 'c@r.fr', '$2y$10$GyepeM2xm5K8IU8d96zABODyLcIR/xIJa8RMjDrrdt5XQqRgv/iry', 1),
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE IF NOT EXISTS `order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_name` varchar(255) NOT NULL,
+  `order_surname` varchar(255) NOT NULL,
+  `order_email` varchar(255) NOT NULL,
+  `order_address` varchar(255) NOT NULL,
+  `order_zip` VARCHAR(5) NOT NULL,
+  `order_city` varchar(255) NOT NULL,
+  `order_department` varchar(255) NOT NULL,
+  `order_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `order_article` TEXT(1000) NOT NULL,
+  `order_state` int(1) NOT NULL DEFAULT 0,
+  `order_total_price` FLOAT NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------

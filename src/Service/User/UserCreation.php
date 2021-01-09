@@ -11,6 +11,10 @@ use App\Repository\UserRepository;
  */
 class UserCreation extends User
 {
+    public function __construct(int $levelLaw = 1)
+    {
+        $this->levelLaw = $levelLaw;
+    }
      /**
      * Create new user
      * @param string $email send by user
@@ -53,6 +57,7 @@ class UserCreation extends User
      */
     private function setInfo(string $email, string $password) : User
     {
+        $this->setLevelLaw($this->levelLaw);
         $this->setEmail($email);
         $this->setPassword($password);
         return $this;

@@ -62,6 +62,13 @@
 .h-screen #registre-product > *, .h-screen #registre-category > *, .h-screen .medium-form > * {
   width: 100%;
 }
+.h-screen #registre-product #edit-password, .h-screen #registre-category #edit-password, .h-screen .medium-form #edit-password {
+  font-size: 10px;
+}
+
+#edit-password, #delete-account-button {
+  font-size: 10px;
+}
 
 .h1 {
   font-size: 2rem !important;
@@ -125,6 +132,18 @@
   display: none !important;
 }
 
+#get-more-product-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+body {
+  min-height: 100vh;
+  height: max-content !important;
+}
+
 .home-banner {
   height: 200px;
 }
@@ -176,6 +195,7 @@
 <div class="lds-ripple"><div></div><div></div></div>
 
 */
+/**Color **/
 .card {
   display: inline-block;
   width: 200px;
@@ -217,6 +237,69 @@
 .card .title {
   overflow: hidden;
   font-weight: 500;
+}
+
+/** basket list horizontal card**/
+.card-to-cart {
+  display: inline-block;
+  width: 200px;
+  height: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 20px 15px 10px 15px;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: #fff;
+  cursor: pointer;
+}
+.card-to-cart:first-child :nth-child(1),
+.card-to-cart:first-child :nth-child(2) {
+  padding: 3px;
+}
+.card-to-cart:first-child :nth-child(2) {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.card-no-pic {
+  display: inline-block;
+  border: 1px solid #ccc;
+  margin: 5px;
+  width: 200px;
+  height: 180px;
+  min-height: 180px;
+  min-width: 180px;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: 0.3s ease-in 0.1s;
+  overflow: hidden;
+}
+.card-no-pic > *:first-child {
+  min-height: 175px;
+  min-width: 175px;
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 10px;
+}
+.card-no-pic > *:first-child > :nth-child(1) {
+  border-top-left-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  box-shadow: 1px solid #747474;
+}
+.card-no-pic > *:first-child > :nth-child(2) {
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+
+.active {
+  height: max-content !important;
 }
 
 #card-loader {
@@ -270,6 +353,259 @@
     background: #cccccc;
   }
 }
+.btn {
+  width: 100px;
+  min-height: 25px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  align-self: center;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn:hover {
+  color: #fff;
+}
+
+.btns-row {
+  background: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 5px;
+}
+.btns-row form {
+  display: flex;
+  align-items: center;
+}
+.btns-row form button {
+  padding-bottom: 3px;
+  border: 0;
+  background: transparent;
+}
+.btns-row a, .btns-row button {
+  color: #ccc;
+  padding: 3px;
+  border-bottom: 1px solid rgba(200, 200, 200, 0);
+}
+.btns-row a:hover, .btns-row button:hover {
+  color: #eee !important;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.btn-b {
+  background: #5f90cf;
+  color: #fff;
+}
+.btn-b:hover {
+  background: #3e80d6;
+}
+
+.btn-r {
+  background: #d82f23;
+  color: #fff;
+}
+.btn-r:hover {
+  background: #b11e13;
+}
+
+.btn-green {
+  background-color: #4eaf73;
+  color: #fff;
+}
+.btn-green:hover {
+  background: #2f9b58;
+  color: #fff;
+}
+
+.btn-o {
+  background: #FF6800;
+  color: #fff;
+  border: 0;
+  font-weight: medium;
+  padding: 10px;
+  font-size: 10px;
+}
+.btn-o:hover {
+  background: #bb5b0c;
+}
+
+.btn-gray {
+  background: #fff;
+  color: #666;
+}
+.btn-gray:hover {
+  background: #3d3a3a;
+  color: #fff;
+}
+
+#filter-board {
+  margin: 10px;
+  width: 200px;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 4px #ccc;
+}
+#filter-board .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#filter-board div {
+  padding-top: 5px;
+}
+#filter-board div div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#filter-board div div span, #filter-board div div div {
+  padding-left: 20px;
+  width: 50%;
+  padding-bottom: 5px;
+}
+#filter-board div div:nth-child(1) {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+#filter-board div .symbol {
+  border-bottom: 1px solid #ccc;
+}
+#filter-board div .symbol > div > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+#filter-board div input {
+  cursor: pointer;
+}
+
+.stick {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100;
+}
+
+.no-stick {
+  position: static !important;
+}
+
+.f-div-2 {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.f-div-2 > * {
+  width: calc(50% - 160px);
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.f-div-2-start {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+.f-div-2-start > * {
+  width: calc(50% - 160px);
+  min-width: 200px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.f-div-y-l {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.f-div-y-l > * {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.f-div-2-8 {
+  display: flex;
+  flex-direction: row;
+}
+.f-div-2-8 > :first-child {
+  width: 30%;
+}
+.f-div-2-8 > :last-child {
+  width: 70%;
+}
+
+.f-div-4 {
+  height: max-content;
+  display: flex;
+  flex-wrap: wrap;
+}
+.f-div-4 h3 {
+  text-align: center;
+}
+.f-div-4 img {
+  width: 150px;
+  height: 100px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+.f-div-4 div {
+  min-height: 170px;
+  width: 200px;
+}
+.f-div-4 div p {
+  width: 150px;
+  margin: 0 25px 0 25px;
+  font-size: 8px;
+  min-height: 50px;
+  text-align: center;
+}
+
+.f-div-space {
+  display: flex;
+  justify-content: center;
+  flex-wrap: center;
+  flex-direction: column;
+}
+
+.success {
+  padding: 5px;
+  background: #4eaf73;
+  color: #fff;
+  max-height: 30px;
+}
+
+.error {
+  padding: 5px;
+  background: #d82f23;
+  color: #fff;
+  max-height: 30px;
+}
+
+.info {
+  padding: 5px;
+  background: #5f90cf;
+  color: #fff;
+  max-height: 30px;
+}
+
 @media screen and (max-width: 905px) {
   .mini-pic-list-container {
     display: flex;

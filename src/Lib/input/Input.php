@@ -42,7 +42,7 @@ class Input extends InputValidator
     }
     
     /**
-     * @param array $array array to clean
+     * @param array $array array to clean with htmlspecialchars
      */
     public function cleaner(array $array) : array
     {

@@ -14,8 +14,10 @@ use App\Service\User\UserCreation;
 use App\Service\User\UserUpdateEmail;
 use App\Service\User\UserUpdatePassword;
 use App\AbstractClass\AbstractController;
+use App\Repository\OrderRepository;
 use App\Service\User\UserDelete;
 use App\Services\User\UserAuthentification;
+use DateTime;
 
 class UserController extends AbstractController
 {
@@ -24,17 +26,30 @@ class UserController extends AbstractController
      */
     public function dashboard()
     {
-        (new UserSession())->ifNotConnected();
-        $userSession = $_SESSION['_userStart'];
+        $userSession =  new UserSession();
+        $userSession->ifNotConnected();
+        $user = $userSession->get('_userStart');
 
-        $userData = (new UserRepository())->findOneBy('user','id', $userSession['id']);
-
+        $userData = (new UserRepository())->findOneBy('user','id', intval($user['id']));
+        $orderRepo = (new OrderRepository());
+        
+        if(($userData['law']) > 1 )
+        {
+            $ordersValidated = $orderRepo->findAllValidated();
+            $ordersRejected = $orderRepo->findAllRejected();
+            $ordersNoValidated = $orderRepo->findAllNoValidated();
+        }
+        
+        $myOrders = $orderRepo->findAllBy('`order`','id_user', intval($user['id']));
+        
         (new Repository())->disconnect();
 
         $this->render('admin/user/dashboard', [
             'email' => $userData['email'],
             'law' => $userData['law'],
-            'session'=> (new Session())
+            'session'=> (new Session()),
+            'orders' => ['validated' => $ordersValidated ?? [], 'noValidated' => $ordersNoValidated ?? [], 'rejected' =>  $ordersRejected ?? [] ],
+            'myOrders' => $myOrders
         ]);
     }
 
@@ -122,7 +137,8 @@ class UserController extends AbstractController
         $this->render('admin/user/edition', [
             'session' => (new Session()),
             'email' => $userData['email'],
-            'law' => $userData['law'] ?? null 
+            'law' => $userData['law'] ,
+            'createdAt' => (new DateTime($userData['created_at']))->format('d/m/Y à H:i') ,
         ]);
         
     }
@@ -140,19 +156,17 @@ class UserController extends AbstractController
     }
 
     /**
-     * Delete user
+     * Delete current user
      */
     public function delete()
     {   
         $session = new UserSession();
         $userRepo = new UserRepository(); 
         $session->ifNotConnected();
-        $session->ifAdmin();
+        $session->ifCreator();
         
         $idUser = $session->get('_userStart')['id'];
         $user  = $userRepo->findOneBy('user','id', intval($idUser));
         (new UserDelete( $user ));
-        $userRepo->disconnect();
-
     }
 }

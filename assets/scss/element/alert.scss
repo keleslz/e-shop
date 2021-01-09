@@ -1,0 +1,39 @@
+$white : #fff;
+
+$blue :  rgb(95, 144, 207);
+$blue-hover :  rgb(62, 128, 214);
+
+$red : rgb(216, 47, 35);
+$red-hover :   rgb(177, 30, 19);
+
+$green : rgb(78, 175, 115);
+$green-hover : rgb(47, 155, 88) ;
+
+// .alert {
+//     width: 100%;
+//     border-radius: 5px;
+// }
+
+.success {
+    padding: 5px;
+    background: $green;
+    color : $white;
+    max-height: 30px ;
+    
+}
+
+.error {
+    padding: 5px;
+    background: $red;
+    color : $white;
+    max-height: 30px ;
+    
+}
+
+.info {
+    padding: 5px;
+    background: $blue;
+    color : $white;
+    max-height: 30px ;
+    
+}

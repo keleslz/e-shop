@@ -9,6 +9,7 @@ use App\Lib\Session\UserSession;
 use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use App\AbstractClass\AbstractController;
+use App\Repository\ProductRepository;
 
 class CategoryController extends AbstractController
 {
@@ -17,7 +18,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
       
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -25,6 +26,7 @@ class CategoryController extends AbstractController
       $category = new Category();
 
       $categories = $categoryRepo->findAll('category');
+      $categoryRepo->disconnect();
 
       $this->render('admin/category/show',  [
          'email' => $userData['email'],
@@ -39,7 +41,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
 
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -74,7 +76,7 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->isClient();
 
       $userData = (new UserRepository())->findOneBy('user','id', $user['id']);
 
@@ -123,7 +125,8 @@ class CategoryController extends AbstractController
       $session = new UserSession();
       $user = $session->get('_userStart');
       $session->ifNotConnected();
-      $session->ifNotContributor();
+      $session->ifSimpleContributor();
+      $session->isClient();
 
       $category = new Category();
       $input = new Input();

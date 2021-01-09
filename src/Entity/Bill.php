@@ -54,7 +54,7 @@ class Bill extends Client
         }
 
         $productList = [];
-
+        
         foreach ($this->cart as $key => $quantity) {
             
             $productRepo = (new ProductRepository())->findOneBy('product', 'product_id', intval($key) );

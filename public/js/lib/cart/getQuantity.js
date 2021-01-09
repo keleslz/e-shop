@@ -18,7 +18,6 @@ export const getQuantity = $( () => {
         dataType : 'text',  // what to expect back from the PHP script, if anything
         data :  { id } ,                         
         success : (res) => {
-            
             const data = JSON.parse(res);
             display(data.quantity)
         }

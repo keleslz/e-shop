@@ -17,7 +17,12 @@ export class Dropdownbox
      *  </ul> 
      */
     constructor()
-    {
+    {   
+        if(!document.querySelector('#navbar-category'))
+        {
+            return;
+        }
+        this.container =  document.querySelector('#navbar-category').children;
         this.run()
     }
 
@@ -25,18 +30,18 @@ export class Dropdownbox
     {
         if( document.querySelector('#navbar-category') !== null )
         {
-            let container =  document.querySelector('#navbar-category').children;
-            let target = container[0];
-            let listContainer = container[1];
+            let target = this.container[0];
+            let listContainer = this.container[1];
             this.open(target, listContainer);
             this.close(target, listContainer);
+            this.active();
         }
     }
 
     /**
      * @param {HTMLElement} target 
      */
-    open(target, listContainer) {
+    open = (target, listContainer)  =>{
         
 
         if(target)
@@ -63,7 +68,7 @@ export class Dropdownbox
         }
     }
 
-    close(target, listContainer) {
+    close = (target, listContainer)  =>{
         
         window.addEventListener('click', (e)=> {
             
@@ -75,6 +80,34 @@ export class Dropdownbox
                 }
             }
         })
+    }
+
+    /**
+     * Active item clicked
+     */
+    active = () =>
+    {  
+        const container = this.container[1].children;
+        
+        for(let i = 0; i < container.length; i++ )
+        {
+            const item = container[i];
+            item.addEventListener('click', (e)=> {
+
+                const active = document.querySelectorAll("#navbar-category > div > a[data-state='active']");
+                
+                if(active.length > 0)
+                {   
+                    active.forEach( active => {
+
+                        active.removeAttribute('data-state');
+                        
+                    });
+                }
+
+                e.target.setAttribute('data-state', 'active');
+            })  
+        }
     }
 }
 
